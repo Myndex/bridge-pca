@@ -1,8 +1,8 @@
 ///////////////////////////////////////////////////////////////////////////////
 /** @preserve
 /////    SAPC APCA - Advanced Perceptual Contrast Algorithm
-/////           Beta 0.0.98G-4g.3 W3 • contrast function only
-/////           DIST: W3 • Revision date: Dec 11, 2021
+/////           bridge-pca-4g-v.0.1.0.js • BRIDGE contrast function only
+/////           DIST: W3 • Revision date: Dec 14, 2021
 /////    Function to parse color values and determine Lc contrast
 /////    Copyright © 2019-2021 by Andrew Somers. All Rights Reserved.
 /////    LICENSE: W3 LICENSE
@@ -13,32 +13,32 @@
 /////
 /////    IMPORT:
 /////    import {
-/////            APCAcontrast, sRGBtoY, displayP3toY, colorParsley
+/////            BPCAcontrast, sRGBtoY, displayP3toY, colorParsley
 /////            } from 'apca-w3';
 /////    
 /////    FORWARD CONTRAST USAGE:
-/////    Lc = APCAcontrast( sRGBtoY( TEXTcolor ) , sRGBtoY( BACKGNDcolor ) );
+/////    Lc = BPCAcontrast( sRGBtoY( TEXTcolor ) , sRGBtoY( BACKGNDcolor ) );
 /////
 /////    Where the colors are sent as an rgba array [0,0,0,255]
 /////
-/////    Live Demonstrator at https://www.myndex.com/APCA/
+/////    Live Demonstrator at https://www.myndex.com/BPCA/
 // */
 ///////////////////////////////////////////////////////////////////////////////
 
 // ==ClosureCompiler==
 // @compilation_level SIMPLE_OPTIMIZATIONS
-// @output_file_name apca-w3-v.0.0.98g-4g.3.min.js
-// @code_url https://raw.githubusercontent.com/Myndex/apca-w3/master/src/apca-w3-v.0.0.98g-4g.3.js
+// @output_file_name bridge-pca-4g-v.0.1.0.min.js
+// @code_url https://raw.githubusercontent.com/Myndex/bridge-pca/master/src/bridge-pca-4g-v.0.1.0.js
 // ==/ClosureCompiler==
 
-// https://closure-compiler.appspot.com/home#code%3D%252F%252F%2520%253D%253DClosureCompiler%253D%253D%250A%252F%252F%2520%2540compilation_level%2520SIMPLE_OPTIMIZATIONS%250A%252F%252F%2520%2540output_file_name%2520apca-w3-v.0.0.98g-4g.3.min.js%250A%252F%252F%2520%2540code_url%2520https%253A%252F%252Fraw.githubusercontent.com%252FMyndex%252Fapca-w3%252Fmaster%252Fsrc%252Fapca-w3-v.0.0.98g-4g.3.js%250A%252F%252F%2520%253D%253D%252FClosureCompiler%253D%253D%250A
+// 
 
 
 ////////////////////////////////////////////////////////////////////////////////
 /////
 /////                      SAPC Method and APCA Algorithm
-/////   W3 Licensed Version: https://github.com/Myndex/apca-w3
-/////   GITHUB: https://github.com/Myndex/SAPC-APCA
+/////   WCAG_2 Bridge Version: https://github.com/Myndex/bridge-pca
+/////   MAIN GITHUB: https://github.com/Myndex/SAPC-APCA
 /////   DEVELOPER SITE: https://www.myndex.com/WEB/Perception
 /////
 /////   Acknowledgments and Thanks To:
@@ -88,9 +88,9 @@
 /////
 ////////////////////////////////////////////////////////////////////////////////
 
-//////////   APCA 0.0.98 G 4g USAGE  //////////////////////////////////////////////
+//////////   BRIDGE PCA 0.1.0 4g USAGE  ////////////////////////////////////////
 ///
-///  The API for "APCA_0_0_98G_4g_minimal" is trivially simple.
+///  The API for "bridge-pcs" is trivially simple.
 ///  Send text and background sRGB numeric values to the sRGBtoY() function,
 ///  and send the resulting text-Y and background-Y to the APCAcontrast function,
 ///  it returns a signed float with the numeric Lc contrast result.
@@ -100,10 +100,10 @@
 ///  no string parsing utilities. EXAMPLE:
 ///  ________________________________________________________________________
 ///
-///     txtColor = 0x123456; // color of the text, as will be rendered
-///     bgColor  = 0xabcdef; // color for the background, as will be rendered
+///     txtColor = [0,0,0,255]; // color of the text, as will be rendered
+///     bgColor  = [232.230.221.255]; // color for the background
 ///
-///     contrastLc = APCAcontrast( sRGBtoY(txtColor) , sRGBtoY(bgColor) );
+///     contrastLc = BPCAcontrast( sRGBtoY(txtColor) , sRGBtoY(bgColor) );
 ///  ________________________________________________________________________
 ///
 ///                  **********   QUICK START   **********
@@ -118,19 +118,19 @@
 ///  an absolute value - light text on dark BG should return a negative number.
 ///
 ///     *****  IMPORTANT: Do Not Mix Up Text and Background inputs.  *****
-///     ****************   APCA is polarity dependent!   *****************
+///     ****************   BPCA is polarity dependent!   *****************
 ///  
 ////////////////////////////////////////////////////////////////////////////////
 
 
 ////////////////////////////////////////////////////////////////////////////////
-/////  BEGIN APCA  0.0.98G-4g.3  BLOCK  \//////////////////////////////////////
+/////  BEGIN BPCA  0.1.0 4g BLOCK       \//////////////////////////////////////
 ////                                     \////////////////////////////////////
 
 
-//////////  ƒ  APCAcontrast()  /////////////////////////////////////////////
+//////////  ƒ  BPCAcontrast()  /////////////////////////////////////////////
 //export 
-function APCAcontrast (txtY,bgY,places=0) {
+function BPCAcontrast (txtY,bgY,places=0) {
                  // send linear Y (luminance) for text and background.
                 // txtY and bgY must be between 0.0-1.0
                // IMPORTANT: Do not swap, polarity is important.
@@ -142,7 +142,7 @@ function APCAcontrast (txtY,bgY,places=0) {
     // return 'error'; // optional string return for error
   };
 
-//////////   APCA 0.0.98 G - 4g - W3 Constants   ///////////////////////
+//////////   BPCA 0.1.0 G - 4g - W3 Constants   ///////////////////////
 
   const normBG = 0.56, 
         normTXT = 0.57,
@@ -155,8 +155,11 @@ function APCAcontrast (txtY,bgY,places=0) {
         scaleWoB = 1.14,
         loBoWoffset = 0.027,
         loWoBoffset = 0.027,
+        bridgeWoBfact = 0.1414,
+        bridgeWoBpivot = 0.84,
         loClip = 0.1,
         deltaYmin = 0.0005;
+
 
 //////////   SAPC LOCAL VARS   /////////////////////////////////////////
 
@@ -202,8 +205,11 @@ function APCAcontrast (txtY,bgY,places=0) {
            // WoB should always return negative value.
 
     SAPC = ( Math.pow(bgY, revBG) - Math.pow(txtY, revTXT) ) * scaleWoB;
-
-    outputContrast = (SAPC > -loClip) ? 0.0 : SAPC + loWoBoffset;
+    
+        // this is a special offset to align with incorrect WCAG_2 math.
+    let bridge = Math.max( 0, txtY / bridgeWoBpivot - 1.0 ) * bridgeWoBfact;
+console.log(bridge + ' txtY ' + txtY + ' SAPC ' + SAPC);
+    outputContrast = (SAPC > -loClip) ? 0.0 : SAPC + loWoBoffset + bridge;
   }
 
          // return Lc (lightness contrast) as a signed numeric value 
@@ -280,6 +286,7 @@ const sRco = 0.2289829594805780,
          sBco * simpleExp(rgba[2]);
 
 } // End displayP3toY()
+
 
 
 

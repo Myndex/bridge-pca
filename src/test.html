@@ -6,45 +6,45 @@
 <h1>APCA Script Test</h1>
 <h3>Usage:</h3>
 <p>First color must be text, second color must be the background.</p>
-<p><code>APCAcontrast()</code> requires Ys (display luminance)<br>
+<p><code>BPCAcontrast()</code> requires Ys (display luminance)<br>
 <code>sRGBtoY()</code> requires an sRGB color array<br>
 <code>displayP3toY()</code> requires a displayP3 RGB color array<br>
 <code>colorParsley()</code> takes anything and parses it to an RGB color array</p>
-<code>Lc = APCAcontrast(sRGBtoY(textColor),sRGBtoY(backgroundColor));</code>
+<code>Lc = BPCAcontrast(sRGBtoY(textColor),sRGBtoY(backgroundColor));</code>
 <div id="test">Enable Javascript </div>
 </body>
 
-<script src="./apca-w3-v.0.0.98g-4g.3.js"></script>
+<script src="./bridge-pca-4g-v.0.1.0.js"></script>
 
 <script>
 
-// import { APCAcontrast, sRGBtoY, displayP3toY, colorParsley } from 'apca-w3';
+// import { BPCAcontrast, sRGBtoY, displayP3toY, colorParsley } from 'apca-w3';
 
 let outputText = document.getElementById('test');
 
 outputText.innerHTML = '<h3>TEST COLORS</h3>';
 
 outputText.innerHTML += '<p>Colors may be a hex string, a named color, an rgb(), or just a number</p> '
-let color1 = '#123456', color2 = 'aliceblue', color3 = 'rgb(240,200,120)', color4 = 0x808080,
+let color1 = '#ffffff', color2 = '959595', color3 = 'rgb(240,200,120)', color4 = 0x808080,
     color5 = [123,145,67,255], color6 = {r: 123,g: 145,b: 67,a: 255};
 
-let contrast1 = APCAcontrast(sRGBtoY(colorParsley(color1)),sRGBtoY(colorParsley(color2))),
-    contrast2 = APCAcontrast(sRGBtoY(colorParsley(color2)),sRGBtoY(colorParsley(color3))),
-    contrast3 = APCAcontrast(sRGBtoY(colorParsley(color3)),sRGBtoY(colorParsley(color4))),
-    contrast4 = APCAcontrast(sRGBtoY(colorParsley(color2)),sRGBtoY(colorParsley(color4))),
-    contrast5 = APCAcontrast(sRGBtoY(colorParsley(color3)),sRGBtoY(colorParsley(color2))),
-    contrast6 = APCAcontrast(sRGBtoY(colorParsley(color3)),sRGBtoY(colorParsley(color5))),
-    contrast7 = APCAcontrast(sRGBtoY(colorParsley(color6)),sRGBtoY(colorParsley(color3))),
-    contrast8 = APCAcontrast(sRGBtoY(colorParsley(color5)),sRGBtoY(colorParsley(color6)));
+let contrast1 = BPCAcontrast(sRGBtoY(colorParsley(color1)),sRGBtoY(colorParsley(color2))),
+    contrast2 = BPCAcontrast(sRGBtoY(colorParsley(color2)),sRGBtoY(colorParsley(color3))),
+    contrast3 = BPCAcontrast(sRGBtoY(colorParsley(color3)),sRGBtoY(colorParsley(color4))),
+    contrast4 = BPCAcontrast(sRGBtoY(colorParsley(color2)),sRGBtoY(colorParsley(color4))),
+    contrast5 = BPCAcontrast(sRGBtoY(colorParsley(color3)),sRGBtoY(colorParsley(color2))),
+    contrast6 = BPCAcontrast(sRGBtoY(colorParsley(color3)),sRGBtoY(colorParsley(color5))),
+    contrast7 = BPCAcontrast(sRGBtoY(colorParsley(color6)),sRGBtoY(colorParsley(color3))),
+    contrast8 = BPCAcontrast(sRGBtoY(colorParsley(color5)),sRGBtoY(colorParsley(color6)));
 
-let contrastP1 = APCAcontrast(displayP3toY(colorParsley(color1)),displayP3toY(colorParsley(color2))),
-    contrastP2 = APCAcontrast(displayP3toY(colorParsley(color2)),displayP3toY(colorParsley(color3))),
-    contrastP3 = APCAcontrast(displayP3toY(colorParsley(color3)),displayP3toY(colorParsley(color4))),
-    contrastP4 = APCAcontrast(displayP3toY(colorParsley(color2)),displayP3toY(colorParsley(color4))),
-    contrastP5 = APCAcontrast(displayP3toY(colorParsley(color3)),displayP3toY(colorParsley(color2))),
-    contrastP6 = APCAcontrast(displayP3toY(colorParsley(color3)),displayP3toY(colorParsley(color5))),
-    contrastP7 = APCAcontrast(displayP3toY(colorParsley(color6)),displayP3toY(colorParsley(color3))),
-    contrastP8 = APCAcontrast(displayP3toY(colorParsley(color5)),displayP3toY(colorParsley(color6)));
+let contrastP1 = BPCAcontrast(displayP3toY(colorParsley(color1)),displayP3toY(colorParsley(color2))),
+    contrastP2 = BPCAcontrast(displayP3toY(colorParsley(color2)),displayP3toY(colorParsley(color3))),
+    contrastP3 = BPCAcontrast(displayP3toY(colorParsley(color3)),displayP3toY(colorParsley(color4))),
+    contrastP4 = BPCAcontrast(displayP3toY(colorParsley(color2)),displayP3toY(colorParsley(color4))),
+    contrastP5 = BPCAcontrast(displayP3toY(colorParsley(color3)),displayP3toY(colorParsley(color2))),
+    contrastP6 = BPCAcontrast(displayP3toY(colorParsley(color3)),displayP3toY(colorParsley(color5))),
+    contrastP7 = BPCAcontrast(displayP3toY(colorParsley(color6)),displayP3toY(colorParsley(color3))),
+    contrastP8 = BPCAcontrast(displayP3toY(colorParsley(color5)),displayP3toY(colorParsley(color6)));
     
 outputText.innerHTML +='<pre>color 1: ' + color1 + '         \t parsed: ' + colorParsley(color1)
                      + ' <br>color 2: ' + color2 + '       \t parsed: ' + colorParsley(color2)

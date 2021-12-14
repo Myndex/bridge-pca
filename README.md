@@ -4,22 +4,22 @@
   <a href="https://github.com/Myndex/SAPC-APCA">
     <img src="https://badgen.net/badge/SAPC/Main Repo/db6b0b" alt="SAPC/Main Repo" />
   </a> &nbsp;&nbsp;  
-  <a href="https://npmjs.org/package/apca-w3">
-    <img src="https://badgen.net/npm/v/apca-w3?color=3000c0&icon=npm" alt="version" />
+  <a href="https://npmjs.org/package/bridge-pca">
+    <img src="https://badgen.net/npm/v/bridge-pca?color=3000c0&icon=npm" alt="version" />
   </a> &nbsp;&nbsp;
-  <a href="https://github.com/Myndex/apca-w3/src/">
+  <a href="https://github.com/Myndex/bridge-pca/src/">
     <img src="https://badgen.net/badge/JS/Vanilla/889900" alt="plain vanilla JS" />
   </a> &nbsp;&nbsp;
-  <a href="https://github.com/Myndex/apca-w3/blob/master/LICENSE.md">
+  <a href="https://github.com/Myndex/bridge-pca/blob/master/LICENSE.md">
     <img src="https://badgen.net/badge/license/W3 • Web Use?icon=github&color=BB5FD1" alt="license" />
   </a> &nbsp;&nbsp;
 </p>
 <p align="center">
-  <a href="https://github.com/Myndex/apca-w3">
-    <img src="https://badgen.net/github/last-commit/Myndex/apca-w3/?icon=github" alt="last commit" />
+  <a href="https://github.com/Myndex/bridge-pca">
+    <img src="https://badgen.net/github/last-commit/Myndex/bridge-pca/?icon=github" alt="last commit" />
   </a> &nbsp;&nbsp;
-  <a href="https://npmjs.org/package/apca-w3">
-    <img src="https://badgen.net/npm/dt/apca-w3?color=6000b0&icon=npm" alt="downloads" />
+  <a href="https://npmjs.org/package/bridge-pca">
+    <img src="https://badgen.net/npm/dt/bridge-pca?color=6000b0&icon=npm" alt="downloads" />
   </a> &nbsp;&nbsp;
   <a href="https://twitter.com/MyndexResearch">
     <img src="https://badgen.net/badge/@/MyndexResearch?icon=twitter" alt="twitter" />
@@ -29,32 +29,32 @@
   </a> &nbsp;&nbsp;    
 </p>
 
-# APCA for W3 & WCAG\_3
-## apca-w3
-The APCA version in this repositiory is licensed to the W3/AGWG per the collaborative agreement.
+# Bridge PCA for WCAG\_2
+## bridge-pca
+A Bridge for WCAG\_2 contrast using APCA technology -- this repositiory is licensed to the W3/AGWG per the collaborative agreement.
 
-### Advanced Perceptual Contrast Algorithm
+### Bridge to the Advanced Perceptual Contrast Algorithm
 
-Current Version: **0.0.98G-4g.3** (w3) _betafish_
+Current Version: **0.1.0 4g** (w3) _betafish_
 
-APCA is a contrast assessment method for predicting the perceived contrast between sRGB colors on a computer monitor. It has been developed as an assessment method for W3 Silver/WCAG3 accessibility standards relating to content for computer displays and mobile devices, with a focus on readability and understandability.
+Bridge PCA is a contrast assessment method based on APCA & SAPC technology for predicting the perceived contrast between sRGB colors on a computer monitor. It has been developed as an assessment method to facilitate better readability while maintaining backwards compatibility with WCAG_2 contrast (1.4.3) accessibility standards relating to content for computer displays and mobile devices. The intention is to improve readability and understandability of content.
 
 ## QuickStart
 
 ```javascript
-    import { APCAcontrast, sRGBtoY, displayP3toY, colorParsley } from 'apca-w3';
+    import { APCAcontrast, sRGBtoY, displayP3toY, colorParsley } from 'bridge-pca';
 ```
 ### *Usage:*
-**BREAKING CHANGE:** _0.0.98G-4g.3_ NOW send rgba int **arrays** to sRGBtoY(), use the new colorParsley() if you need to parse a string first.
+Send rgba int **array** to sRGBtoY(), use the new colorParsley() if you need to parse a string first.
 
-First color must be text, second color must be the background.
+First color **must** be text, second color **must** be the background.
 ```javascript
     let textColor = [17,17,17,255];
     let backgroundColor = [232,230,221,255];
     let contrastLc = APCAcontrast( sRGBtoY( textColor ), sRGBtoY( backgroundColor ) );
 ```
 
-If you need to parse, we've kept that, now called "colorParsley()" send it anything, it returns an rgba array. Relative to the above example:
+If you need to parse, we've kept that, now called "colorParsley()" send it anything, it returns an rgba array. HSL is not implemented. Relative to the above example:
 
 ```javascript
     let textColor = colorParsley('#111111');
@@ -94,45 +94,36 @@ in the src folder .js file, there is a ` /*/ ` type code toggle you can disable 
 
 ```javascript
              // import with parsing off:
-    import { APCAcontrast, sRGBtoY, displayP3toY } from 'apca-w3';
+    import { APCAcontrast, sRGBtoY, displayP3toY } from 'bridge-pca';
 ```
 
 
-### Font Use Lookup Table
-Latest Lookup Table: November 17 2021
+### Font Use 
 
-<img width="639" alt="0.0.98G4gLUT" src="images/0.0.98G4gLUT.png">
+Unlike the main APCA, BridgePCA is all about "emulating" WCAG\_2 contrast.
 
-<img width="596" alt="0.0.98G4gLUT legend" src="images/0.0.98G4gLUT-legend.png">
+So, BridgePCA is a like-for-like replacement of the faulty WCAG\_2 contrast math.
 
-```javascript
-// APCA FONT LOOKUP TABLE 0.98G-4g-b3
-// Font Size and Reference Font Weight
-// THIS GRID FOR FLUENT TEXT USE CASE ONLY DEC 12 2021
+DIFFERENCES: for best use, do not switch polarity. Bridge PCA is polarity sensitive, even though WCAG\_2 is not. For light text on a dark background, the result will be a negative number — use the absolute value (ignore the minus sign).
 
-const apcaFluentGrid = [
-   ["min", "min", "min", "min", "min", "min", "min", "min", "min"],
-   ["min", "min", "min", "min", "min", "min", "min", "min", "min"],
-   ["min", "min", "min", 95, 90, 85, 80, "min", "min"],
-   ["min", "min", "min", 90, 85, 80, 75, "min", "min"],
-   ["min", "min", 95, 75, 70, 65, 60, 55, "min"],
-   ["min", "min", 90, 70, 65, 60, 55, 50, 45],
-   ["min", 95, 85, 65, 60, 55, 50, 45, 40],
-   ["min", 90, 75, 60, 55, 50, 45, 40, 35],
-   ["min", 85, 70, 55, 50, 45, 40, 35, 30],
-   [90, 75, 60, 50, 45, 40, 35, 30, "max"],
-   [85, 70, 55, 45, 40, 35, 30, "max", "max"],
-   [75, 60, 50, 40, 35, 30, "max", "max", "max"],
-   [70, 55, 45, 35, 30, "max", "max", "max", "max"],
-   [60, 45, 40, 30, "max", "max", "max", "max", "max"],
- ];
-```
+Like APCA, BridgePCA reports results as Lc (Lightness Contrast) but the conversion to WCAG\_2 ratios is trivial:
+
+Lc 60 exceeds WCAG 3:1
+Lc 75 exceeds WCAG 4.5:1
+Lc 90 exceeds WCAG 7:1
+
+BridgePCA has some minor internal adjustments to align with some of the incorrect aspects of WCAG\_2 contrast math. In order to be backwards compatible, BridgePCA will not forgive the false-fails of WCAG\_2 but BridgePCA will correct the many false passes.
+
+**No Free Lunch:** while BridgePCA corrects the many false passes and improve readability, the cost is that there is reduced design flexibility due to the fact that to maintain backwards compatibility, some contrasts are forced higher than they actually need be.
+
+But if you need a standards compliant method that also improves readability this is it. If on the other hand you do not need to abide by the letter of any particular standard, you may want to consider the more flexible full APCA solution.
+
 
 -----
 ## EXTRAS
 Additional documentation, including a plain language walkthrough, LaTeX math, and more are available [at the SAPC repo.](https://github.com/Myndex/SAPC-APCA)
 
-### Current APCA Constants ( 0.0.98G 4g - W3 )
+### Current BPCA Constants ( 0.1.0 4g - W3 )
 **These constants are for use with the web standard sRGB colorspace.**
 ```javascript
  // 0.98G-4g-W3 constants (W3 license only):
@@ -144,14 +135,16 @@ Additional documentation, including a plain language walkthrough, LaTeX math, an
   Clamps =     { blkThrs: 0.022,     blkClmp: 1.414,     loClip: 0.1,     deltaYmin: 0.0005, };
         
   Scalers =    { scaleBoW: 1.14,     loBoWoffset: 0.027, 
-                 scaleWoB: 1.14,     loWoBoffset: 0.027, };	
+                 scaleWoB: 1.14,     loWoBoffset: 0.027, 
+                 bridgeWoBfact = 0.1414,
+                 bridgeWoBpivot = 0.84, };	
 ```    
 
 ----- 
-### [LIVE VERSION][APCAsite]
-There is a working version with examples and reference material on [the APCA site][APCAsite]
+### [LIVE VERSION][BPCAsite]
+There (will be soon)) a working version with examples and reference material on [the BPCA site][BPCAsite]
 
-[APCAsite]: https://www.myndex.com/APCA/
+[BPCAsite]: https://www.myndex.com/BPCA/
 
 [![](https://raw.githubusercontent.com/Myndex/SAPC-APCA/master/images/Myndex_eye_cielabWide.png)](https://github.com/Myndex)
 
