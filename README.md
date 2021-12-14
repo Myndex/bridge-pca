@@ -98,7 +98,7 @@ in the src folder .js file, there is a ` /*/ ` type code toggle you can disable 
 ```
 
 
-### Font Use 
+### Font Use
 
 Unlike the main APCA, BridgePCA is all about "emulating" WCAG\_2 contrast.
 
