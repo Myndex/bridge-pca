@@ -10,7 +10,7 @@ DEPRECATED/
 OBSOLETE/
 OBSOLETE/PendingDelete/
 IGNORE/
-temp
+temp/
 
 # macOS DS file
 .DS_Store
@@ -20,9 +20,6 @@ temp
 
 # Package Files #
 *.jar
-*.war
-*.nar
-*.ear
 *.zip
 *.tar.gz
 *.rar
@@ -50,17 +47,3 @@ node_modules/
 # Yarn Integrity file
 .yarn-integrity
 
-# vuepress build output
-.vuepress/dist
-
-# Serverless directories
-.serverless/
-
-# FuseBox cache
-.fusebox/
-
-# DynamoDB Local files
-.dynamodb/
-
-# TernJS port file
-.tern-port
