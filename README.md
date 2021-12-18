@@ -84,10 +84,7 @@ The following are the available input types for colorParsley(), HSL is not imple
 
 No alpha parsing for _numbers_ in part as there are big and little endian issues that need to be resolved.
 
-### _BREAKING CHANGE:_
- The parsing was be moved to a separate function, colorParsley(), and sRGBtoY will now take only an rgba array in the form of rgba = [0,0,0,255] this is in keeping with comments that the parsing is not always necessarry, and rather raw data is preferred.
- 
- This should be the last "breaking" change for a while.
+
  
 ### Parsing Removal
 in the src folder .js file, there is a ` /*/ ` type code toggle you can disable the entire set of parsing functions before minimizing. this changes the import to:
