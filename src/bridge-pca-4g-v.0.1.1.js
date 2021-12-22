@@ -1,8 +1,8 @@
 ///////////////////////////////////////////////////////////////////////////////
 /** @preserve
 /////    SAPC APCA - Advanced Perceptual Contrast Algorithm
-/////           bridge-pca-4g-v.0.1.0.js • BRIDGE contrast function only
-/////           DIST: W3 • Revision date: Dec 14, 2021
+/////           bridge-pca-4g-v.0.1.1.js • BRIDGE contrast function only
+/////           DIST: W3 • Revision date: Dec 21, 2021
 /////    Function to parse color values and determine Lc contrast
 /////    Copyright © 2019-2021 by Andrew Somers. All Rights Reserved.
 /////    LICENSE: W3 LICENSE
@@ -27,8 +27,8 @@
 
 // ==ClosureCompiler==
 // @compilation_level SIMPLE_OPTIMIZATIONS
-// @output_file_name bridge-pca-4g-v.0.1.0.min.js
-// @code_url https://raw.githubusercontent.com/Myndex/bridge-pca/master/src/bridge-pca-4g-v.0.1.0.js
+// @output_file_name bridge-pca-4g-v.0.1.1.min.js
+// @code_url https://raw.githubusercontent.com/Myndex/bridge-pca/master/src/bridge-pca-4g-v.0.1.1.js
 // ==/ClosureCompiler==
 
 // 
@@ -88,9 +88,9 @@
 /////
 ////////////////////////////////////////////////////////////////////////////////
 
-//////////   BRIDGE PCA 0.1.0 4g USAGE  ////////////////////////////////////////
+//////////   BRIDGE PCA 0.1.1 4g USAGE  ////////////////////////////////////////
 ///
-///  The API for "bridge-pcs" is trivially simple.
+///  The API for "bridge-pca" is trivially simple.
 ///  Send text and background sRGB numeric values to the sRGBtoY() function,
 ///  and send the resulting text-Y and background-Y to the APCAcontrast function,
 ///  it returns a signed float with the numeric Lc contrast result.
@@ -124,13 +124,13 @@
 
 
 ////////////////////////////////////////////////////////////////////////////////
-/////  BEGIN BPCA  0.1.0 4g BLOCK       \//////////////////////////////////////
+/////  BEGIN BPCA  0.1.1 4g BLOCK       \//////////////////////////////////////
 ////                                     \////////////////////////////////////
 
 
 //////////  ƒ  BPCAcontrast()  /////////////////////////////////////////////
 //export 
-function BPCAcontrast (txtY,bgY,places=0) {
+function BPCAcontrast (txtY,bgY,places = -1) {
                  // send linear Y (luminance) for text and background.
                 // txtY and bgY must be between 0.0-1.0
                // IMPORTANT: Do not swap, polarity is important.
@@ -165,6 +165,7 @@ function BPCAcontrast (txtY,bgY,places=0) {
 
   let SAPC = 0.0;            // For raw SAPC values
   let outputContrast = 0.0; // For weighted final values
+  let polCat = 'N';        // Polarity Indicator. N normal R reverse
 
   // TUTORIAL
 
@@ -193,31 +194,42 @@ function BPCAcontrast (txtY,bgY,places=0) {
 
   if ( bgY > txtY ) {  // For normal polarity, black text on white (BoW)
 
-           // Calculate the SAPC contrast value and scale
-      
+                     // Calculate the SAPC contrast value and scale
+
     SAPC = ( Math.pow(bgY, normBG) - Math.pow(txtY, normTXT) ) * scaleBoW;
 
-            // Low Contrast smooth rollout to prevent polarity reversal
-           // and also a low-clip for very low contrasts
+                 // Low Clip to prevent polarity reversal
     outputContrast = (SAPC < loClip) ? 0.0 : SAPC - loBoWoffset;
 
-  } else {  // For reverse polarity, light text on dark (WoB)
-           // WoB should always return negative value.
+  } else {    // For reverse polarity, light text on dark (WoB)
+             // WoB should always return either negative value.
+            // OR the output will have R appended as string '23R'
+           // OR WoB '23 BoW' toolmaker choice so long as explained
+    polCat = 'R';
 
     SAPC = ( Math.pow(bgY, revBG) - Math.pow(txtY, revTXT) ) * scaleWoB;
-    
-        // this is a special offset to align with incorrect WCAG_2 math.
+
+         // this is a special offset to align with incorrect WCAG_2 math.
     let bridge = Math.max( 0, txtY / bridgeWoBpivot - 1.0 ) * bridgeWoBfact;
-console.log(bridge + ' txtY ' + txtY + ' SAPC ' + SAPC);
+
+// console.log(bridge + ' txtY ' + txtY + ' SAPC ' + SAPC);
+
     outputContrast = (SAPC > -loClip) ? 0.0 : SAPC + loWoBoffset + bridge;
   }
 
          // return Lc (lightness contrast) as a signed numeric value 
         // Round to the nearest whole number is optional.
        // Rounded can be a signed INT as output will be within ± 127 
-       
-  return  Math.round(outputContrast * 100.0);
-  
+      // places = -1 returns signed float, 0 returns rounded as string
+
+  if(places < 0 ){
+    return  outputContrast * 100.0;
+  } else if(places == 0 ){
+    return  Math.round(Math.abs(outputContrast)*100.0)+'<sub>'+polCat+'</sub>';
+  } else if(Number.isInteger(places)){
+    return  (outputContrast * 100.0).toFixed(places);
+  } else { throw 'Err-3'}
+
 } // End APCAcontrast()
 
 
@@ -226,19 +238,17 @@ console.log(bridge + ' txtY ' + txtY + ' SAPC ' + SAPC);
 
 
 //////////  ƒ  sRGBtoY()  //////////////////////////////////////////////////
-//export 
-function sRGBtoY (rgba = [0,0,0,255]) { // send sRGB 8bpc (0xFFFFFF) or string
+//export
+function sRGBtoY (rgba = [0,0,0,1.0]) { // send sRGB 8bpc (0xFFFFFF) or string
 
 /////   APCA 0.0.98 G - 4g - W3 Constants   ////////////////////////
 
 const mainTRC = 2.4; // 2.4 exponent emulates actual monitor perception
-    
-const sRco = 0.2126729, 
-      sGco = 0.7151522, 
-      sBco = 0.0721750; // sRGB coefficients
-      
-// Future:
-// 0.2126478133913640	0.7151791475336150	0.0721730390750208
+
+const sRco = 0.2126478133913640,
+      sGco = 0.7151791475336150,
+      sBco = 0.0721730390750208; // sRGB coefficients
+
 // Derived from:
 // xW	yW	K	xR	yR	xG	yG	xB	yB
 // 0.312720	0.329030	6504	0.640	0.330	0.300	0.600	0.150	0.060
@@ -251,7 +261,7 @@ const sRco = 0.2126729,
   return sRco * simpleExp(rgba[0]) +
          sGco * simpleExp(rgba[1]) +
          sBco * simpleExp(rgba[2]);
-         
+
 } // End sRGBtoY()
 
 
@@ -259,9 +269,9 @@ const sRco = 0.2126729,
 
 
 
-//////////  ƒ  displayP3toY()  //////////////////////////////////////////////////
+//////////  ƒ  displayP3toY()  /////////////////////////////////////////////
 //export 
-function displayP3toY (rgba = [0,0,0,255]) { // send rgba array
+function displayP3toY (rgba = [0,0,0,1.0]) { // send rgba array
 
 /////   APCA 0.0.98 G - 4g - W3 Constants   ////////////////////////
 
@@ -290,13 +300,14 @@ const sRco = 0.2289829594805780,
 
 
 
+
 ///// OPTIONAL STRING PARSING UTILITY //////////////////////////////////////////
 
-//* // PARSESTRING COMMENT SWITCH //////////////////////////////////////////
-//  (add/remove first slash in the above line to toggle before compile)  //
+//* // PARSESTRING COMMENT SWITCH //////////////////////////////////////
+//  (add/remove first slash in the above line to toggle b4 compile)  //
 
 
-/////  ƒ  colorParsley()  ///////////////////////////////////////////////////
+/////  ƒ  colorParsley()  //////////////////////////////////////////////////
 //export
 function colorParsley (colorIn) {
 
@@ -305,7 +316,7 @@ function colorParsley (colorIn) {
     } else if (typeof colorIn === 'number') {
         return [(colorIn & 0xFF0000) >> 16,
                 (colorIn & 0x00FF00) >> 8,
-                (colorIn & 0x0000FF), 255];
+                (colorIn & 0x0000FF), 1.0];
     } else if (typeof colorIn === 'object') {
        if (Array.isArray(colorIn)) {
           return colorIn;
@@ -318,8 +329,6 @@ function colorParsley (colorIn) {
     };
     return -1; // return error -1
 }
-
-
 
 
 
@@ -353,8 +362,8 @@ function parseString (colorString = '#abcdef') {
     
   let colorDefs = [
     {
-      rex: /^rgb\((\d{1,3}),(\d{1,3}),(\d{1,3})\)$/,
-      parseStr: function (slices){ // rgb(0,0,0)
+      rex: /^rgb\((\d{1,3}),(\d{1,3}),(\d{1,3})\)$/i,
+      parseStr: function (slices){ // rgb(123,123,123)
         return [
           parseInt(slices[1]),
           parseInt(slices[2]),
@@ -363,8 +372,8 @@ function parseString (colorString = '#abcdef') {
       }
     },
     {
-      rex: /^rgbs\((\d{1,3}),(\d{1,3}),(\d{1,3})\),(\d{1,3})\)$/,
-      parseStr: function (slices){ // rgb(0,0,0)
+      rex: /^rgba\((\d{1,3}),(\d{1,3}),(\d{1,3})\),([01]?[0.1]\d{0,42})\)$/i,
+      parseStr: function (slices){ // rgba(123,123,123,1.0)
         return [
           parseInt(slices[1]),
           parseInt(slices[2]),
@@ -426,7 +435,7 @@ function parseString (colorString = '#abcdef') {
   let colorDefLen = colorDefs.length;
   let rexInput, slicesInput;
   let r,g,b;
-  let a = 255, i = 0;
+  let a = 1.0, i = 0;
 
     // Loop stops once valid color is found
   for (; i < colorDefLen; i++) {
@@ -440,8 +449,8 @@ function parseString (colorString = '#abcdef') {
       r = channel[0] & 0xFF;
       g = channel[1] & 0xFF;
       b = channel[2] & 0xFF;
-      (isNaN(channel[3])) ? a = 255 : a = channel[3] & 0xFF;
-      
+      a = (isNaN(channel[3])) ? 1.0 : Math.min(Math.max(channel[3],0.0),1.0);
+
       return [r,g,b,a];
     }
   }
@@ -456,17 +465,17 @@ module.exports = {
 }
 
 
-/*////// PARSESTRING TOGGLE /////
+/*/ ///// PARSESTRING MID TOGGLE /////
 
 module.exports = {
    APCAcontrast,
    sRGBtoY,
    displayP3toY
 }
-// */  ///// END PARSESTRING COMMENT SWITCH /////
+// */ ///// END PARSESTRING COMMENT SWITCH /////
 
 
 
-////\                                 //////////////////////////////////////////
-/////\  END APCA 0.0.98G-4g.3 BLOCK  //////////////////////////////////////////
+////\                              /////////////////////////////////////////////
+/////\  END BPCA  0.1.1 4g BLOCK  /////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
