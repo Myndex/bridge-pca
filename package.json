@@ -1,8 +1,8 @@
 {
   "name": "bridge-pca",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A Bridge for WCAG_2 contrast using APCA (Advanced Perceptual Contrast Algorithm), technology.",
-  "main": "./dist/bridge-pca-4g-v.0.1.0.min.js",
+  "main": "./dist/bridge-pca-4g-v.0.1.1.min.js",
   "keywords": [
     "color",
     "colour",
