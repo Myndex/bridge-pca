@@ -93,6 +93,11 @@ In addition, the following enhanced SCs can be added with Bridge-PCA to further 
 - Prefer a font no thicker than 700 weight
 
 -----
+### Comparison Chart
+In this chart, we see that WCAG_2 contrast degrades losing readability as color pairs get darker, while APCA technology maintains readability across the visual range.
+
+<img src="images/ColumnCompareAll400.png" width="820" alt="WCAG2 to APCA comparison table demonstrating the false passes of WCAG 2 contrast">
+
 Additional Notes
 -----
 Unlike the main APCA, BridgePCA is all about "emulating" WCAG\_2 contrast. So, BridgePCA is a like-for-like replacement of the quirky WCAG\_2 contrast math.
