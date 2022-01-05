@@ -165,7 +165,7 @@ function BPCAcontrast (txtY,bgY,places = -1) {
 
   let SAPC = 0.0;            // For raw SAPC values
   let outputContrast = 0.0; // For weighted final values
-  let polCat = 'N';        // Polarity Indicator. N normal R reverse
+  let polCat = 'BoW';        // Polarity Indicator. N normal R reverse
 
   // TUTORIAL
 
@@ -205,7 +205,7 @@ function BPCAcontrast (txtY,bgY,places = -1) {
              // WoB should always return either negative value.
             // OR the output will have R appended as string '23R'
            // OR WoB '23 BoW' toolmaker choice so long as explained
-    polCat = 'R';
+    polCat = 'WoB';
 
     SAPC = ( Math.pow(bgY, revBG) - Math.pow(txtY, revTXT) ) * scaleWoB;
 
@@ -228,7 +228,7 @@ function BPCAcontrast (txtY,bgY,places = -1) {
     return  Math.round(Math.abs(outputContrast)*100.0)+'<sub>'+polCat+'</sub>';
   } else if(Number.isInteger(places)){
     return  (outputContrast * 100.0).toFixed(places);
-  } else { throw 'Err-3'}
+  } else { throw 'Err-3' }
 
 } // End APCAcontrast()
 
