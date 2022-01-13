@@ -1,6 +1,6 @@
 # Bridge PCA for WCAG\_2
 <p align="center">
- <img src="images/APCAlogo.png"  alt="Bridge PCA WCAG 2 Compatiblity APCA technology" width="501"><br><br>
+ <img src="images/BPCAlogo.png"  alt="Bridge PCA WCAG 2 Compatiblity APCA technology" width="501"><br><br>
 
   <a href="https://github.com/Myndex/SAPC-APCA">
     <img src="https://badgen.net/badge/SAPC/Main Repo/db6b0b" alt="SAPC/Main Repo" />
