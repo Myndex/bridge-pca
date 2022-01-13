@@ -1,4 +1,4 @@
-# Bridge PCA for WCAG\_2
+# Bridge PCA for WCAG\_2*
 <p align="center">
  <img src="images/BPCAlogo.png"  alt="Bridge PCA WCAG 2 Compatiblity APCA technology" width="501"><br><br>
 
@@ -31,7 +31,9 @@
 </p>
 
 ## bridge-pca
-A Bridge for WCAG\_2 contrast using APCA technology.
+A Bridge for WCAG\_2 contrast using APCA technology. 
+
+\* *This is not an official guideline of the AGWG, and was developed indpenedently by Myndex to help cure the readability probelms with web-based content. It is nevertheless fully backwards compatible with the existing WGAC 2 guidelines and provides optional accessibility extensions to improve readability further. It is free for use with web-based content.*
 
 ### Bridge to the Advanced Perceptual Contrast Algorithm
 Current Version: **0.1.1 4g** (w3) _betafish_
