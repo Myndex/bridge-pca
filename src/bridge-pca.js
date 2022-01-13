@@ -1,7 +1,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 /** @preserve
 /////    SAPC APCA - Advanced Perceptual Contrast Algorithm
-/////           bridge-pca-4g-v.0.1.1.js • BRIDGE contrast function only
+/////           bridge-pca  0.1.2  • BRIDGE contrast function only
 /////           DIST: W3 • Revision date: Dec 21, 2021
 /////    Function to parse color values and determine Lc contrast
 /////    Copyright © 2019-2021 by Andrew Somers. All Rights Reserved.
@@ -14,12 +14,12 @@
 /////    IMPORT:
 /////    import {
 /////            BPCAcontrast, sRGBtoY, displayP3toY, colorParsley
-/////            } from 'apca-w3';
+/////            } from 'bridge-pca';
 /////    
 /////    FORWARD CONTRAST USAGE:
 /////    Lc = BPCAcontrast( sRGBtoY( TEXTcolor ) , sRGBtoY( BACKGNDcolor ) );
 /////
-/////    Where the colors are sent as an rgba array [0,0,0,255]
+/////    Where the colors are sent as an rgba array [0,0,0]
 /////
 /////    Live Demonstrator at https://www.myndex.com/BPCA/
 // */
@@ -27,8 +27,8 @@
 
 // ==ClosureCompiler==
 // @compilation_level SIMPLE_OPTIMIZATIONS
-// @output_file_name bridge-pca-4g-v.0.1.1.min.js
-// @code_url https://raw.githubusercontent.com/Myndex/bridge-pca/master/src/bridge-pca-4g-v.0.1.1.js
+// @output_file_name bridge-pca.min.js
+// @code_url https://raw.githubusercontent.com/Myndex/bridge-pca/master/src/bridge-pca.js
 // ==/ClosureCompiler==
 
 // 
@@ -48,7 +48,6 @@
 /////     others — see refs at https://www.myndex.com/WEB/WCAG_CE17polarity
 /////   • Bruce Bailey of USAccessBoard for his encouragement, ideas, & feedback
 /////   • Chris Loiselle of Oracle for getting us back on track in a pandemic
-/////   • Chris Lilley of W3 for his early and continued comments & feedback.
 /////   • The many volunteer test subjects for participating in the studies.
 /////   • Principal research conducted at Myndex by A.Somers.
 /////
@@ -58,7 +57,7 @@
 /////
 /////   *****  SAPC BLOCK  *****
 /////
-/////   For Evaluations, refer to this as: SAPC-8, v0.0.98 G-series constant 4g
+/////   For Evaluations, refer to this as: SAPC-8, v0.1.2 G-series constant 4g
 /////            SAPC • S-LUV Advanced Predictive Color
 /////
 /////   SIMPLE VERSION — Only the basic APCA contrast predictor.
@@ -73,10 +72,10 @@
 ////////////////////////////////////////////////////////////////////////////////
 /////
 /////               DISCLAIMER AND LIMITATIONS OF USE
-/////     APCA is an embodiment of certain suprathreshold contrast
+/////     Bridge-PCA is an embodiment of certain suprathreshold contrast
 /////     prediction technologies and it is licensed to the W3 on a
 /////     limited basis for use in certain specific accessibility
-/////     guidelines for web content only. APCA may be used for 
+/////     guidelines for web content only. Bridge-PCA may be used for 
 /////     predicting colors for web content use without royalty.
 /////
 /////     However, Any such license excludes other use cases
@@ -88,11 +87,11 @@
 /////
 ////////////////////////////////////////////////////////////////////////////////
 
-//////////   BRIDGE PCA 0.1.1 4g USAGE  ////////////////////////////////////////
+//////////   BRIDGE PCA 0.1.2 4g USAGE  ////////////////////////////////////////
 ///
 ///  The API for "bridge-pca" is trivially simple.
 ///  Send text and background sRGB numeric values to the sRGBtoY() function,
-///  and send the resulting text-Y and background-Y to the APCAcontrast function,
+///  and send the resulting text-Y and background-Y to the BPCAcontrast function,
 ///  it returns a signed float with the numeric Lc contrast result.
 ///  
 ///  The two inputs are TEXT color and BACKGROUND color in that order.
@@ -100,8 +99,8 @@
 ///  no string parsing utilities. EXAMPLE:
 ///  ________________________________________________________________________
 ///
-///     txtColor = [0,0,0,255]; // color of the text, as will be rendered
-///     bgColor  = [232.230.221.255]; // color for the background
+///     txtColor = [0,0,0]; // color of the text, as will be rendered
+///     bgColor  = [232,230,221]; // color for the background
 ///
 ///     contrastLc = BPCAcontrast( sRGBtoY(txtColor) , sRGBtoY(bgColor) );
 ///  ________________________________________________________________________
@@ -124,7 +123,7 @@
 
 
 ////////////////////////////////////////////////////////////////////////////////
-/////  BEGIN BPCA  0.1.1 4g BLOCK       \//////////////////////////////////////
+/////  BEGIN BPCA  0.1.2 4g BLOCK       \//////////////////////////////////////
 ////                                     \////////////////////////////////////
 
 
@@ -142,7 +141,7 @@ function BPCAcontrast (txtY,bgY,places = -1) {
     // return 'error'; // optional string return for error
   };
 
-//////////   BPCA 0.1.0 G - 4g - W3 Constants   ///////////////////////
+//////////   BPCA 0.1.2 G - 4g Constants   ///////////////////////
 
   const normBG = 0.56, 
         normTXT = 0.57,
@@ -190,7 +189,7 @@ function BPCAcontrast (txtY,bgY,places = -1) {
   if ( Math.abs(bgY - txtY) < deltaYmin ) { return 0.0; }
 
 
-//////////   APCA/SAPC CONTRAST - LOW CLIP (W3 LICENSE)  ///////////////
+//////////   Bridge-PCA/SAPC CONTRAST - LOW CLIP (W3 LICENSE)  ///////////////
 
   if ( bgY > txtY ) {  // For normal polarity, black text on white (BoW)
 
@@ -230,7 +229,7 @@ function BPCAcontrast (txtY,bgY,places = -1) {
     return  (outputContrast * 100.0).toFixed(places);
   } else { throw 'Err-3' }
 
-} // End APCAcontrast()
+} // End BPCAcontrast()
 
 
 
@@ -239,9 +238,9 @@ function BPCAcontrast (txtY,bgY,places = -1) {
 
 //////////  ƒ  sRGBtoY()  //////////////////////////////////////////////////
 //export
-function sRGBtoY (rgba = [0,0,0,1.0]) { // send sRGB 8bpc (0xFFFFFF) or string
+function sRGBtoY (rgba = [0,0,0]) { // send sRGB 8bpc (0xFFFFFF) or string
 
-/////   APCA 0.0.98 G - 4g - W3 Constants   ////////////////////////
+/////   Bridge-PCA 0.1.2 G - 4g - W3 Constants   ////////////////////////
 
 const mainTRC = 2.4; // 2.4 exponent emulates actual monitor perception
 
@@ -271,9 +270,9 @@ const sRco = 0.2126478133913640,
 
 //////////  ƒ  displayP3toY()  /////////////////////////////////////////////
 //export 
-function displayP3toY (rgba = [0,0,0,1.0]) { // send rgba array
+function displayP3toY (rgba = [0,0,0]) { // send rgba array
 
-/////   APCA 0.0.98 G - 4g - W3 Constants   ////////////////////////
+/////   Bridge-PCA 0.1.2 G - 4g - W3 Constants   ////////////////////////
 
 const mainTRC = 2.4; // 2.4 exponent emulates actual monitor perception
                     // Pending evaluation, because, Apple...
@@ -301,9 +300,90 @@ const sRco = 0.2289829594805780,
 
 
 
+
+
+//////////  ƒ  adobeRGBtoY()  /////////////////////////////////////////////
+//export 
+function adobeRGBtoY (rgb = [0,0,0]) { // send rgba array
+
+// NOTE: Currently expects 0-255
+
+/////   Bridge-PCA 0.1.1   G - 4g - W3 Constants   ////////////////////////
+
+const mainTRC = 2.35; // 2.35 exponent emulates actual monitor perception
+                     // Pending evaluation...
+    
+const sRco = 0.2973550227113810, 
+      sGco = 0.6273727497145280, 
+      sBco = 0.0752722275740913; // adobeRGB coefficients
+
+// Derived from:
+// xW	yW	K	xR	yR	xG	yG	xB	yB
+// 0.312720	0.329030	6504	0.640	0.330	0.210	0.710	0.150	0.060
+
+         // linearize r, g, or b then apply coefficients
+        // and sum then return the resulting luminance
+
+  function simpleExp (chan) { return Math.pow(chan/255.0, mainTRC); };
+
+  return sRco * simpleExp(rgb[0]) +
+         sGco * simpleExp(rgb[1]) +
+         sBco * simpleExp(rgb[2]);
+
+} // End displayP3toY()
+
+
+
+
+//////////  ƒ  alphaBlend()  /////////////////////////////////////////////
+//export 
+                      // send rgba array for top, rgb for bottom.
+                     // Only foreground has alpha of 0.0 to 1.0 
+                    // This blends using gamma encoded space (standard)
+                   // rounded 0-255 or set isInt false for float 0.0-1.0
+function alphaBlend (rgbaFG=[0,0,0,1.0], rgbBG=[0,0,0], isInt = true ) {
+	
+	rgbaFG[3] = Math.max(Math.min(rgbaFG[3], 1.0), 0.0); // clamp alpha
+	let compBlend = 1.0 - rgbaFG[3];
+	let rgbOut = [0,0,0]; // or just use rgbBG to retain other elements?
+	
+	for (i=0;i<3;i++) {
+		rgbOut[i] = rgbBG[i] * compBlend + rgbaFG[i] * rgbaFG[3];
+		if (isInt) rgbOut[i] = Math.min(Math.round(rgbOut[i]),255);
+	};
+  return rgbOut;
+} // End alphaBlend()
+
+
+
+
+//////////  ƒ  calcBPCA()  /////////////////////////////////////////////
+//export 
+function calcBPCA (textColor, bgColor, places = -1, isInt = true) {
+        
+        // Note that this function required colorParsley !!
+	let bgClr = colorParsley(bgColor);
+	let txClr = colorParsley(textColor);
+	let hasAlpha = (txClr[3] != '' || txClr[3] < 1) ? true : false;
+
+	if (hasAlpha) { txClr = alphaBlend( txClr, bgClr, isInt); };
+	
+	return BPCAcontrast( sRGBtoY(txClr), sRGBtoY(bgClr), places)
+} // End calcBPCA()
+
+
+
+
+
+
+
+
+
+
+
 ///// OPTIONAL STRING PARSING UTILITY //////////////////////////////////////////
 
-//* // PARSESTRING COMMENT SWITCH //////////////////////////////////////
+/* // PARSESTRING COMMENT SWITCH //////////////////////////////////////
 //  (add/remove first slash in the above line to toggle b4 compile)  //
 
 
@@ -458,7 +538,7 @@ function parseString (colorString = '#abcdef') {
 }
 
 module.exports = {
-   APCAcontrast,
+   BPCAcontrast,
    sRGBtoY,
    displayP3toY,
    colorParsley
@@ -468,14 +548,20 @@ module.exports = {
 /*/ ///// PARSESTRING MID TOGGLE /////
 
 module.exports = {
-   APCAcontrast,
+   BPCAcontrast,
    sRGBtoY,
-   displayP3toY
-}
+   displayP3toY,
+   adobeRGBtoY,
+   alphaBlend,
+   calcBPCA
+};
+
+// import { colorParsley } from './colorparsley';
+
 // */ ///// END PARSESTRING COMMENT SWITCH /////
 
 
 
 ////\                              /////////////////////////////////////////////
-/////\  END BPCA  0.1.1 4g BLOCK  /////////////////////////////////////////////
+/////\  END BPCA  0.1.2 4g BLOCK  /////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////

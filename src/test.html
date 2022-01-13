@@ -1,32 +1,159 @@
 <!DOCTYPE html><head>
-<base lang="en-US" title="APCA TEST">
-<title>APCA TEST</title>
+<base lang="en-US" title="Bridge-PCA TEST">
+<title>Bridge-PCA TEST</title>
+
+	<style>
+  body {	
+		margin: 2em;
+		font-family: sans-serif;
+		font-size: 1.2em;
+		line-height: 1.5;
+		color: #c8cfc0;
+		background: #429;
+  }
+  code, pre {
+  	padding: 6px 8px 4px 12px;
+  	font-family: menlo, monospaced;
+		font-size: 16px;
+		color: #def;
+  	background: #345;
+  	}
+  pre { max-width: 640px; overflow: scroll; line-height: 1.5; }
+  .hScroll {
+    padding: 6px 14px 4px 12px;
+  	overflow: scroll;
+  	white-space: nowrap;
+  	background: #345;
+    border: 1px solid #a0a0a0; 
+  	border-radius: 10px;
+  	}
+	</style>
 </head>
-<body style="margin: 2em; font-family: sans-serif; font-size: 1.2em; background: #429; color:#eee;">
-<h1>APCA Script Test</h1>
+<body>
+
+<h1>Bridge-PCA Script Test</h1>
 <h3>Usage:</h3>
 <p>First color must be text, second color must be the background.</p>
 <p><code>BPCAcontrast()</code> requires Ys (display luminance)<br>
-<code>sRGBtoY()</code> requires an sRGB color array<br>
-<code>displayP3toY()</code> requires a displayP3 RGB color array<br>
-<code>colorParsley()</code> takes anything and parses it to an RGB color array</p>
-<code>Lc = BPCAcontrast(sRGBtoY(textColor),sRGBtoY(backgroundColor));</code>
-<div id="test">Enable Javascript </div>
+<code>sRGBtoY()</code> requires an sRGB color array 0-255<br>
+<code>displayP3toY()</code> requires a displayP3 RGB color array 0.0-1.0<br>
+<code>adobeRGBtoY()</code> requires an Adobe98 RGB color array 0-255<br>
+<code>colorParsley()</code> parses string to an RGB color array 0-255<br>
+<code>alphaBlend()</code> blends FG color with alpha to BG, returns array<br>
+<code>calcBPCA(textString,bgString)</code> shortcut, takes strings, text allows alpha</p>
+
+<div class="hScroll">
+<code>Lc = BPCAcontrast(sRGBtoY( alphaBlend(colorParsley(color8),colorParsley(color2)) ), sRGBtoY(colorParsley(color2)));
+</code><br>
+</div>
+
+<div id="test">Enable Javascript
+<!--TEST RESULTS ARE INSERTED HERE --></div>
+
+
+<h2>TESTING YOUR IMPLEMENTATION</h2>
+
+<p>If you've implemented the code and want a quick sanity check, Here are some keystone checks with no rounding. The first color is TEXT and the second color is BACKGROUND:
+
+<p>Test Values for the 0.1.0 G constants, normal and reverse float values for each color pair.
+
+
+<p>First number is TEXT second number is BACKGROUND.
+
+<h3>TEXT vs BKGND •  EXPECTED RESULT for 0.1.1</h3>
+<pre><code>
+    #888 vs #fff  •  63.056469930209424
+    #fff vs #888  • -68.54146436644962  
+
+    #000 vs #aaa  •  58.146262578561334
+    #aaa vs #000  • -56.24113336839742
+    
+    #123 vs #def  •  91.66830811481631
+    #def vs #123  • -93.06770049484275
+
+    #123 vs #444  •   8.32326136957393
+    #234 vs #444  •  -7.526878460278154
+    </code></pre>
+These exercise all the important constants.
 </body>
 
-<script src="./bridge-pca-4g-v.0.1.1.js"></script>
+<!-- For Local Testing (non server) using script includes -->
+<script src="./bridge-pca.js" ></script>
+<script src="../node_modules/colorparsley/dist/colorparsley.min.js" ></script>
+<!-- end -->
+
+<script type="module">
+// for server-based testing using module import add slash to next line
+
+/* // MOD.EXP COMMENT SWITCH LOCAL TESTING /////
+ import { BPCAcontrast, sRGBtoY, displayP3toY, adobeRGBtoY, alphaBlend } from './bridge-pca.js';
+ import { colorParsley } from '../node_modules/colorparsley/dist/colorparsley.min.js';
+// */  ///// END PARSESTRING COMMENT SWITCH /////
+</script>
+
+
 
 <script>
 
-// import { BPCAcontrast, sRGBtoY, displayP3toY, colorParsley } from 'apca-w3';
-
 let outputText = document.getElementById('test');
 
-outputText.innerHTML = '<h3>TEST COLORS</h3>';
+    outputText.innerHTML = '<h3>TEST COLORS</h3>';
+
+
+//*  ////   TOGGLE SWITCH
+
+    outputText.innerHTML += '<p>This is a test with the standardized test values</p> '
+
+let color1 = '#888', color2 = '#fff', color3 = '#000', color4 = '#aaa',
+    color5 = '#123', color6 = '#def', color7 = '#444', color8 = '#0006';
+
+let contrast1 = BPCAcontrast(sRGBtoY(colorParsley(color1)),sRGBtoY(colorParsley(color2))),
+    contrast2 = BPCAcontrast(sRGBtoY(colorParsley(color2)),sRGBtoY(colorParsley(color1))),
+    contrast3 = BPCAcontrast(sRGBtoY(colorParsley(color3)),sRGBtoY(colorParsley(color4))),
+    contrast4 = BPCAcontrast(sRGBtoY(colorParsley(color4)),sRGBtoY(colorParsley(color3))),
+    contrast5 = BPCAcontrast(sRGBtoY(colorParsley(color5)),sRGBtoY(colorParsley(color6))),
+    contrast6 = BPCAcontrast(sRGBtoY(colorParsley(color6)),sRGBtoY(colorParsley(color5))),
+    contrast7 = BPCAcontrast(sRGBtoY(colorParsley(color5)),sRGBtoY(colorParsley(color7))),
+    contrast8 = BPCAcontrast(sRGBtoY(colorParsley(color7)),sRGBtoY(colorParsley(color5))),
+    contrast9 = BPCAcontrast(sRGBtoY(alphaBlend(colorParsley(color8),colorParsley(color2))),
+                             sRGBtoY(colorParsley(color2))),
+    contrastA = calcBPCA(color8,color2);
+  
+let alpha1 = alphaBlend([221,238,255,0.5],colorParsley(color3)),
+    alpha2 = alphaBlend([0.86667,9.333,1.0,0.25],colorParsley(color3),false);
+
+outputText.innerHTML +='<pre>color 1: ' + color1 + '	 parsed: ' + colorParsley(color1)
+                     + ' <br>color 2: ' + color2 + '	 parsed: ' + colorParsley(color2)
+                     + ' <br>color 3: ' + color3 + '	 parsed: ' + colorParsley(color3)
+                     + ' <br>color 4: ' + color4 + '	 parsed: ' + colorParsley(color4)
+                     + ' <br>color 5: ' + color5 + '	 parsed: ' + colorParsley(color5)
+                     + ' <br>color 6: ' + color6 + '	 parsed: ' + colorParsley(color6)
+                     + ' <br>color 7: ' + color7 + '	 parsed: ' + colorParsley(color7)
+                     + ' <br>color 8: ' + color8 + '	 parsed: ' + colorParsley(color8)
+
+                     + '<br><br>sRGB BPCA results • check to match the expected result'
+                     + '<br><br>Colors 1 & 2   sRGB Lc ' + contrast1 
+                     + '<br>Colors 2 & 1   sRGB Lc ' + contrast2 
+                     + '<br><br>Colors 3 & 4   sRGB Lc ' + contrast3 
+                     + '<br>Colors 4 & 3   sRGB Lc ' + contrast4 
+                     + '<br><br>Colors 5 & 6   sRGB Lc ' + contrast5 
+                     + '<br>Colors 6 & 5   sRGB Lc ' + contrast6 
+                     + '<br><br>Colors 5 & 7   sRGB Lc ' + contrast7 
+                     + '<br>Colors 7 & 5   sRGB Lc ' + contrast8 
+                     + '<br><br>ALPHA TEST '
+                     + '<br><br>Colors 6 & 3 • 6 @ 50%    A   ' + alpha1 
+                     + '<br>Float  6 & 3 • 6 @ 25%    A   ' + alpha2 
+                     + '<br><br>Colors 8 & 2   sRGBA Lc ' + contrast9
+                     + '<br><br>calcBPCA(color8,color2) ' + contrastA
+                     + '<br><br></pre>';
+
+/*/ /// Mid Toggle Do Not Delete
+
 
 outputText.innerHTML += '<p>Colors may be a hex string, a named color, an rgb(), or just a number</p> '
-let color1 = '#ffffff', color2 = '959595', color3 = 'rgb(240,200,120)', color4 = 0x808080,
-    color5 = [123,145,67,255], color6 = {r: 123,g: 145,b: 67,a: 255};
+let color1 = '#123', color2 = '#def', color3 = '#123' ; //'rgb(240,200,120)',
+let color4 = 0x808080,
+    color5 = [123,145,67,1.0], color6 = 'aliceblue'; //{r: 123,g: 145,b: 67,a: 1.0};
 
 let contrast1 = BPCAcontrast(sRGBtoY(colorParsley(color1)),sRGBtoY(colorParsley(color2))),
     contrast2 = BPCAcontrast(sRGBtoY(colorParsley(color2)),sRGBtoY(colorParsley(color3))),
@@ -70,6 +197,10 @@ outputText.innerHTML +='<pre>color 1: ' + color1 + '         \t parsed: ' + colo
                      + '<br><br>Colors 6 & 3   sRGB Lc ' + contrast7 + '  \t P3 Lc ' + contrastP7
                      + '<br><br>Colors 5 & 6   sRGB Lc ' + contrast8 + '  \t P3 Lc ' + contrastP8
                      + '</pre>';
+
+//  */ //// END TOGGLE
+
+
 </script>
 
 
