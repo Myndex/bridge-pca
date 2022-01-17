@@ -1,7 +1,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 /** @preserve
 /////    SAPC APCA - Advanced Perceptual Contrast Algorithm
-/////           bridge-pca  0.1.2  • BRIDGE contrast function only
+/////           bridge-pca  0.1.3  • BRIDGE contrast function only
 /////           DIST: W3 • Revision date: Dec 21, 2021
 /////    Function to parse color values and determine Lc contrast
 /////    Copyright © 2019-2021 by Andrew Somers. All Rights Reserved.
@@ -57,7 +57,7 @@
 /////
 /////   *****  SAPC BLOCK  *****
 /////
-/////   For Evaluations, refer to this as: SAPC-8, v0.1.2 G-series constant 4g
+/////   For Evaluations, refer to this as: SAPC-8, v0.1.3 G-series constant 4g
 /////            SAPC • S-LUV Advanced Predictive Color
 /////
 /////   SIMPLE VERSION — Only the basic APCA contrast predictor.
@@ -87,7 +87,7 @@
 /////
 ////////////////////////////////////////////////////////////////////////////////
 
-//////////   BRIDGE PCA 0.1.2 4g USAGE  ////////////////////////////////////////
+//////////   BRIDGE PCA 0.1.3 4g USAGE  ////////////////////////////////////////
 ///
 ///  The API for "bridge-pca" is trivially simple.
 ///  Send text and background sRGB numeric values to the sRGBtoY() function,
@@ -123,7 +123,7 @@
 
 
 ////////////////////////////////////////////////////////////////////////////////
-/////  BEGIN BPCA  0.1.2 4g BLOCK       \//////////////////////////////////////
+/////  BEGIN BPCA  0.1.3 4g BLOCK       \//////////////////////////////////////
 ////                                     \////////////////////////////////////
 
 
@@ -141,7 +141,7 @@ function BPCAcontrast (txtY,bgY,places = -1) {
     // return 'error'; // optional string return for error
   };
 
-//////////   BPCA 0.1.2 G - 4g Constants   ///////////////////////
+//////////   BPCA 0.1.3 G - 4g Constants   ///////////////////////
 
   const normBG = 0.56, 
         normTXT = 0.57,
@@ -271,7 +271,7 @@ function bridgeRatio (contrastLc = 0, ratioStr = ' to 1', places = 1) {
 //export
 function sRGBtoY (rgba = [0,0,0]) { // send sRGB 8bpc (0xFFFFFF) or string
 
-/////   Bridge-PCA 0.1.2 G - 4g - W3 Constants   ////////////////////////
+/////   Bridge-PCA 0.1.3 G - 4g - W3 Constants   ////////////////////////
 
 const mainTRC = 2.4; // 2.4 exponent emulates actual monitor perception
 
@@ -303,7 +303,7 @@ const sRco = 0.2126478133913640,
 //export 
 function displayP3toY (rgba = [0,0,0]) { // send rgba array
 
-/////   Bridge-PCA 0.1.2 G - 4g - W3 Constants   ////////////////////////
+/////   Bridge-PCA 0.1.3 G - 4g - W3 Constants   ////////////////////////
 
 const mainTRC = 2.4; // 2.4 exponent emulates actual monitor perception
                     // Pending evaluation, because, Apple...
@@ -595,5 +595,5 @@ module.exports = {
 
 
 ////\                              /////////////////////////////////////////////
-/////\  END BPCA  0.1.2 4g BLOCK  /////////////////////////////////////////////
+/////\  END BPCA  0.1.3 4g BLOCK  /////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
