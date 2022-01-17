@@ -34,11 +34,14 @@
 **A Bridge for WCAG\_2 contrast using APCA technology. **
 
 ### Bridge to the Advanced Perceptual Contrast Algorithm
-Current Version: **0.1.1 4g** (w3) _betafish_
+Current Version: **0.1.3 4g** (w3) _betafish_
 
 Bridge PCA is a contrast assessment method based on APCA & SAPC technology for predicting the perceived contrast between sRGB colors on a computer monitor. It has been developed as an assessment method to facilitate better readability while maintaining backwards compatibility with WCAG_2 contrast (1.4.3) accessibility standards relating to content for computer displays and mobile devices. The intention is to improve readability and understandability of content.
 
 ### _WCAG\_2 Drop N Go_
+
+#### NEW in 0.1.3!! Now the [live tool][BPCAsite] reports both APCA LC values AND WCAG style ratios!.
+
 Bridge-PCS is a "drop n go" replacement for WCAG_2 math, and it's super easy to convert to WCAG\_2 ratios. Like APCA, BridgePCA reports results as Lc (Lightness Contrast), and they align like this:
 
 Use the following conversions for AA and AAA:

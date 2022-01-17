@@ -118,34 +118,42 @@ let contrast1 = BPCAcontrast(sRGBtoY(colorParsley(color1)),sRGBtoY(colorParsley(
     contrast9 = BPCAcontrast(sRGBtoY(alphaBlend(colorParsley(color8),colorParsley(color2))),
                              sRGBtoY(colorParsley(color2))),
     contrastA = calcBPCA(color8,color2);
-  
+
 let alpha1 = alphaBlend([221,238,255,0.5],colorParsley(color3)),
     alpha2 = alphaBlend([0.86667,9.333,1.0,0.25],colorParsley(color3),false);
 
-outputText.innerHTML +='<pre>color 1: ' + color1 + '	 parsed: ' + colorParsley(color1)
-                     + ' <br>color 2: ' + color2 + '	 parsed: ' + colorParsley(color2)
-                     + ' <br>color 3: ' + color3 + '	 parsed: ' + colorParsley(color3)
-                     + ' <br>color 4: ' + color4 + '	 parsed: ' + colorParsley(color4)
-                     + ' <br>color 5: ' + color5 + '	 parsed: ' + colorParsley(color5)
-                     + ' <br>color 6: ' + color6 + '	 parsed: ' + colorParsley(color6)
-                     + ' <br>color 7: ' + color7 + '	 parsed: ' + colorParsley(color7)
-                     + ' <br>color 8: ' + color8 + '	 parsed: ' + colorParsley(color8)
+let aSpn = "  \t<span style='color: ";
+let bSpn = "; background-color: ";
+let cSpn = ";'> & icyATOMsizedgap </span>";
 
-                     + '<br><br>sRGB BPCA results • check to match the expected result'
-                     + '<br><br>Colors 1 & 2   sRGB Lc ' + contrast1 
-                     + '<br>Colors 2 & 1   sRGB Lc ' + contrast2 
-                     + '<br><br>Colors 3 & 4   sRGB Lc ' + contrast3 
-                     + '<br>Colors 4 & 3   sRGB Lc ' + contrast4 
-                     + '<br><br>Colors 5 & 6   sRGB Lc ' + contrast5 
-                     + '<br>Colors 6 & 5   sRGB Lc ' + contrast6 
-                     + '<br><br>Colors 5 & 7   sRGB Lc ' + contrast7 
-                     + '<br>Colors 7 & 5   sRGB Lc ' + contrast8 
-                     + '<br><br>ALPHA TEST '
-                     + '<br><br>Colors 6 & 3 • 6 @ 50%    A   ' + alpha1 
-                     + '<br>Float  6 & 3 • 6 @ 25%    A   ' + alpha2 
-                     + '<br><br>Colors 8 & 2   sRGBA Lc ' + contrast9
-                     + '<br><br>calcBPCA(color8,color2) ' + contrastA
-                     + '<br><br></pre>';
+outputText.innerHTML +='<pre>color 1: ' + color1 + '   parsed: ' + colorParsley(color1)
+     + ' <br>color 2: ' + color2 + '     parsed: ' + colorParsley(color2)
+     + ' <br>color 3: ' + color3 + '     parsed: ' + colorParsley(color3)
+     + ' <br>color 4: ' + color4 + '     parsed: ' + colorParsley(color4)
+     + ' <br>color 5: ' + color5 + '     parsed: ' + colorParsley(color5)
+     + ' <br>color 6: ' + color6 + '     parsed: ' + colorParsley(color6)
+     + ' <br>color 7: ' + color7 + '     parsed: ' + colorParsley(color7)
+     + ' <br>color 8: ' + color8 + '     parsed: ' + colorParsley(color8)
+
+     + '<br><br>sRGB BPCA results • check to match the expected result'
+     + '<br><br>Colors 1 & 2   sRGB Lc ' + contrast1 + aSpn+color1+bSpn+color2+cSpn
+     + '<br>Colors 2 & 1   sRGB Lc ' + contrast2 + aSpn+color2+bSpn+color1+cSpn
+     + '<br>bridgeRatio:   ' + bridgeRatio(contrast2) + ' (WCAG 2 compatible)'
+     + '<br><br>Colors 3 & 4   sRGB Lc ' + contrast3  + aSpn+color3+bSpn+color4+cSpn
+     + '<br>bridgeRatio:   ' + bridgeRatio(contrast3) + ' (WCAG 2 compatible)'
+     + '<br>Colors 4 & 3   sRGB Lc ' + contrast4 + aSpn+color4+bSpn+color3+cSpn 
+     + '<br><br>Colors 5 & 6   sRGB Lc ' + contrast5 + aSpn+color5+bSpn+color6+cSpn 
+     + '<br>Colors 6 & 5   sRGB Lc ' + contrast6 + aSpn+color6+bSpn+color5+cSpn 
+     + '<br>bridgeRatio:   ' + bridgeRatio(contrast6) + ' (WCAG 2 compatible)'
+     + '<br><br>Colors 5 & 7   sRGB Lc ' + contrast7 + aSpn+color5+bSpn+color7+cSpn 
+     + '<br>bridgeRatio:   ' + bridgeRatio(contrast7) + ' (WCAG 2 compatible)'
+     + '<br>Colors 7 & 5   sRGB Lc ' + contrast8 + aSpn+color7+bSpn+color5+cSpn 
+     + '<br><br>ALPHA TEST '
+     + '<br><br>Colors 6 & 3 • 6 @ 50%    A   ' + alpha1 
+     + '<br>Float  6 & 3 • 6 @ 25%    A   ' + alpha2 
+     + '<br><br>Colors 8 & 2   sRGBA Lc ' + contrast9
+     + '<br><br>calcBPCA(color8,color2) ' + contrastA
+     + '<br><br></pre>';
 
 /*/ /// Mid Toggle Do Not Delete
 
