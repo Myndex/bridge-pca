@@ -29,6 +29,7 @@
   },
   "dependencies": {
     "colorparsley": "^0.1.1",
-    "npm": "^8.3.0"
+    "node": "^17.3.1",
+    "npm": "^8.3.1"
   }
 }
