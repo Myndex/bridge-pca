@@ -9,6 +9,8 @@ So, BridgePCA is a like-for-like replacement of the faulty WCAG\_2 contrast math
 ### DIFFERENCES:
 For best use, do not switch polarity. Bridge PCA is polarity sensitive, even though WCAG\_2 is not. For light text on a dark background, the result should be a negative number — use the absolute value (ignore the minus sign).
 
+NEW!! Bridge PCA now gives a WCAG 2 style RATIO, as well as an LC value!
+
 Like APCA, BridgePCA reports results as **Lc** (Lightness Contrast) but the conversion to WCAG\_2 ratios is trivial:
 
 - **Lc 60 exceeds WCAG 3:1**

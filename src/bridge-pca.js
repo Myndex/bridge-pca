@@ -1,7 +1,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 /** @preserve
 /////    SAPC APCA - Advanced Perceptual Contrast Algorithm
-/////           bridge-pca  0.1.3  • BRIDGE contrast function only
+/////           bridge-pca  0.1.4  • BRIDGE contrast function only
 /////           DIST: W3 • Revision date: Dec 21, 2021
 /////    Function to parse color values and determine Lc contrast
 /////    Copyright © 2019-2021 by Andrew Somers. All Rights Reserved.
@@ -57,7 +57,7 @@
 /////
 /////   *****  SAPC BLOCK  *****
 /////
-/////   For Evaluations, refer to this as: SAPC-8, v0.1.3 G-series constant 4g
+/////   For Evaluations, refer to this as: SAPC-8, v0.1.4 G-series constant 4g
 /////            SAPC • S-LUV Advanced Predictive Color
 /////
 /////   SIMPLE VERSION — Only the basic APCA contrast predictor.
@@ -87,7 +87,7 @@
 /////
 ////////////////////////////////////////////////////////////////////////////////
 
-//////////   BRIDGE PCA 0.1.3 4g USAGE  ////////////////////////////////////////
+//////////   BRIDGE PCA 0.1.4 4g USAGE  ////////////////////////////////////////
 ///
 ///  The API for "bridge-pca" is trivially simple.
 ///  Send text and background sRGB numeric values to the sRGBtoY() function,
@@ -123,7 +123,7 @@
 
 
 ////////////////////////////////////////////////////////////////////////////////
-/////  BEGIN BPCA  0.1.3 4g BLOCK       \//////////////////////////////////////
+/////  BEGIN BPCA  0.1.4 4g BLOCK       \//////////////////////////////////////
 ////                                     \////////////////////////////////////
 
 
@@ -141,7 +141,7 @@ function BPCAcontrast (txtY,bgY,places = -1) {
     // return 'error'; // optional string return for error
   };
 
-//////////   BPCA 0.1.3 G - 4g Constants   ///////////////////////
+//////////   BPCA 0.1.4 G - 4g Constants   ///////////////////////
 
   const normBG = 0.56, 
         normTXT = 0.57,
@@ -236,26 +236,43 @@ function BPCAcontrast (txtY,bgY,places = -1) {
 
 
 
+
+
+
+
 //////////  ƒ  bridgeRatio()  ////////////////////////////////////////////
 //export
 function bridgeRatio (contrastLc = 0, ratioStr = ' to 1', places = 1) {
+
            // Takes the output of APCA (either a string or number)
           // and makes it a WCAG2 ratio, returning a string '4.5 to 1'
          // Jan 16 2022 constants   
-    let finalScale = 0.170;
-    let preScale = -0.078;
-    let powerShift = 3.14159;
-    let loThresh = 0.222;
-    let loExp = 0.890;
+    const offsetA = 0.2693;
+    const preScale = -0.0561;
+    const powerShift = 4.537;
 
-    contrastLc = Math.pow(Math.max(0, Math.abs(parseFloat(contrastLc) * 0.01) +
-                 preScale), powerShift) + finalScale;
-    
-    contrastLc = (contrastLc > loThresh) ? contrastLc :
-                 contrastLc - Math.pow(loThresh - contrastLc, loExp);
-    
-    return ( contrastLc * 10.0 ).toFixed(places) + ratioStr;
-}        
+    const mainFactor = 1.113946;
+    const addTrim = 0.0837;
+
+    const loThresh = 0.3;
+    const loExp = 0.48;
+    const preEmph = 0.42;
+    const postDe = 0.6594;
+
+    contrastLc = Math.max(0, Math.abs(parseFloat(contrastLc) * 0.01));
+
+         // convert Lc into a WCAG ratio
+    let wcagContrast = (Math.pow( contrastLc + preScale, powerShift ) +
+                        offsetA) * mainFactor * contrastLc + addTrim;
+
+         // adjust WCAG ratios that are under  3 : 1
+    wcagContrast = (wcagContrast > loThresh) ?
+                10.0 * wcagContrast :
+                10.0 * wcagContrast -
+                (Math.pow( loThresh - wcagContrast + preEmph, loExp ) - postDe);
+
+    return (wcagContrast).toFixed(places) + ratioStr;
+}
 
 
 
@@ -271,7 +288,7 @@ function bridgeRatio (contrastLc = 0, ratioStr = ' to 1', places = 1) {
 //export
 function sRGBtoY (rgba = [0,0,0]) { // send sRGB 8bpc (0xFFFFFF) or string
 
-/////   Bridge-PCA 0.1.3 G - 4g - W3 Constants   ////////////////////////
+/////   Bridge-PCA 0.1.4 G - 4g - W3 Constants   ////////////////////////
 
 const mainTRC = 2.4; // 2.4 exponent emulates actual monitor perception
 
@@ -299,11 +316,14 @@ const sRco = 0.2126478133913640,
 
 
 
+
+
+
 //////////  ƒ  displayP3toY()  /////////////////////////////////////////////
 //export 
 function displayP3toY (rgba = [0,0,0]) { // send rgba array
 
-/////   Bridge-PCA 0.1.3 G - 4g - W3 Constants   ////////////////////////
+/////   Bridge-PCA 0.1.4 G - 4g - W3 Constants   ////////////////////////
 
 const mainTRC = 2.4; // 2.4 exponent emulates actual monitor perception
                     // Pending evaluation, because, Apple...
@@ -366,6 +386,12 @@ const sRco = 0.2973550227113810,
 
 
 
+
+
+
+
+
+
 //////////  ƒ  alphaBlend()  /////////////////////////////////////////////
 //export 
                       // send rgba array for top, rgb for bottom.
@@ -373,17 +399,27 @@ const sRco = 0.2973550227113810,
                     // This blends using gamma encoded space (standard)
                    // rounded 0-255 or set isInt false for float 0.0-1.0
 function alphaBlend (rgbaFG=[0,0,0,1.0], rgbBG=[0,0,0], isInt = true ) {
-	
-	rgbaFG[3] = Math.max(Math.min(rgbaFG[3], 1.0), 0.0); // clamp alpha
-	let compBlend = 1.0 - rgbaFG[3];
-	let rgbOut = [0,0,0]; // or just use rgbBG to retain other elements?
-	
-	for (i=0;i<3;i++) {
-		rgbOut[i] = rgbBG[i] * compBlend + rgbaFG[i] * rgbaFG[3];
-		if (isInt) rgbOut[i] = Math.min(Math.round(rgbOut[i]),255);
-	};
-  return rgbOut;
+  
+  if (rgbaFG[3]) {
+    rgbaFG[3] = Math.max(Math.min(rgbaFG[3], 1.0), 0.0); // clamp alpha
+    let compBlend = 1.0 - rgbaFG[3];
+    let rgbOut = [0,0,0]; // or just use rgbBG to retain other elements?
+  
+    for (i=0;i<3;i++) {
+      rgbOut[i] = rgbBG[i] * compBlend + rgbaFG[i] * rgbaFG[3];
+      if (isInt) rgbOut[i] = Math.min(Math.round(rgbOut[i]),255);
+    };
+  
+     return rgbOut;
+     
+  } else { return rgbaFG }
 } // End alphaBlend()
+
+
+
+
+
+
 
 
 
@@ -395,7 +431,7 @@ function calcBPCA (textColor, bgColor, places = -1, isInt = true) {
         // Note that this function required colorParsley !!
 	let bgClr = colorParsley(bgColor);
 	let txClr = colorParsley(textColor);
-	let hasAlpha = (txClr[3] != '' || txClr[3] < 1) ? true : false;
+	let hasAlpha = (txClr[3] != '' && txClr[3] < 1) ? true : false;
 
 	if (hasAlpha) { txClr = alphaBlend( txClr, bgClr, isInt); };
 	
@@ -595,5 +631,5 @@ module.exports = {
 
 
 ////\                              /////////////////////////////////////////////
-/////\  END BPCA  0.1.3 4g BLOCK  /////////////////////////////////////////////
+/////\  END BPCA  0.1.4 4g BLOCK  /////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////

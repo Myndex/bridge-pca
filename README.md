@@ -31,18 +31,19 @@
 </p>
 
 ## bridge-pca
-**A Bridge for WCAG\_2 contrast using APCA technology. **
+**A Bridge for WCAG_2 contrast using APCA technology. **
 
 ### Bridge to the Advanced Perceptual Contrast Algorithm
-Current Version: **0.1.3 4g** (w3) _betafish_
+Current Version: **0.1.4 4g** (w3) (public beta)
 
 Bridge PCA is a contrast assessment method based on APCA & SAPC technology for predicting the perceived contrast between sRGB colors on a computer monitor. It has been developed as an assessment method to facilitate better readability while maintaining backwards compatibility with WCAG_2 contrast (1.4.3) accessibility standards relating to content for computer displays and mobile devices. The intention is to improve readability and understandability of content.
 
 ### _WCAG\_2 Drop N Go_
+Current Version: 0.1.4 Jan 18, 2022
 
 #### NEW in 0.1.3!! Now the [live tool][BPCAsite] reports both APCA LC values AND WCAG style ratios!.
 
-Bridge-PCS is a "drop n go" replacement for WCAG_2 math, and it's super easy to convert to WCAG\_2 ratios. Like APCA, BridgePCA reports results as Lc (Lightness Contrast), and they align like this:
+Bridge-PCS is a "drop n go" replacement for WCAG_2 math, and it's super easy to convert to WCAG_2 ratios. Like APCA, BridgePCA reports results as Lc (Lightness Contrast), and they align like this:
 
 Use the following conversions for AA and AAA:
 - **Lc 60 exceeds WCAG 3:1**
@@ -105,19 +106,19 @@ In this chart, we see that WCAG_2 contrast degrades losing readability as color 
 
 Additional Notes
 -----
-Unlike the main APCA, BridgePCA is all about "emulating" WCAG\_2 contrast. So, BridgePCA is a like-for-like replacement of the quirky WCAG\_2 contrast math.
+Unlike the main APCA, BridgePCA is all about "emulating" WCAG_2 contrast. So, BridgePCA is a like-for-like replacement of the quirky WCAG_2 contrast math.
 
-Like APCA, BridgePCA reports results as Lc (Lightness Contrast). Conversion to WCAG\_2 ratios:
+Like APCA, BridgePCA reports results as Lc (Lightness Contrast). Conversion to WCAG_2 ratios:
 
 - **Lc 60 exceeds WCAG 3:1**
 - **Lc 75 exceeds WCAG 4.5:1**
 - **Lc 90 exceeds WCAG 7:1**
 
-***DIFFERENCES:*** for best results, send the text color to the text input of the tool. Bridge PCA is "polarity sensitive," even though WCAG\_2 is not. For light text on a dark background, the result will have an R for "reverse" after the LC value. N means "normal".
+***DIFFERENCES:*** for best results, send the text color to the text input of the tool. Bridge PCA is "polarity sensitive," even though WCAG_2 is not. For light text on a dark background, the result will have an R for "reverse" after the LC value. N means "normal".
 
 **No Free Lunch:** while BridgePCA corrects the many false passes and improves readability, the cost is that there is reduced design flexibility due to the fact that to maintain backwards compatibility, some contrasts are forced higher than they actually need be.
 
-BridgePCA has some minor internal adjustments to align with some of the more incorrect aspects of WCAG\_2 contrast math. In order to be backwards compatible, BridgePCA will not forgive the false-fails of WCAG\_2, but BridgePCA **will** correct the many false passes which vastly improves readability.
+BridgePCA has some minor internal adjustments to align with some of the more incorrect aspects of WCAG_2 contrast math. In order to be backwards compatible, BridgePCA will not forgive the false-fails of WCAG_2, but BridgePCA **will** correct the many false passes which vastly improves readability.
 
 But if you need a standards compliant method that also improves readability this is it. If on the other hand you do not need to abide by the letter of any particular standard, you may want to consider the more flexible full APCA solution.
 

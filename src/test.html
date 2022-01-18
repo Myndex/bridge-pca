@@ -105,7 +105,9 @@ let outputText = document.getElementById('test');
     outputText.innerHTML += '<p>This is a test with the standardized test values</p> '
 
 let color1 = '#888', color2 = '#fff', color3 = '#000', color4 = '#aaa',
-    color5 = '#123', color6 = '#def', color7 = '#444', color8 = '#0006';
+    color5 = '#123', color6 = '#def', color7 = '#444', color8 = '#0006',
+    colorW21 = '#B5B5B5', colorW31 = '#949494', colorW451 = '#767676',
+    colorW71 = '#595959' ;
 
 let contrast1 = BPCAcontrast(sRGBtoY(colorParsley(color1)),sRGBtoY(colorParsley(color2))),
     contrast2 = BPCAcontrast(sRGBtoY(colorParsley(color2)),sRGBtoY(colorParsley(color1))),
@@ -117,7 +119,12 @@ let contrast1 = BPCAcontrast(sRGBtoY(colorParsley(color1)),sRGBtoY(colorParsley(
     contrast8 = BPCAcontrast(sRGBtoY(colorParsley(color7)),sRGBtoY(colorParsley(color5))),
     contrast9 = BPCAcontrast(sRGBtoY(alphaBlend(colorParsley(color8),colorParsley(color2))),
                              sRGBtoY(colorParsley(color2))),
-    contrastA = calcBPCA(color8,color2);
+    contrastA = calcBPCA(color8,color2),
+    contrastW21 = BPCAcontrast(sRGBtoY(colorParsley(color2)),sRGBtoY(colorParsley(colorW21))).toFixed(4),
+    contrastW31 = BPCAcontrast(sRGBtoY(colorParsley(color2)),sRGBtoY(colorParsley(colorW31))).toFixed(4),
+    contrastW451 = calcBPCA(color2,colorW451).toFixed(3),
+    contrastW71 = calcBPCA(color2,colorW71).toFixed(4);
+    
 
 let alpha1 = alphaBlend([221,238,255,0.5],colorParsley(color3)),
     alpha2 = alphaBlend([0.86667,9.333,1.0,0.25],colorParsley(color3),false);
@@ -134,6 +141,7 @@ outputText.innerHTML +='<pre>color 1: ' + color1 + '   parsed: ' + colorParsley(
      + ' <br>color 6: ' + color6 + '     parsed: ' + colorParsley(color6)
      + ' <br>color 7: ' + color7 + '     parsed: ' + colorParsley(color7)
      + ' <br>color 8: ' + color8 + '     parsed: ' + colorParsley(color8)
+     + ' <br>color W31: ' + colorW31 + '     parsed: ' + colorParsley(colorW31)
 
      + '<br><br>sRGB BPCA results • check to match the expected result'
      + '<br><br>Colors 1 & 2   sRGB Lc ' + contrast1 + aSpn+color1+bSpn+color2+cSpn
@@ -153,6 +161,14 @@ outputText.innerHTML +='<pre>color 1: ' + color1 + '   parsed: ' + colorParsley(
      + '<br>Float  6 & 3 • 6 @ 25%    A   ' + alpha2 
      + '<br><br>Colors 8 & 2   sRGBA Lc ' + contrast9
      + '<br><br>calcBPCA(color8,color2) ' + contrastA
+     + '<br><br>calcBPCA(colorW21,color2) Lc ' + contrastW21 + aSpn+color2+bSpn+colorW21+cSpn 
+     + '<br>calcBPCA(colorW31,color2) Lc ' + contrastW31 + aSpn+color2+bSpn+colorW31+cSpn 
+     + '<br>calcBPCA(colorW451,color2) Lc ' + contrastW451 + aSpn+color2+bSpn+colorW451+cSpn 
+     + '<br>calcBPCA(colorW71,color2) Lc ' + contrastW71 + aSpn+color2+bSpn+colorW71+cSpn 
+     + '<br><br>bridgeRatio:   ' + bridgeRatio(contrastW21) + ' (WCAG 2 compatible)'
+     + '<br>bridgeRatio:   ' + bridgeRatio(contrastW31) + ' (WCAG 2 compatible)'
+     + '<br>bridgeRatio:   ' + bridgeRatio(contrastW451) + ' (WCAG 2 compatible)'
+     + '<br>bridgeRatio:   ' + bridgeRatio(contrastW71) + ' (WCAG 2 compatible)'
      + '<br><br></pre>';
 
 /*/ /// Mid Toggle Do Not Delete
