@@ -170,13 +170,7 @@ No alpha parsing for _numbers_ in part as there are big and little endian issues
 
 
 ### Parsing Removal
-in the src folder .js file, there is a ` /*/ ` type code toggle you can disable the entire set of parsing functions before minimizing. this changes the import to:
-
-````javascript
-             // import with parsing off:
-    import { APCAcontrast, sRGBtoY, displayP3toY } from 'bridge-pca';
-```
-
+colorParsley() is now a separate package, and an optional dependency if you need parsing of strings.
 
 -----
 ## EXTRAS
@@ -184,6 +178,7 @@ Additional documentation, including a plain language walkthrough, LaTeX math, an
 
 ### Current BPCA Constants ( 0.1.0 4g - W3 )
 **These constants are for use with the web standard sRGB colorspace.**
+
 ```javascript
  // 0.98G-4g-W3 constants (W3 license only):
 
@@ -197,16 +192,16 @@ Additional documentation, including a plain language walkthrough, LaTeX math, an
                  scaleWoB: 1.14,     loWoBoffset: 0.027, 
                  bridgeWoBfact = 0.1414,
                  bridgeWoBpivot = 0.84, };
-```
+````````
 
 ----- 
-### [LIVE VERSION][BPCAsite]
-There (will be soon)) a working version with examples and reference material on [the BPCA site][BPCAsite]
+### [LIVE VERSION](http://www.myndex.com/BPCA/)
+There's a working version with examples and reference material on [the BPCA site](http://www.myndex.com/BPCA/)
 
 [BPCAsite]: https://www.myndex.com/BPCA/
 
 [![](https://raw.githubusercontent.com/Myndex/SAPC-APCA/master/images/Myndex_eye_cielabWide.png)](https://github.com/Myndex)
 
-### APCA is the _Advanced Perceptual Contrast Algorithm_
+### APCA is the Accessible Perceptual Contrast Algorithm_
 ## THE REVOLUTION WILL BE READABLE™
 
