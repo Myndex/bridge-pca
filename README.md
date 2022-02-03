@@ -31,7 +31,7 @@
 </p>
 
 ## bridge-pca
-**A Bridge for WCAG_2 contrast using APCA technology. **
+**A Bridge for WCAG_2 contrast using APCA technology.**
 
 ### Bridge to the Advanced Perceptual Contrast Algorithm
 Current Version: **0.1.4 4g** (w3) (public beta)
@@ -52,7 +52,7 @@ Use the following conversions for AA and AAA:
 
 **Large Font:** 24px (18pt) normal weight or 18.7px (14pt) bold, or larger.
 
-\* *This is not an official guideline of the AGWG, and was developed indpenedently by Myndex to help cure the readability probelms with web-based content. It is nevertheless fully backwards compatible with the existing WGAC 2 guidelines and provides optional accessibility extensions to improve readability further. It is free for use with web-based content.*
+\* <sub>*This is not an official guideline of the AGWG, and was developed indpenedently by Myndex to help cure the readability probelms with web-based content. It is nevertheless fully backwards compatible with the existing WGAC 2 guidelines and provides optional accessibility extensions to improve readability further. It is free for use with web-based content.*</sub>
 
 -----
 ## WCAG\_2 Bridge-PCA _Enhanced SCs_
