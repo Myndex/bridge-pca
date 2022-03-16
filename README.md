@@ -190,8 +190,8 @@ Additional documentation, including a plain language walkthrough, LaTeX math, an
         
   Scalers =    { scaleBoW: 1.14,     loBoWoffset: 0.027, 
                  scaleWoB: 1.14,     loWoBoffset: 0.027, 
-                 bridgeWoBfact = 0.1414,
-                 bridgeWoBpivot = 0.84, };
+                 bridgeWoBfact: 0.1414,
+                 bridgeWoBpivot: 0.84, };
 ````````
 
 ----- 
