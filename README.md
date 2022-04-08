@@ -34,6 +34,7 @@
 
 ## bridge-pca
 **A Bridge for WCAG_2 contrast using APCA technology.**
+_NPM Install:_ ` npm i bridge-pca `
 
 ### Bridge to the Advanced Perceptual Contrast Algorithm
 Current Version: **0.1.4 4g** (w3) (public beta)
