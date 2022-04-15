@@ -2,7 +2,7 @@
 /** @preserve
 /////    SAPC APCA - Advanced Perceptual Contrast Algorithm
 /////           bridge-pca  0.1.5  • BRIDGE contrast function only
-/////           DIST: W3 • Revision date: Dec 21, 2021
+/////           DIST: W3 • Revision date: April 14, 2022
 /////    Function to parse color values and determine Lc contrast
 /////    Copyright © 2019-2021 by Andrew Somers. All Rights Reserved.
 /////    LICENSE: W3 LICENSE
@@ -13,15 +13,19 @@
 /////
 /////    IMPORT:
 /////    import {
-/////            BPCAcontrast, sRGBtoY, displayP3toY, colorParsley
+/////            BPCAcontrast, bridgeRatio, sRGBtoY, displayP3toY, colorParsley
 /////            } from 'bridge-pca';
 /////    
 /////    FORWARD CONTRAST USAGE:
-/////    Lc = BPCAcontrast( sRGBtoY( TEXTcolor ) , sRGBtoY( BACKGNDcolor ) );
+/////    
+/////    txtY = sRGBtoY( TEXTcolor );
+/////    bgY = sRGBtoY( BACKGNDcolor );
+/////    contrastLc = BPCAcontrast( txtY, bgY );
+/////    wcag2ratio = bridgeRatio( contrastLc, txtY, bgY );
+/////    
+/////     Where the colors are sent as an rgba array [0,0,0]
 /////
-/////    Where the colors are sent as an rgba array [0,0,0]
-/////
-/////    Live Demonstrator at https://www.myndex.com/BPCA/
+/////     Live Demonstrator at https://www.myndex.com/BPCA/
 // */
 ///////////////////////////////////////////////////////////////////////////////
 
@@ -266,8 +270,6 @@ function bridgeRatio (contrastLc = 0, txtY, bgY, ratioStr = ' to 1', places = 1)
     const trimThresh = 0.506; // #c0c0c0
 
     let addTrim = loTrim + hiTrim;
-
-    ///let addTrim = maxY <= trimThresh ? loTrim + hiTrim : (loTrim * ((1.0 - maxY) / (1.0 - trimThresh)) + hiTrim;)
 
     if (maxY > trimThresh) { 
       let adjFact = (1.0 - maxY) / (1.0 - trimThresh) ;
@@ -622,6 +624,7 @@ function parseString (colorString = '#abcdef') {
 
 module.exports = {
    BPCAcontrast,
+   bridgeRatio,
    sRGBtoY,
    displayP3toY,
    colorParsley
