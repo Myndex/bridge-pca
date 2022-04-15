@@ -1,7 +1,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 /** @preserve
 /////    SAPC APCA - Advanced Perceptual Contrast Algorithm
-/////           bridge-pca  0.1.4  • BRIDGE contrast function only
+/////           bridge-pca  0.1.5  • BRIDGE contrast function only
 /////           DIST: W3 • Revision date: Dec 21, 2021
 /////    Function to parse color values and determine Lc contrast
 /////    Copyright © 2019-2021 by Andrew Somers. All Rights Reserved.
@@ -242,36 +242,52 @@ function BPCAcontrast (txtY,bgY,places = -1) {
 
 //////////  ƒ  bridgeRatio()  ////////////////////////////////////////////
 //export
-function bridgeRatio (contrastLc = 0, ratioStr = ' to 1', places = 1) {
+function bridgeRatio (contrastLc = 0, txtY, bgY, ratioStr = ' to 1', places = 1) {
 
            // Takes the output of APCA (either a string or number)
           // and makes it a WCAG2 ratio, returning a string '4.5 to 1'
          // Jan 16 2022 constants   
+         
+    let maxY = Math.max(txtY, bgY);
+    
     const offsetA = 0.2693;
     const preScale = -0.0561;
     const powerShift = 4.537;
 
     const mainFactor = 1.113946;
-    const addTrim = 0.0837;
 
     const loThresh = 0.3;
     const loExp = 0.48;
     const preEmph = 0.42;
     const postDe = 0.6594;
 
+    const hiTrim = 0.0785;
+    const loTrim = 0.0815;
+    const trimThresh = 0.506; // #c0c0c0
+
+    let addTrim = loTrim + hiTrim;
+
+    ///let addTrim = maxY <= trimThresh ? loTrim + hiTrim : (loTrim * ((1.0 - maxY) / (1.0 - trimThresh)) + hiTrim;)
+
+    if (maxY > trimThresh) { 
+      let adjFact = (1.0 - maxY) / (1.0 - trimThresh) ;
+      addTrim = loTrim * adjFact + hiTrim;
+    }
+
     contrastLc = Math.max(0, Math.abs(parseFloat(contrastLc) * 0.01));
 
          // convert Lc into a WCAG ratio
-    let wcagContrast = (Math.pow( contrastLc + preScale, powerShift ) +
-                        offsetA) * mainFactor * contrastLc + addTrim;
+    let wcagContrast = (Math.pow(contrastLc + preScale, powerShift) + offsetA) *
+                        mainFactor * contrastLc + addTrim;
 
-         // adjust WCAG ratios that are under  3 : 1
+         // adjust WCAG ratios that are under  3 : 1, clean up near 0.
     wcagContrast = (wcagContrast > loThresh) ?
                 10.0 * wcagContrast :
+                (contrastLc < 0.06) ? 0 :
                 10.0 * wcagContrast -
                 (Math.pow( loThresh - wcagContrast + preEmph, loExp ) - postDe);
 
-    return (wcagContrast).toFixed(places) + ratioStr;
+    return (wcagContrast).toFixed(places) + ratioStr; // + '<br>trim:' + addTrim;
 }
 
 
