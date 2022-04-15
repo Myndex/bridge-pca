@@ -37,14 +37,14 @@
 _NPM Install:_ ` npm i bridge-pca `
 
 ### Bridge to the Advanced Perceptual Contrast Algorithm
-Current Version: **0.1.4 4g** (w3) (public beta)
+Current Version: **0.1.5 4g** (w3) (public beta)
 
 Bridge PCA is a contrast assessment method based on APCA & SAPC technology for predicting the perceived contrast between sRGB colors on a computer monitor. It has been developed as an assessment method to facilitate better readability while maintaining backwards compatibility with WCAG_2 contrast (1.4.3) accessibility standards relating to content for computer displays and mobile devices. The intention is to improve readability and understandability of content.
 
 ### _WCAG\_2 Drop N Go_
-Current Version: 0.1.4 Jan 18, 2022
+Current Version: 0.1.5 April 14, 2022
 
-#### NEW in 0.1.3!! Now the [live tool][BPCAsite] reports both APCA LC values AND WCAG style ratios!.
+NEW: Improved WCAG 2 ratios.
 
 Bridge-PCS is a "drop n go" replacement for WCAG_2 math, and it's super easy to convert to WCAG_2 ratios. Like APCA, BridgePCA reports results as Lc (Lightness Contrast), and they align like this:
 
@@ -139,7 +139,13 @@ First color **must** be text, second color **must** be the background.
 ```javascript
     let textColor = [17,17,17,255];
     let backgroundColor = [232,230,221,255];
-    let contrastLc = APCAcontrast( sRGBtoY( textColor ), sRGBtoY( backgroundColor ) );
+    
+    let txtY = sRGBtoY( TEXTcolor );
+    let bgY = sRGBtoY( BACKGNDcolor );
+    z
+    let contrastLc = BPCAcontrast( txtY, bgY );
+    let wcag2ratio = bridgeRatio( contrastLc, txtY, bgY );
+
 ```
 ### *Parsing Color Strings:*
 If you need to parse, we've kept that, now called "colorParsley()" send it anything, it returns an rgba array. HSL is not implemented. Relative to the above example:
@@ -179,7 +185,7 @@ colorParsley() is now a separate package, and an optional dependency if you need
 ## EXTRAS
 Additional documentation, including a plain language walkthrough, LaTeX math, and more are available [at the SAPC repo.](https://github.com/Myndex/SAPC-APCA)
 
-### Current BPCA Constants ( 0.1.0 4g - W3 )
+### Current BPCA Constants ( 0.1.5 4g - W3 )
 **These constants are for use with the web standard sRGB colorspace.**
 
 ```javascript
@@ -195,6 +201,11 @@ Additional documentation, including a plain language walkthrough, LaTeX math, an
                  scaleWoB: 1.14,     loWoBoffset: 0.027, 
                  bridgeWoBfact: 0.1414,
                  bridgeWoBpivot: 0.84, };
+
+// NEW for 0.1.5 for the bridgeRatio function
+    const hiTrim = 0.0785;
+    const loTrim = 0.0815;
+    const trimThresh = 0.506;
 ````````
 
 ----- 
