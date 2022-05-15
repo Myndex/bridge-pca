@@ -28,8 +28,6 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
-    "colorparsley": "^0.1.1",
-    "node": "^17.7.2",
-    "npm": "^8.7.0"
+    "colorparsley": "^0.1.1"
   }
 }
