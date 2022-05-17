@@ -1,8 +1,8 @@
 {
   "name": "bridge-pca",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "A Bridge for WCAG_2 contrast using APCA (Advanced Perceptual Contrast Algorithm), technology.",
-  "main": "./dist/bridge-pca.min.js",
+  "main": "./src/bridge-pca.js",
   "keywords": [
     "color",
     "colour",
@@ -28,8 +28,6 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
-    "colorparsley": "^0.1.1",
-    "node": "^17.7.2",
-    "npm": "^8.7.0"
+    "colorparsley": "^0.1.6"
   }
 }
