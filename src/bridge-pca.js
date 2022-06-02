@@ -130,7 +130,7 @@
 /////  BEGIN BPCA  0.1.6 4g BLOCK       \//////////////////////////////////////
 ////                                     \////////////////////////////////////
 
-import { colorParsley, colorToHex, colorToRGB } from '../node_modules/colorparsley/src/colorparsley.js';
+import { colorParsley, colorToHex, colorToRGB } from 'colorparsley';
 
 
 
