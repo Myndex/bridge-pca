@@ -1,6 +1,14 @@
-### All Files Copyright (c) 2019-2022 by Myndex Research and Andrew Somers. All Rights Reserved.
+---
+layout: simple
+---
 
-# — LICENSE —
+# Bridge PC<span class="flipH">A</span> — LICENSE and RESTRICTIONS
+## Patent(s) pending.
+## Copyright
+Code and documentation in _THIS_ repository is copyright © 2019-2022 by Andrew Somers and/or Myndex™. All Rights Reserved.
+
+See also: [Minimum compliance](https://git.apcacontrast.com/documentation/minimum_compliance) to use "APCA" and related trademarks.
+
 
 ### The Short Summary:
 Files are licensed for non-commercial use and without alteration or modification, except as may be necessarry for porting to a different language than available here. The "no modification" is important to maintain consistency across tools.
