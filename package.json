@@ -29,6 +29,6 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
-    "colorparsley": "^0.1.6"
+    "colorparsley": "^0.1.8"
   }
 }
