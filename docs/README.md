@@ -23,9 +23,18 @@ Like APCA, BridgePCA reports results as **Lc** (Lightness Contrast) but the conv
 
 But if you need a standards compliant method that also improves readability this is it. If on the other hand you do not need to abide by the letter of any particular standard, you may want to consider the more flexible full APCA solution.
 
+
+## Why BridgePCA??
+
+BridgePCA was developed to address some aspersions from a small group of trolls who have been crowing that _"oh WCAG 2 is law tho."_ the truth is that it's not codified as an absolute law in most places, and even so, actual accessibility is what is legal. APCA and the [APCA Readability Criterion](https://readtech.org/ARC/) promotes _**actual**_ accessibility while WCAG_2 contrast does not.
+
+BridgePCA maintains backwards compatibility to the flawed WCAG_2 contrast but at the loss of some useful flexibility. It's a way to "force fit" WCAG_2 guidelines into something less harmful, but because WCAG_2 contrast ignores spatial characteristics such as line thickness as the primary driver of contrast, Bridge PCA is restricted from relaxing contrast on low-spatial frequency elements, which is specifically needed yet missing in WCAG 2.
+
+For instance, WCAG_2 SC 1.4.11 is not supported by any actual science, only some self-referential cites that arguably have no place in a standards document. 1.4.11 makes some logical leaps and ignores the primary drivers of contrast perception. Moreover, WCAG_2 contrast _results_ can be grossly insufficient, or just barely enough, or much more than needed, all depending on context and use-cases — yet WCAG_2 contrast ignores context and use-cases.
+
+
 -----
 
-
-You can see the current working version at https://www.myndex.com/BPCA/
+You can see the current working version of BridgePCA at https://www.myndex.com/BPCA/
 
 There is more about this project on our main site, https://www.myndex.com/WEB/Perception
