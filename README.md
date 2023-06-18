@@ -1,8 +1,6 @@
-<img width='300' alt="Poster: a picture of crash test dummies crashing out of a car, and text that says don't be a dummy! Stop using low contrast text. At the bottom it says APCA the world is reading" src='https://user-images.githubusercontent.com/42009457/161151275-7c4feea7-888a-43f1-a9c0-7504afaac258.png'>  <img  width='300' alt='Smokey the bear saying  ONLY YOU CAN STOP LOW CONTRAST' src='https://user-images.githubusercontent.com/42009457/161151536-a0add333-161e-482d-a99a-d1d076c75daf.png'>   <img  width='300' alt='Uncle Sam saying I want you to use high contrast text' src='https://user-images.githubusercontent.com/42009457/161151222-74fb81af-f87b-4d7c-a41c-756e1ee3056f.png'> 
-
-# Bridge PCA for WCAG\_2*
+# Bridge PCA for WCAG 2*
 <p align="center">
- <img src="images/BPCAlogo.png"  alt="Bridge PCA WCAG 2 Compatibility APCA technology" width="501"><br><br>
+ <img src="images/BPCAlogo.png"  alt="Bridge PCA WCAG 2 Compatibility APCA technology" width="360"><br><br>
 
   <a href="https://github.com/Myndex/SAPC-APCA">
     <img src="https://badgen.net/badge/SAPC/Main Repo/db6b0b" alt="SAPC/Main Repo" />
@@ -33,8 +31,18 @@
 </p>
 
 ## bridge-pca
-**A Bridge for WCAG_2 contrast using APCA technology.**
+**A Bridge for WCAG 2 contrast using APCA technology.**
 _NPM Install:_ ` npm i bridge-pca `
+
+## Why BridgePCA??
+BridgePCA was developed to address some aspersions from a small group of trolls who have been crowing that _"oh WCAG&nbsp;2 is law tho."_ the truth is that WCAG&nbsp;2 is not codified as an absolute law in most places (check your region). The reality is actual accessibility is what is legal. APCA and the [APCA Readability Criterion](https://readtech.org/ARC/) promotes _**actual**_ accessibility while WCAG_2 contrast does not.
+
+BridgePCA maintains backwards compatibility to the flawed WCAG&nbsp;2  contrast but at the loss of some useful flexibility. It's a way to "force fit" WCAG&nbsp;2  guidelines into something less harmful. But because WCAG_2 contrast ignores spatial characteristics (such as line thickness) as the primary driver of contrast, Bridge PCA is restricted from relaxing contrast on low-spatial frequency elements, which is specifically needed yet missing in WCAG&nbsp;2.
+
+For instance, WCAG&nbsp;2 SC 1.4.11 is not supported by any actual science, only some self-referential cites that arguably have no place in a standards document. 1.4.11 makes some logical leaps and ignores the primary drivers of contrast perception. Moreover, WCAG&nbsp;2 contrast _results_ can be grossly insufficient, or just barely enough, or much more than needed, all depending on context and use-cases — yetWCAG&nbsp;2  contrast ignores context and use-cases.
+
+
+<img width='300' alt="Poster: a picture of crash test dummies crashing out of a car, and text that says don't be a dummy! Stop using low contrast text. At the bottom it says APCA the world is reading" src='https://user-images.githubusercontent.com/42009457/161151275-7c4feea7-888a-43f1-a9c0-7504afaac258.png'>  <img  width='300' alt='Smokey the bear saying  ONLY YOU CAN STOP LOW CONTRAST' src='https://user-images.githubusercontent.com/42009457/161151536-a0add333-161e-482d-a99a-d1d076c75daf.png'>   <img  width='300' alt='Uncle Sam saying I want you to use high contrast text' src='https://user-images.githubusercontent.com/42009457/161151222-74fb81af-f87b-4d7c-a41c-756e1ee3056f.png'> 
 
 ### Bridge to the Advanced Perceptual Contrast Algorithm
 Current Version: **0.1.5 4g** (w3) (public beta)
@@ -55,7 +63,7 @@ Use the following conversions for AA and AAA:
 
 **Large Font:** 24px (18pt) normal weight or 18.7px (14pt) bold, or larger.
 
-\* <sub>*This is not an official guideline of the AGWG, and was developed indpenedently by Myndex to help cure the readability probelms with web-based content. It is nevertheless fully backwards compatible with the existing WGAC 2 guidelines and provides optional accessibility extensions to improve readability further. It is free for use with web-based content.*</sub>
+\* <sub>*This is not an official guideline of the AGWG, and was developed indpenedently by Myndex to help cure the readability probelms with web-based content. It is nevertheless fully backwards compatible with the existing WCAG 2 guidelines and provides optional accessibility extensions to improve readability further. It is free for use with web-based content.*</sub>
 
 -----
 ## WCAG\_2 Bridge-PCA _Enhanced SCs_
