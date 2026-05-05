@@ -1,0 +1,2031 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-121680439-6">
+</script>
+<script async>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'UA-121680439-6');
+</script> 
+
+<!--ALL PAGES ON THIS SITE ARE COPYRIGHT © 1997-2022 by ANDREW SOMERS, ALL RIGHTS RESERVED
+The content on this page is PROPRIETARY AND NOT LICENSED FOR FURTHER USE. -->
+
+<meta charset="utf-8"/>
+
+<title>Bridge PCA</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<link rel="canonical" href="https://www.myndex.com/BPCA/"/>
+
+
+<meta name="Description" content="Bridge PCA — Advanced Perceptual Contrast Algorithim SIMPLE VERSION.">
+<meta name="Keywords" content="Myndex, Research and Development, RnD, R&amp;D, Engineer, Engineering, Systems Engineer, Industrial Design, Solidworks, FEA, CADCAM, drafting, 3D modeling, prototyping, software development, database development, IT">
+
+<meta property="fb:app_id" content="227594707878157"/>
+
+<meta property="og:title" content="Myndex™ Perception Research"/>
+<meta property="og:description" content=" Bridge PCA Advanced Perceptual Contrast Algorithim WCAG 2 Compatible APCA Contrast"/>
+
+<meta property="og:type" content="website"/>
+<meta property="og:url" content="https://www.myndex.com/BPCA/"/>
+<meta property="og:site_name" content="Myndex™ BPCA Tool"/>
+<meta property="twitter:image" content="./images/BPCAlogo.png"/>
+
+<meta property="og:image" content="./images/BPCAlogo.png"/>
+<meta property="og:image:alt" content="BPCA The Bridge for WCAG 2 Contrast"/>
+<meta property="og:image:type" content="image/png"/>
+<meta property="og:image:width" content="501"/>
+<meta property="og:image:height" content="512"/>
+
+
+
+
+
+
+<link rel="preconnect" href="https://fonts.googleapis.com/">
+<link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Audiowide&amp;family=Oxanium:wght@600&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@100;200;300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=K2D:wght@200;300;400;500;600;700&amp;text=N%7C&amp;display=swap" rel="stylesheet">
+
+
+
+<link rel="stylesheet" href="./CSS/style.0.1.2-gKLN.css">  
+<link rel="stylesheet" href="./CSS/inline-styles.css"/>
+<link rel="stylesheet" href="./CSS/new-styles.css"/>
+
+
+
+<!-- This Page Requires beta 0.1.2-G or greater of the following file. -->
+<script src="./JS/BPCAsRGB.0.0.1.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/@jaames/iro@5"></script>
+
+
+
+<script async>
+  // User Agent Detection — place first in head
+  // Set body tag: <body id="bodyid" onload="setBrowser()">
+
+  let browserName = "";
+function setBrowser() {
+  if(navigator.vendor.match(/google/i)) {
+    browserName = 'chrome/blink';
+    document.getElementById("bodyid").classList.add("chrome");
+  } else if(navigator.vendor.match(/apple/i)) {
+    browserName = 'safari/webkit';
+    document.getElementById("bodyid").classList.add("safari");
+  } else if(navigator.userAgent.match(/firefox\//i)) {
+    browserName = 'firefox/gecko';
+    document.getElementById("bodyid").classList.add("firefox");
+  } else if(navigator.userAgent.match(/edge?\//i)) {
+    browserName = 'edge/edgehtml';
+    document.getElementById("bodyid").classList.add("edge");
+  } else if(navigator.userAgent.match(/trident\//i)) {
+    browserName = 'ie/trident';
+    document.getElementById("bodyid").classList.add("IErecent");
+  } else if(navigator.userAgent.match(/MSIE\//i)) {
+    browserName = 'ie/IE';
+    document.getElementById("bodyid").classList.add("IElegacy");
+  } else {
+    browserName = navigator.userAgent + " by " + navigator.vendor;
+    document.getElementById("bodyid").classList.add("unknownAgent");
+  }
+//console.log(document.getElementById("bodyid").classList);
+}  
+
+
+////////////////////////////////////////////////////////////////////////////////
+//////////// PAGE CODE BETA 0.98g //////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+
+
+////////////////////////////////////////////////////////////////////////////////
+//////////// PAGE MAIN FUNCTIONS ///////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+
+// To do: work on reducing the use of globals!
+
+// Declare the two key variables
+let BG = new RGBcolor('2F4');
+let TXT = new RGBcolor('42F');
+
+function getCSScolor(sRGBstrg, type) {
+    // Call to primary color pre-process
+    // Returns RGBcolor OBJECT if good
+    // Sets page colors
+    
+  let thisColor = new RGBcolor(sRGBstrg);
+
+  if (thisColor.ok) {
+
+    switch (type) {
+
+    case 'BG':
+
+      BG = thisColor;
+
+      // Clear Error warning colors
+        inputBG.style.backgroundColor = '#DFA';
+        // BGpickerWrap.style.backgroundColor = '#a0a0a0';
+
+      // Set the input element and result element values to match 
+        inputBG.value = thisColor.cleaned;
+        BGpicker.value = thisColor.hexNoA();
+        
+      // Set the CSS BG colors
+        sliderPicker.color.hexString =
+        BGpicker.style.backgroundColor = 
+        ampSamp3.style.backgroundColor = cssVar('--bgColor',thisColor.hexNoA());
+
+      break;
+
+    case 'TXT':
+
+      TXT = thisColor;
+
+      //  Clear Error warning colors
+        inputTXT.style.backgroundColor = '#DFA';
+      // TXTpickerWrap.style.backgroundColor = '#a0a0a0';
+
+      // Set the input element and result element values to match
+        inputTXT.value = thisColor.cleaned;
+        TXTpicker.value = thisColor.hexNoA();
+
+      // Set the CSS text colors // Background for result: it is the patch
+        sliderPickerTXT.color.hexString =
+        TXTpicker.style.backgroundColor =       
+        TXTpicker.style.color =
+         ampSamp3.style.borderColor = 
+         ampSamp3.style.color = cssVar('--textColor',thisColor.hexNoA()); 
+
+      break;
+
+    case 'MID':
+    
+      //MID = thisColor;
+      //cssVar('--textColorMid',MID.hexNoA()); 
+      //cssVar('--bgColorMid',MID.hexNoA()); 
+
+      //return thisColor;  // jump out now for MID
+
+      break;
+    }
+
+
+      // Report results to the results window to show info about the color
+    let colorValid = '<code><span class="dib ls0 m0 pb08 fs075 lh10 fwb">'
+                   + thisColor.hexNoA2() + ' • ' + thisColor.RGBAstr()
+                   // + '<br>LYP: '+thisColor.LYP+'</span></code>'
+                   ;
+
+    document.getElementById( type + 'validText' ).innerHTML = colorValid;
+
+    return thisColor;
+
+  } else {  // else when the color is an invalid entry.
+      
+    document.getElementById( type + 'validText' ).innerHTML =
+      '<code><span class="dib ls0 m0 pb08 fs075 lh10 fwb cR"><b>INVALID COLOR</b></span></code>';
+
+    switch (type) { // Set error warning colors
+      case 'BG':
+        inputBG.style.backgroundColor = '#F9A';
+        //BGpickerWrap.style.backgroundColor = '#D00';
+        BG.ok = false;
+      break;
+
+      case 'TXT':
+        inputTXT.style.backgroundColor = '#F9A';
+        //TXTpickerWrap.style.backgroundColor = '#D00';
+        TXT.ok = false;
+      break;
+      }
+    }
+  }
+
+
+////////////////////////////////////////////////////////////////////////////////
+/////////  MYNDEX FRAMEWORK FUNCTIONS  /////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+
+const cssVar = ( name, value ) => {
+  if(name.substr(0, 2) !== "--") {name = "--" + name; }
+  if(value) { document.documentElement.style.setProperty(name, value) }
+  return getComputedStyle(document.documentElement).getPropertyValue(name);
+}
+
+const byID = ( name, property, value, property2 ) => {
+
+    let tempObj = document.getElementById(name);
+    if(property) {
+      tempObj = tempObj[property]; 
+      if(property2) {tempObj = tempObj[property];}      
+      if(value != null) {tempObj = value;}
+    }
+    return tempObj;         
+}
+  // Usage for byID()
+  // byID('thing'); // returns DOM thing
+  // byID('thing','innerHTML'); // returns thing's innerHTML
+  // byID('thing','style',null,'color');    // returns thing's color
+  // byID('thing','style','#777','color'); // sets thing's color to #777
+  // byID('thing','style','color: #777'); // replaces thing's style string
+
+
+const byQuery = ( selectors, styleProperty, value) => {
+
+    let tempAry = document.querySelectorAll(selectors).style;
+
+    if(value != null && styleProperty != null) {
+      tempAry.forEach((elementStyle) => {
+        elementStyle[property] = value;   
+      })
+    } else if(value != null) {
+      tempAry.forEach((elementStyle) => {
+        elementStyle = value;   
+      })
+    }
+
+    return tempAry;         
+}
+  // Usage for byQuery()
+  // byQuery('p.thing'); // returns array of "p.thing" elements
+  // byQuery('p.thing','color','#777'); // sets all p.things color to #777
+  // byQuery('p.thing',null,'color: #777'); // replaces p.thing's style string  
+
+
+const byClass = ( className, property, value, property2 ) => {
+
+    let theClasses = document.getElementsByClassName(className);
+
+    if(value != null) {
+      theClasses.forEach((thisClass) => { 
+        if(property2) {
+          thisClass[property][property2] = value;
+        } else {
+          thisClass[property] = value;    
+        }
+    })
+
+    return  theClasses;     
+  }
+}
+  // Usage for byClass()
+  // byClass('thing'); // returns array of thing classes    
+  // byClass('thing','innerHTML'); // set all thing classes innerHTML to empty
+  // byClass('thing','innerHTML','Hollow World');
+        // sets all thing classes innerHTML to "Hollow World"
+  
+  // byClass('thing','style','#777','color');
+        // sets all thing classes color to #777
+  
+  // byClass('thing','style','color: #777'); 
+        // Replaces all thing classes style string with 'color: #777'
+
+
+////////////////////////////////////////////////////////////////////////////////
+/////////  PAGE UTILITY FUNCTIONS  /////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+
+  function swapColors() {
+    
+    let BGtemp = inputBG.value;
+    getCSScolor(inputTXT.value,'BG');
+    getCSScolor(BGtemp, 'TXT');
+
+    testContrast();
+  }
+
+
+  // getColorURL is the main page initializer
+  
+  function getColorURL() {
+
+    let urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.has('BG') && urlParams.has('TXT')) {
+      BG = getCSScolor(urlParams.get('BG'),'BG');
+      TXT = getCSScolor(urlParams.get('TXT'), 'TXT');
+
+      document.getElementById("URLresult").value = document.URL; 
+      document.getElementById("URLresult").select();
+
+    } else {
+
+      BG = getCSScolor('e9e4d0','BG'); // Default BG Color 
+      TXT = getCSScolor('1234b0', 'TXT'); // Default TXT Color
+    } 
+    testContrast();
+  }
+
+
+  function createColorURL (elementID,BGstring,TXTstring) {
+
+    if (BGstring && TXTstring) {
+      BG = new RGBcolor(BGstring);
+      TXT = new RGBcolor(TXTstring);
+    }
+
+    if (BG.ok && TXT.ok) {  
+      let newURL = document.getElementById(elementID).href =
+        "https://www.myndex.com" + window.location.pathname
+        + "?BG=" + BG.hex()
+        + "&TXT=" + TXT.hex()
+        + "&DEV=G4g"
+        + "&BUF=A22";
+      navigator.clipboard.writeText(newURL);
+    } else {
+      document.getElementById('colorWarn').style.display='block'
+    }
+  }
+
+
+    // Entry Key Cleanup for better UX with auto-enter
+    // Only the specified key presses sends a testContrast()
+
+  function entryKeys(colorString,type,e) {
+  
+    if (
+        ( (e.which >= 48 && e.which <= 57 && event.shiftKey == false) || // 0-9
+          (e.which >= 65 && e.which <= 90) ||  // a-z
+          (e.which >= 96 && e.which <= 105) // num keypad
+        ) ||
+        e.which === 13  || // enter
+        e.which === 9   || // tab key
+        e.which === 188 || // comma key
+        e.which === 194 || // comma num keypad key
+        //e.which === 8  || // backspace
+        //e.which === 17 || // ctrl
+        //e.which === 46 || // delete
+        //(e.which >= 91 && e.which <= 93) ||  // OS key
+        (e.which === 48 && event.shiftKey == true) // ")" parenthesis key
+      ) 
+    {
+      getCSScolor(colorString,type);
+      testContrast();
+    }
+  }
+
+
+  function entryKeysNum(value,e) {
+    if ( /^-?\d\d?\d?$/.test(value) && // constrain input 
+      (
+        (e.which >= 48 && e.which <= 57 && event.shiftKey == false) ||
+        (e.which >= 96 && e.which <= 105) || // num keypad
+       
+        e.which === 13  || // enter
+        e.which === 9   || // tab key
+        e.which === 109 || // subtract
+        e.which === 173 || // minus
+        e.which === 189    // minus some user agents
+      ) 
+       )
+    {
+      setResearchOffset(value); // SAPC researchMode
+    }
+  }
+////////////////////////////////////////////////////////////////////////////////
+/////////  END HEAD FUNCTIONS  •••  SEE AFTER FOOTER FOR MORE  /////////////////
+////////////////////////////////////////////////////////////////////////////////
+</script>
+
+</head>
+
+<!--  ********  ********   Begin Body ********  ********  -->
+<!--  ********  ********   Begin Body ********  ********  -->
+<!--  ********  ********   Begin Body ********  ********  -->
+
+
+
+<!--  ********  ********   Begin Body ********  ********  -->
+<!--  ********  ********   Begin Body ********  ********  -->
+<!--  ********  ********   Begin Body ********  ********  -->
+
+
+
+<!--  ********  ********   Begin Body ********  ********  -->
+<!--  ********  ********   Begin Body ********  ********  -->
+<!--  ********  ********   Begin Body ********  ********  -->
+
+
+<body id="bodyid" onload="setBrowser(); getColorURL();">
+ 
+<main class="wrapper">
+
+  <div class="headBanner">  
+    <div class="perceptex flr">
+      <div class="he1">MYNDEX</div>
+      <div class="he2">RESEARCH</div>
+    </div>
+    <h1 class="" style="font-family: Audiowide;">Bridge-PCA<br><span class="fs08" style="font-family: Oxanium;">Contrast Calculator</span></h1>
+  </div>
+
+  <div style="position: relative; Margin: 0.25em auto;">
+    <div id="null01" class="contrastChart pie">
+
+
+
+<table id="tableSamples" class="conformScore">
+
+  <tr>  
+    <th colspan="4" class="tableTitle"><label for="inputTXT">TEXT / ICON COLOR</label></th>
+
+    <th class="ma0" id="ampSamp3" colspan="2" rowspan="2" role="button" tabindex="0" onkeypress="if(event.keyCode==32||event.keyCode==13){swapColors()};" onclick="swapColors()"><span class="montFont lh05">SAMPLE<br></span><span style="display: inline-block; position:relative; padding:0; margin:21px 0 2px; font-size: 3.75em;">&amp;</span><br>&#8678;&nbsp;<span class="helvetiFont" style="line-height: 1.3;">Click To Swap</span>&nbsp;&#8680;
+    </th>
+
+    <th colspan="4" class="tableTitle"><label for="inputBG">BACKGROUND COLOR</label></th>
+  </tr>
+
+
+  <tr>
+    <th rowspan="2" class="colorPickerNon" id="TXTpickerWrap">
+      <input type="color" id="TXTpicker" oninput="getCSScolor(this.value,'TXT'); inputTXT.value = this.value; testContrast();"><label for="TXTpicker">Click</label>
+    </th>
+    <th colspan="3" class="tableTitle">
+      <span class="code" id="TXTvalidText"></span>
+      <br>
+      <span class="TXTinput">
+        <input id="inputTXT" type="text" value="" onclick="this.select();" onkeyup="entryKeys(this.value,'TXT',event);" onblur="getCSScolor(this.value,'TXT'); testContrast();">
+      </span>
+    </th>
+    
+    <th colspan="3" class="tableTitle">
+      <span class="code" id="BGvalidText"></span>
+      <br>
+      <span class="TXTinput">
+        <input id="inputBG" type="text" value="" onclick="this.select();" onkeyup="entryKeys(this.value,'BG',event);" onblur="getCSScolor(this.value,'BG'); testContrast();">
+      </span>
+    </th>
+    
+    <th rowspan="2" class="colorPickerNon" id="BGpickerWrap">
+      <input type="color" id="BGpicker" oninput="getCSScolor(this.value,'BG'); inputBG.value = this.value; testContrast();"><label for="BGpicker">Click</label>
+    </th>
+  </tr>
+
+
+
+  <tr id="">
+    <th colspan="3" rowspan="1" class="colorSliders">
+      <div id="TXTsliders" style="margin:5px;"></div>
+    </th>
+    <th colspan="2" rowspan="2" class="tableContrast"><span style="font-size: 0.75em; letter-spacing: 0;">PCA CONTRAST<br></span><span style="font-family: 'Barlow',sans-serif; font-size: 1em;font-weight: 500; line-height: 1.1;" id="contrastResultTable"></span>
+    </th>
+    <th colspan="3" rowspan="1" class="colorSliders">
+      <div id="BGsliders" style="margin:5px;"></div>
+    </th>
+  </tr>
+
+
+
+  <tr>
+	<td colspan="6"> <div class="textSample" id="largeTextSamp" style="color: var(--textColor, #123); background-color: var(--bgColor, #bad); border-color: currentColor;">LARGE: The quiet fox didn't wake the sleeping dog</div></td>
+
+	<td colspan="4"> <div class="textSample" id="smallTextSamp" style="color: var(--textColor, #123); background-color: var(--bgColor, #bad);  border-color: currentColor;">SMALL: The quiet fox didn't wake the sleeping dog</div></td>
+  </tr>
+
+
+
+<!-- 
+
+  <tr id='bodyText'>
+    <th></th>
+    <td> </td>
+    <td colspan='2'> </td>
+    <td colspan='2'> </td>
+    <td> </td>
+    <td> </td>
+    <td colspan='2'> </td>
+  </tr>
+  
+  <tr id='fluentText'>
+    <th></th>
+    <td> </td>
+    <td colspan='2'> </td>
+    <td colspan='2'> </td>
+    <td> </td>
+    <td> </td>
+    <td colspan='2'> </td>
+  </tr>
+
+  <tr id='softText'>
+    <th></th>
+    <td> </td>
+    <td colspan='2'> </td>
+    <td colspan='2'> </td>
+    <td> </td>
+    <td> </td>
+    <td colspan='2'> </td>
+  </tr>
+
+  <tr id='spotText'>
+    <th></th>
+    <td> </td>
+    <td colspan='2'> </td>
+    <td colspan='2'> </td>
+    <td> </td>
+    <td> </td>
+    <td colspan='2'> </td>
+  </tr>
+
+  <tr id='nonText'>
+    <th></th>
+    <td> </td>
+    <td colspan='2'> </td>
+    <td colspan='2'> </td>
+    <td> </td>
+    <td> </td>
+    <td colspan='2'> </td>
+  </tr>
+  -->
+  
+  
+      </table>
+    </div>
+  </div> <!-- Close Main Interface -->
+
+
+
+
+
+  <div class="flr" id="demoArea">
+    <h2 id="accessible-contrast">
+      <label class="tac por" for="URLresult">Create a shareable URL of these colors</label></h2>
+    <div class="centered ">
+      <input class="tac por p05" type="text" id="URLresult" value="" onclick="this.select();"/>
+    </div>
+    <a id="colorURL" class="myndexButton tac por" role="button" tabindex="0" onkeypress="if(event.keyCode==32||event.keyCode==13){createColorURL('colorURL')};" style="width: 95%; margin: 0.5em auto; padding: 0.15em 0.5em 0.35em 2em;" onclick="createColorURL('colorURL')">Generate a URL of This Color Pair
+    </a>
+      <div class="innerwrapper infobox">
+    <div class="por ml20 cB" style="max-width: 520px;">
+          <p>The Bridge PCA tool corrects some of the worst failings of the WCAG 2 math and methods, such as calculating contrast for "Dark Mode". <i>Note: the WCAG 2 ratio shown here substantially exceeds that of other contrast checkers which use the WCAG 2 math.</i></p>
+    
+        </div>
+  </div>
+  </div>
+
+  <div id="colorWarn" class="clrf" style="">
+    <div style="">
+      <button class="colorWarnX" style="" onclick="document.getElementById('colorWarn').style.display='none'" tabindex="0">&times;</button>
+      <h3 style="">Please Enter Valid Colors First!</h3>
+    </div>
+  </div>
+  <script>
+    let dialog = document.getElementById("colorWarn");
+    window.onclick = function(event) {
+      if (event.target == dialog) {
+        dialog.style.display = "none";
+      }
+    };
+  </script>
+</div><!--    ********    Close Demo Area ********    -->
+
+
+  <div class="innerwrapper infobox">
+    <div class="ml20">
+    
+      <h2 id="accessible-contrast" class="h1Query">Accessible Contrast</h2>
+      <h3 id="font-size-and-weight" class="h3Query">A Drop-In Replacement for WCAG 2</h3>
+
+      <p>Bridge PCA was created due to the need for a contrast replacement that was fully backwards compatible with "WCAG 2" but that was actually based on human perception, which WCAG 2 is not. Bridge PCA is a drop-in replacement that can be used right now as a replacement for the error-prone WCAG 2 contrast math.
+      <p>Bridge PCA reports contrast not only as the APCA Lc&nbsp;value (lightness contrast) but also with a WCAG 2 compatible ratio display, which can be used with WCAG 2 SCs like 1.4.3.</p>
+
+    </div>
+  </div>
+
+
+
+
+<div class="explainers clrf">
+
+  <section class="explainer">
+    
+    <details>
+      <summary>
+        <span class="twistUp">
+          <svg xmlns="http://www.w3.org/2000/svg" height="30px" viewbox="0 0 24 24" width="36px" fill="none">
+            <path d="M0 0h24v24H0V0z" fill="none"/>
+            <path d="M12 4c4.41 0 8 3.59 8 8s-3.59 8-8 8-8-3.59-8-8 3.59-8 8-8m0-2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 13l-4-4h8z" stroke="#34028b" fill="#230167"/>
+          </svg>
+        </span>
+        <h3 class="Luv275 fw6 h3Query" style="">
+          WCAG 2 Compatibility &amp; Enhancements
+        </h3>
+      </summary>
+
+<h3 id="_wcag-_2-drop-n-go_">WCAG_2 Drop N Go</h3>
+<p>Bridge-PCA is a &quot;drop-&#39;n-go&quot; replacement for WCAG_2 math, and it&#39;s super easy to convert to WCAG_2 ratios. Like APCA, BridgePCA reports results as Lc (Lightness Contrast), and they align like this:</p>
+<p>Use the following conversions for AA and AAA:</p>
+<ul>
+<li><strong>Lc 60 exceeds WCAG 3:1</strong></li>
+<li><strong>Lc 75 exceeds WCAG 4.5:1</strong></li>
+<li><strong>Lc 90 exceeds WCAG 8:1</strong></li>
+</ul>
+<p><strong>Large Font:</strong> 24px (18pt) normal weight or 18.7px (14pt) bold, or larger.</p>
+<p>In addition, this tool displays a special WCAG 2 style ratio, that can be used directly instead of using the WCAG 2 math. This ratio exceeds the WCAG 2 math calculations, as it uses APCA technology. It corrects the serious failings of WCAG 2 for things like dark mode calculation.</p>
+<p>However, to be fully backwards compatible, this does not correct the "false fails" for things like white text on a colored background, where WCAG 2 is also very weak. To maintain backwards compatibility, the WCAG 2 compatible ratio shown here gradually shifts into alignment with WCAG 2 when the lightest color is <code>#c0c0c0</code> to <code>#fff</code>. When the lightest color is darker than <code>#c0c0c0</code>, Bridge PCA is essentially the same as basic APCA.
+
+<hr>
+<h2 id="wcag-_2-bridge-pca-_enhanced-scs_">WCAG_2 Bridge-PCA <em>Enhanced SCs</em></h2>
+<p>In addition, the following enhanced SCs can be added with Bridge-PCA to further improve readability guidance.</p>
+<hr>
+<h3 id="aa-enhanced">AA, Enhanced</h3>
+<p><strong><em>SHOULD</em></strong></p>
+<i>(WCB means WCAG Compatible Bridge ratio)</i>
+<ul>
+<li><strong>Lc 15 (WCB 1.1:1 to 2:1)</strong> Invisibility point. Minimum for disabled non-text elements.</li>
+<li><strong>Lc 30 (WCB 1.6:1 to 2.5:1)</strong> Minimum for non-content text such as placeholders or inactive/disabled text.</li>
+<li><strong>Lc 45 (WCB 2.2:1 to 3:1)</strong> Minimum for logotypes.</li>
+</ul>
+<p><strong><em>SHALL</em></strong></p>
+<ul>
+<li><strong>Lc 60 (WCB 3:1 to 3.8:1)</strong> Large font only, no body text. Non-text okay.</li>
+<li><strong>Lc 75 (WCB 4.5:1 to 5.3:1)</strong> 16px minimum for body text, 13px minimum otherwise</li>
+<li><strong>Lc 90 (WCB 8:1 to 9:1)</strong> 14px minimum body text, 11px minimum otherwise</li>
+</ul>
+<p><strong><em>MAY</em></strong></p>
+<ul>
+<li><strong>Lc 90 (WCB 8:1 to 9:1)</strong> Suggested maximum for very large and bold elements, larger than 35px.</li>
+<li>The indicated WCAG 2 style ratio can be used as it adjusts slightly for greater flexibility, and maintains both backwards compatibility with WCAG 2 and forwards compatibility to APCA</li>
+</ul>
+<hr>
+<h3 id="aaa-enhanced">AAA, Enhanced</h3>
+<p><strong><em>SHOULD</em></strong></p>
+<ul>
+<li><strong>Lc 30 (WCB 1.6:1 to 2.5:1)</strong> Minimum for disabled elements (not hidden).</li>
+<li><strong>Lc 45 (WCB 2.2:1 to 3:1)</strong> Minimum for incidental non-content text such as placeholders, or inactive/disabled texts, with a minimum size of 16px.</li>
+</ul>
+<p><strong><em>SHALL</em></strong></p>
+<ul>
+<li><strong>Lc 60 (WCB 3:1 to 3.8:1)</strong> Minimum for logotypes and essential non-text.</li>
+<li><strong>Lc 75 (WCB 4.5:1 to 5.3:1)</strong> Large font only (24px and larger), no body text.</li>
+<li><strong>Lc 90 (WCB 8:1 to 9:1)</strong> 19px minimum for body text, 16px minimum other content text, 12px minimum for non-content text (such as placeholders)</li>
+</ul>
+<p><strong><em>MAY</em></strong></p>
+<ul>
+<li><strong>Lc 85 (WCB 7:1)</strong> Suggested maximum for very large and bold elements, larger than 35px.</li>
+</ul>
+<hr>
+
+<h3 id="font-use-enhanced">Font Use, Enhanced</h3>
+<p><strong><em>SHOULD</em></strong></p>
+<ul>
+<li>Prefer a font with an x-height ratio of 0.52 to 0.56<ul>
+<li>Adjust the minimum font size for fonts with smaller x-height ratios to make up the difference.</li>
+<li>For instance the &quot;large&quot; font x-heights should measure<ul>
+<li>13.5px high normal (24px font body)</li>
+<li>10.5px high bold  (18.7px font body)</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Prefer a font no thinner than 300 weight</li>
+<li>Prefer a font no thicker than 700 weight</li>
+</ul>
+
+<p><strong><em>DO NOT USE</em></strong></p>
+<ul>
+<li>Do not use <code>-webkit-font-smoothing: antialiased;</code> on fonts smaller than 24px nor thinner than 500 weight. 
+<ul>
+<li><code>-webkit-font-smoothing: antialiased;</code> is a faux blending method that results in contrast being reduced by more than Lc 15.
+<li>Instead, leave at default or set to auto: <code>-webkit-font-smoothing: auto;</code></li>
+<li>It's important to remember that default is the best anti-aliasing for a given device, such as subpixel antialiasing, which is preferred in nearly all cases.
+
+</ul></ul>
+    </details>
+
+
+
+
+    <details>
+      <summary>
+        <span class="twistUp">
+          <svg xmlns="http://www.w3.org/2000/svg" height="30px" viewbox="0 0 24 24" width="36px" fill="none">
+            <path d="M0 0h24v24H0V0z" fill="none"/>
+            <path d="M12 4c4.41 0 8 3.59 8 8s-3.59 8-8 8-8-3.59-8-8 3.59-8 8-8m0-2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 13l-4-4h8z" stroke="#34028b" fill="#230167"/>
+          </svg>
+        </span>
+        <h3 id="general-guidelines-on-levels" class="Luv275 fw6 h3Query">
+          General APCA Guide: Simple Levels</h3>
+      </summary>
+      <p>These general levels are appropriate for use without reference to the lookup table. The lookup table simply adds additional accuracy, which allows for greater flexibility. </p>
+
+      <ul>
+        <li><strong>Lc&nbsp;90</strong> • Preferred level for fluent text and columns of body text with a font no smaller than 18px/weight 300 or 14px/weight 400 (normal), or non-body text with a font no smaller than 12px. Also a recommended minimum for extremely thin fonts with a minimum of 24px at weight 200. Lc&nbsp;90 is a <em>suggested maximum</em> for <strong>very large and bold fonts</strong> (greater than 36px bold), and large areas of color. </li>
+        <li><strong>Lc&nbsp;75</strong> • The <em>minimum</em> level for columns of body text with a font no smaller than 24px/300 weight, 18px/400, 16px/500 and 14px/700. This level may be used with non-body text with a font no smaller than 15px/400. Also, Lc&nbsp;75 should be considered a minimum for larger for any larger text where readability is important. </li>
+        <li><strong>Lc&nbsp;60</strong> • The <em>minimum</em> level recommended for content text that is not body, column, or block text. In other words, text you want people to read. The minimums: no smaller than 48px/200, 36px/300, 24px normal weight (400), 21px/500, 18px/600, 16px/700 (bold). These values based on the reference font Helvetica. To use these sizes as body text, add Lc&nbsp;15 to the minimum contrast. </li>
+        <li> <strong>Lc&nbsp;45</strong> • The <em>minimum</em> for larger, heavier text (36px normal weight or 24px bold) such as headlines, and large text that should be fluently readabile but is not body text. This is also the minimum for pictograms with fine details, or smaller outline icons, , no less than 4px in its smallest dimension. </li>
+        <li><strong>Lc&nbsp;30</strong> • The <em>absolute minimum</em> for any text not listed above, which means non-content text considered as &quot;spot readable&quot;. This includes placeholder text and disabled element text, and some non-content like a copyright bug. This is also the minimum for large/solid semantic &amp; understandable non-text elements such as &quot;mostly solid&quot; icons or pictograms, no less than 10px in its smallest dimension. </li>
+        <li><strong>Lc&nbsp;15</strong> • The <em>absolute minimum</em> for any non-text that needs to be <em>discernible</em> and differentiable, but does not apply to semantic non-text such as icons, and is no less than 15px in its smallest dimention. This may include dividers, and in <em>some</em> cases large buttons or thick focus visible outlines, but does <em>not</em> include fine details which have a higher minimum. <strong>Designers should treat anything below this level as invisible</strong>, as it will not be visible for many users. This minimum level should be avoided for any items important to the use, understanding, or interaction of the site. </li>
+      </ul><p> These define the basic minimum levels, what you might think of as A/AA in the old WCAG&nbsp;2. For the equivelent to AAA, simply increase the contrast values by Lc&nbsp;15. </p>
+    </details>
+    
+    <details>
+      <summary>
+        <span class="twistUp">
+          <svg xmlns="http://www.w3.org/2000/svg" height="30px" viewbox="0 0 24 24" width="36px" fill="none">
+            <path d="M0 0h24v24H0V0z" fill="none"/>
+            <path d="M12 4c4.41 0 8 3.59 8 8s-3.59 8-8 8-8-3.59-8-8 3.59-8 8-8m0-2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 13l-4-4h8z" stroke="#34028b" fill="#230167"/>
+          </svg>
+        </span>
+        <h3 id="general-guidelines-on-levels" class="Luv275 fw6 h3Query">
+          Comparison Chart (WCAG 2 vs APCA)
+
+        </h3>
+      </summary>
+    
+<p>In this chart, we see that WCAG_2 contrast degrades losing readability as color pairs get darker, while APCA technology maintains readability across the visual range.</p>
+<img class="por" style="left: -60px;" src="./images/ColumnCompareAll400.png" width="820" alt="WCAG2 to APCA comparison table demonstrating the false passes of WCAG 2 contrast">
+<h2 id="additional-notes">Additional Notes</h2>
+<p>Unlike the main APCA, BridgePCA is all about &quot;emulating&quot; WCAG_2 contrast. So, BridgePCA is a like-for-like replacement of the quirky WCAG_2 contrast math.</p>
+<p>Like APCA, BridgePCA reports results as Lc (Lightness Contrast). Conversion to WCAG_2 ratios:</p>
+<ul>
+<li><strong>Lc 60 exceeds WCAG II 3:1</strong></li>
+<li><strong>Lc 75 exceeds WCAG II 4.5:1</strong></li>
+<li><strong>Lc 90 exceeds WCAG II 8:1</strong></li>
+</ul>
+<p><strong><em>DIFFERENCES:</em></strong> for best results, send the text color to the text input of the tool. Bridge PCA is &quot;polarity sensitive,&quot; even though WCAG_2 is not. For light text on a dark background, the result will have either a minus sign, or an R for &quot;reverse&quot; after the LC value. N means &quot;normal&quot;.</p>
+<p><strong>No Free Lunch:</strong> while BridgePCA corrects the many false passes and improves readability, the cost is that there is reduced design flexibility due to the fact that to maintain backwards compatibility, some contrasts are forced higher than they actually need be.</p>
+<p>BridgePCA has some minor internal adjustments to align with some of the more incorrect aspects of WCAG_2 contrast math. In order to be backwards compatible, BridgePCA will not forgive the false-fails of WCAG_2, but BridgePCA <strong>will</strong> correct the many false passes which vastly improves readability.</p>
+<p>But if you need a standards compliant method that also improves readability this is it. If on the other hand you do not need to abide by the letter of any particular standard, you may want to consider the more flexible full APCA solution.</p>
+
+        </details>
+
+  </section>
+
+  <!-- ********    Close Guidlines Section     ********    -->
+
+
+  <section id="apca-science" class="explainer">
+    <details>
+      <summary>
+        <span class="twistUp">
+          <svg xmlns="http://www.w3.org/2000/svg" height="30px" viewbox="0 0 24 24" width="36px" fill="none">
+            <path d="M0 0h24v24H0V0z" fill="none"/>
+            <path d="M12 4c4.41 0 8 3.59 8 8s-3.59 8-8 8-8-3.59-8-8 3.59-8 8-8m0-2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 13l-4-4h8z" stroke="#34028b" fill="#230167"/>
+          </svg>
+        </span>
+        <h3 class="Luv275 fw6 h3Query" id="the-accessible-perceptual-contrast-algorithm"> 
+          <span style="font-family: 'barlow condensed'; font-size: 1em;">The Accessible Perceptual Contrast Algorithm
+        </h3>
+      </summary>
+
+      <p>
+        APCA is a new method for calculating and predicting readability
+        contrast. APCA is a part of the larger S-Luv Accessible
+        Readability Color Appearance Model known as SARCAM (formerly
+        SAPC). These models are specifically related to color appearance
+        on self-illuminated RGB computer displays &amp; devices, and also
+        for modeling accessible user needs, with a focus on readability.
+      </p>
+
+      <h3 class="h3Query" style="" id="lightness-contrast">
+        Lightness contrast L<sup>c</sup>
+      </h3>
+
+      <p>
+        The APCA generates a contrast value based on a color pair, and
+        this value is perceptually based: that is, regardless of how light
+        or dark the colors are, a contrast value of Lc&nbsp;60 represents
+        the same <em>perceived</em> readability contrast. This is
+        absolutely not the case with WCAG&nbsp;2.x, which far overstates
+        contrast for dark colors to the point that 4.5:1 can be
+        functionally unreadable when a color is near black. As a result,
+        WCAG&nbsp;2.x contrast cannot be used for guidance designing
+        &quot;dark mode&quot;.
+      </p>
+      <p>
+        The APCA contrast value is perceptually uniform, and pivots near
+        the point where the CS curve flattens due to contrast constancy.
+        Halving or doubling the APCA value relates to a halving or
+        doubling of the perceived contrast. There is a subtle weighting
+        for higher contrasts to smaller, thinner fonts.
+      </p>
+
+      <h3 class="h3Query" style="" id="different-uses-different-contrasts">
+        Different Uses, Different Contrasts
+      </h3>
+      <p>
+        The APCA has a set of levels related to use cases — for instance,
+        Lc&nbsp;90 is <em>preferred</em> and Lc&nbsp;75 is the
+        <em>minimum</em> for body text. This makes for an easy way to use
+        ACPA, very similar to 1.4.3 in terms of ease of use.
+      </p>
+      <p>
+        The APCA also has an <strong>optional</strong> lookup table to
+        associate font size and weight to the readability contrast
+        (Lc&nbsp;value). The lookup tables allow for even greater accuracy
+        and therefore greater flexibility in design.
+      </p>
+
+      <h3 class="h3Query" style="" id="failing-pass-fail">
+        Failing Pass/Fail
+      </h3>
+      <p>
+        A key takeaway is that a strict pass/fail with a blanket contrast
+        ratio is not instructive as a guideline, and does not necessarily
+        solve a given user need. In fact, user needs when it comes to
+        contrast are conflicting—what is good for one can be harmful to
+        another. This is even true of font size.
+      </p>
+      <p>
+        This points to the importance of real user personalization, an
+        area where the technology is literally missing (and a work in
+        progress). For the guidelines though, we can set ranges for
+        targets and expectations toward making the web readable for all.
+      </p>
+    </details>
+
+
+
+    <details>
+      <summary>
+        <span class="twistUp">
+          <svg xmlns="http://www.w3.org/2000/svg" height="30px" viewbox="0 0 24 24" width="36px" fill="none">
+            <path d="M0 0h24v24H0V0z" fill="none"/>
+            <path d="M12 4c4.41 0 8 3.59 8 8s-3.59 8-8 8-8-3.59-8-8 3.59-8 8-8m0-2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 13l-4-4h8z" stroke="#34028b" fill="#230167"/>
+          </svg>
+        </span>
+        <h3 class="Luv275 fw6 h3Query">
+          The Science Behind SAPC/APCA
+        </h3>
+      </summary>
+      <h3 class="h3Query">
+        <b>A</b>ccessible <b>P</b>erceptual <b>C</b>ontrast
+        <b>A</b>lgorithm
+      </h3>
+
+      <div>
+        <p>
+          For a brief overview and explanation of the SAPC math and
+          methods, take a look at
+          <a id="null02" href="http://www.myndex.com/WEB/WCAG_CE17polarity">Experiment Results CE17</a>, one of the polarity experiments. The discussion includes
+          graphs comparing SAPC to other contrast methods, and related
+          discussions.
+        </p>
+        <p>
+          Also, as spatial frequency is one of the most important
+          predictors of contrast perception and readability, see
+          <a id="null03" href="http://www.myndex.com/WEB/WCAG_CE14weight">Experiment Results CE14-weight</a>
+          for further explanations.
+        </p>
+        <p>
+          <span class="fw6">The "TL;DR" is:</span> like all human
+          perceptions, color and contrast are extremely context dependent.
+          In terms of readability, there is a "critical contrast" level,
+          and that level is more dependent on spatial frequency, which
+          relates to font weight, than a given color pair.
+        </p>
+        <p>
+          To accurately predict contrast perception, the Spatial
+          <em>(font weight &amp; size)</em>, color
+          <em>(perceived lightness difference between text and
+            background)</em>, and context
+          <em>(ambient light, surroundings, intended purpose of the
+            text)</em>
+          all need to be taken into account.
+        </p>
+        <h3 class="h3Query" style="text-align: center;">
+          What is the Contrast of This Page?
+        </h3>
+        <p>
+          Most of this page is set at <span class="Lc">L<sup>c</sup> </span>90. To help differentiate
+          between dark text on a light background and light text on dark,
+          the math reports the latter as a negative value. But for
+          purposes of the font lookup table, ignore the minus sign and use
+          the absolute value.
+        </p>
+      </div>
+    </details>
+
+    <details>
+      <summary>
+        <span class="twistUp">
+          <svg xmlns="http://www.w3.org/2000/svg" height="30px" viewbox="0 0 24 24" width="36px" fill="none">
+            <path d="M0 0h24v24H0V0z" fill="none"/>
+            <path d="M12 4c4.41 0 8 3.59 8 8s-3.59 8-8 8-8-3.59-8-8 3.59-8 8-8m0-2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 13l-4-4h8z" stroke="#34028b" fill="#230167"/>
+          </svg>
+        </span>
+        <h3 class="Luv275 fw6 h3Query">
+          Links to Resources and Articles
+        </h3>
+      </summary>
+  <div class="innerwrapper sciencelinks">
+
+      <a href="http://www.myndex.com/CVD/" aria-label="Go to Color Vision Simulator" class="myndexButton queryButton" style="padding: 0.3em;overflow:hidden">
+    <img class="fll" role="presentation" alt="icon" style="margin: 0.3em; padding: 0;border-radius:40px;" src="https://myndex.com/CVD/faviconMasterSmall.jpg" height="40"/>
+    <div class="flr" style="margin: 0.3em; padding:0;">
+      Myndex&nbsp;Color&nbsp;Vision <br/>Deficiency&nbsp;Simulator
+    </div>
+  </a>
+  <a href="https://github.com/Myndex/SAPC-APCA/blob/master/documentation/WhyAPCA.md#why-the-new-contrast-method-apca" aria-label="Go to Why APCA" class="myndexButton queryButton" style="padding: 0.3em;overflow:hidden">
+    <div class="flr" style="margin: 0.3em; padding:14px;">
+      Why APCA?
+    </div>
+  </a>
+</div>
+
+<br>
+
+<div class="por clr" style="max-width: 520px; clear: both; margin: 0.3em; padding:0;">
+<h2 id="featured-articles">Featured Articles</h2>
+<ul>
+<li><p><a href="https://uxdesign.cc/better-reading-on-the-web-c943c4cfc91a"><strong>Better reading on the web</strong></a> published in UX Collective, this article discusses and demonstrates the problems with automated testing and WCAG 2 contrast.</p>
+</li>
+<li><p><a href="https://atangledwebweweave.com/please-stop-using-grey-text-3d3e71acfca8"><strong>Please Stop Using Grey Text</strong></a> on Tangled Web, debunking one of the worst myths about design contrast.</p>
+</li>
+<li><p><a href="https://atangledwebweweave.com/whats-red-black-also-not-read-573b9c0a97ed"><strong>What&#39;s Red &amp; Black &amp; Also Not Read?</strong></a> Do the WCAG 2 Contrast Guidelines Help Color Vision Issues? The answer may surprise you.</p>
+</li>
+<li><p><a href="https://atangledwebweweave.com/a-contrast-of-errors-373c2665d42a"><strong>A Contrast of Errors</strong></a> A look into the history of the WCAG 2 contrast guidelines, and a discussion of the proposed replacement, the APCA (Advanced Perceptual Contrast Algorithm).</p>
+</li>
+</ul>
+<h2 id="github-documentation-and-articles">GitHub Documentation and Articles</h2>
+<h3 id="_contrast_"><em>Contrast</em></h3>
+<ul>
+<li><a href="https://github.com/Myndex/SAPC-APCA/WhyAPCA.md"><strong>Why APCA?</strong></a> A brief overview of WCAG_2 contrast issues and how APCA solves them.</li>
+</ul>
+<h3 id="_new-_-let-s-flip-for-color-https-gist-github-com-myndex-e1025706436736166561d339fd667493-lets-flip-for-color-"><em>NEW!</em> <a href="https://gist.github.com/Myndex/e1025706436736166561d339fd667493#lets-flip-for-color">Let&#39;s Flip for Color!</a></h3>
+<p>If you want your text to be either black or white if the user selects some random color, just where is that inflection point? <strong>Hint: It&#39;s NOT 18% Y.</strong></p>
+<ul>
+<li>Part I: <a href="https://gist.github.com/Myndex/1dadb6dcac596f1cd7a5686a076f697f"><strong>Orange You Wondering About Contrast?</strong></a> Answering some contrast questions, and demonstrating a real solution to the infamous orange conundrum.</li>
+<li>Part II: <a href="https://gist.github.com/Myndex/c30dba273aa5eca426ad9f5200917c9d"><strong>The Lighter Side of Dark Backgrounds</strong></a> An article comparing some parts of APCA with the old WCAG 2 contrast methods, demonstrating how WCAG_2 contrast does not help color vision types.</li>
+<li>Part III: <a href="https://gist.github.com/Myndex/069a4079b0de2930e72d5401bde9af98#wcag-2-vs-apca-contrast-shootout"><strong>WCAG 2 vs APCA Contrast Shootout</strong></a>
+Answering some recent questions regarding APCA, with comparisons and examples of the old (WCAG 2 1.4.3) and the future WCAG 3 / APCA.</li>
+</ul>
+<hr>
+<h3 id="_color_"><em>Color</em></h3>
+<ul>
+<li>Part I: <a href="https://gist.github.com/Myndex/47c793f8a054041bd2b52caa7ad5271c#file-fortheluvofcolor-md"><strong>For The Luv of Color</strong></a> An article comparing CIE Lab and Luv colorspaces.</li>
+<li>Part II: <a href="https://gist.github.com/Myndex/10caff6a68e844591e83eadeebfb4347"><strong>Will Work for Color</strong></a> A follow-up article on working spaces and related considerations. Introduces the concept of &quot;Web Working Spacelets&quot;.</li>
+<li><a href="https://gist.github.com/Myndex/b21c2621072b93d3a7c1ef8939bc2adb"><strong>COLORSPACES - The Primal Frontier</strong></a> A brief Look at the math that helps model how we see. </li>
+<li><a href="https://gist.github.com/Myndex/db30607d4fe697de9e582544335bbce6#how-many-colors-in-a-bushel"><strong>How Many Colors in a Bushel?</strong></a> Just &quot;how many&quot; colors are there? Is that even an answerable question? </li>
+</ul>
+<hr>
+<h2 id="related-repos">Related Repos</h2>
+<ul>
+<li><a href="https://github.com/Myndex/SAPC-APCA"><strong>SAPC-APCA</strong></a> The main repository for the research and development of the new contrast method and algorithm being developed for the W3/AGWG accessibility guidelines, and for other standards and applications. This is the primary source for all things related to SAPC and APCA.</li>
+<li><a href="https://github.com/Myndex/apca-w3"><strong>APCA W3</strong></a> This is the specific version of the APCA licensed to the W3 for the use in web accessibility guidelines such as the WCAG_3 guidelines.</li>
+<li><a href="https://github.com/Myndex/bridge-pca"><strong>Bridge PCA</strong></a> BPCA is designed as a drop-in replacement for WCAG_2 contrast that is backwards compatible, but using APCA technology, to &quot;bridge&quot; toward the future of readability contrast.</li>
+<li><a href="https://github.com/Myndex/fancyfontflipping/blob/master/README.md#fancy-font-flipping"><strong>Fancy Font Flipping</strong></a> Fancy Font Flipping is a demo I first put up in CodePen to illustrate the issues with flipping the text color from black to white based on a given estimated background luminance.</li>
+<li><a href="https://github.com/Myndex/colorparsley"><strong>Color Parsley</strong></a> lightweight and versatile color parsing functions.</li>
+</ul>
+
+
+  </div>
+  </details>
+  </section>
+</div>
+
+
+
+<hr class="clb mb0" style=""> 
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle" style="display:block; text-align:center;" data-ad-layout="in-article" data-ad-format="fluid" data-ad-client="ca-pub-8528204478975741" data-ad-slot="8819425657"></ins>
+<script async>
+   (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+
+
+  <div class="betanotice ml25 mr25 pk25 ">
+    <h3>
+      We'd love to hear your comments, questions, or concerns—come visit our <a href="https://github.com/Myndex/SAPC-APCA/tree/master/documentation">GitHub repo</a> and let us know in the <a href="https://github.com/Myndex/SAPC-APCA/discussions">discussions forum </a>.
+    </h3>
+  </div>
+
+  </div>
+</main>
+
+
+<footer class="fs07">
+  <div class="innerwrapper">
+    <div>Copyright &copy; 2019 – 2022 by Andrew Somers. All Rights Reserved.
+      <br/>
+      <b>THIS PAGE IS PROPRIETARY AND NOT LICENSED FOR THIRD PARTY USE.</b>
+      <br/>
+      Public License options at the SAPC/APCA Repository:
+      <br/>
+      <a href="https://github.com/Myndex/SAPC-APCA/">github.com/Myndex/SAPC-APCA/</a>
+    </div>
+    
+    <div>This project is part of the <a href="https://www.myndex.com/WEB/Perception" aria-label="Go Back to Percepton Experiments">Myndex Web Perception Experiment.</a>
+
+      <div class="copyright">Copyright &copy; 2019 – 2025 by MTI. All Rights Reserved. • Server.07 •
+      <br/>
+      <i>"Myndex" and the Myndex Eye Logo are trademarks of Myndex
+          Technologies.</i>
+      </div>
+
+
+<span style="font-size: 75%;">MTIUnique: <b>472697 </b>TPH:   <b>2148154 </b> And some of the nifty stuff you share with every site you visit:<br>Your IP Address: <b>18.97.14.89</b> &nbsp; &nbsp;  Port: 54474 &nbsp; &nbsp; Host:  &nbsp; &nbsp;  User:  &nbsp; &nbsp; URI: /BPCA/ &nbsp; &nbsp; Ref: <br> Agent: CCBot/2.0 (https://commoncrawl.org/faq/)</span>
+    </div>
+  </div> <!-- close innerwrapper -->
+</footer>
+
+
+
+<script>
+
+////////////////////////////////////////////////////////////////////////////////
+/////////  FOOTER FUNCTIONS  ///////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+
+
+///// James's IRO sliders
+
+var sliderPickerTXT = new iro.ColorPicker("#TXTsliders", {
+  width: 270,
+  color: "rgb(255, 0, 0)",
+  borderWidth: 1,
+  borderColor: "#ddd6cc",
+  layout: [
+    {
+      component: iro.ui.Slider,
+      options: {
+        sliderType: 'hue'
+      }
+    },
+    {
+      component: iro.ui.Slider,
+      options: {
+        sliderType: 'saturation'
+      }
+    },
+    {
+      component: iro.ui.Slider,
+      options: {
+        sliderType: 'value'
+      }
+    },
+  ]
+});
+
+var sliderPicker = new iro.ColorPicker("#BGsliders", {
+  width: 270,
+  color: "rgb(255, 0, 0)",
+  borderWidth: 1,
+  borderColor: "#ddd6cc",
+  layout: [
+    {
+      component: iro.ui.Slider,
+      options: {
+        sliderType: 'hue'
+      }
+    },
+    {
+      component: iro.ui.Slider,
+      options: {
+        sliderType: 'saturation'
+      }
+    },
+    {
+      component: iro.ui.Slider,
+      options: {
+        sliderType: 'value'
+      }
+    },
+  ]
+});
+
+// listen to a color picker's color:change event
+// color:change callbacks receive the current color
+sliderPickerTXT.on('input:change', function(color) {
+
+  getCSScolor(color.hexString,'TXT');
+  inputTXT.value = color.hexString;
+  testContrast();
+});
+
+// listen to a color picker's color:change event
+// color:change callbacks receive the current color
+sliderPicker.on('input:change', function(color) {
+
+  getCSScolor(color.hexString,'BG');
+  inputBG.value = color.hexString;
+  testContrast();
+});
+
+////////////////////////////////////////////////////////////////////////////////
+/////////  DEBUG AND COLOR ANALYSIS FUNCTIONS //////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+
+//~/~/~/~/~/~/~/~/~/~/~/~/~/~/~/~/~/~/~/~/~/~/~/~/~/~/~/~/~/~/~/~/~/~/~/~/~/~/~/
+//~/~  RESEARCH ONLY ITEM: kitchenSink  ~/~/~/~/~/~/~/~/~/~/~/~/~/~/~/~/~/~/~/~/
+//~/~/~/~/~/~/~/~/~/~/~/~/~/~/~/~/~/~/~/~/~/~/~/~/~/~/~/~/~/~/~/~/~/~/~/~/~/~/~/
+
+//*  //  SWITCH A
+function kitchenSink(type) { 
+  
+  return '<div class="tac cW bgN br05 fs20 fw3 ">The Kitchen Sink is Leaking Again</div>';
+}
+// */ // END SWITCH A
+
+
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+/////////  CONFORMANCE SCORING CONSTANTS AND ARRAYS  \//////////////////////////
+////////                                              \/////////////////////////
+///////                                                \////////////////////////
+
+
+////////////////////////////////////////////////////////////////////////////
+/////////////  NEW G SERIES    \///////////////////////////////////////////
+
+  const scoreLevels1GG = [15,30,45,60,75,90,105];
+  const scoreLevels1GGlen = scoreLevels1GG.length;
+
+  const sansIndex = [0,1,2,3,4,5,6,];
+  const sansIndexLen = sansIndex.length;
+  const serifIndex = [false,1,2,3,4,5,6,];
+    
+    // for the score array needed for the original samples section
+function createScoreArray (aLevels,aLength,bLevels,bLength) {
+  
+  let tempArray = [[]];
+  let xDimLen = bLevels[0].length;
+  let xi = 0, ai = 0, bi = bLength - 1, ti = 0;
+
+  for (; xi < aLength; xi++) {  // instantiate tempArray
+    tempArray[xi] = bLevels[xi].slice(0,xDimLen);
+  }
+
+  for (; ai < aLength; ai++) { // Set tempArray values
+    bi = bLength - 1;
+    for (; bi > 0; bi-- ) {
+      if ( aLevels[ai] == bLevels[bi][0] ) {
+        ti = 0;
+        tempArray[ai][xDimLen - 1] = bLevels[bi][ti];
+        for (; ti < xDimLen - 1; ti++){
+          tempArray[ai][ti] = bLevels[bi][ti + 1];
+        }
+      } 
+    } 
+  } 
+//console.log(tempArray);
+  return tempArray;
+}
+
+
+// For the following arrays, the Y axis is contrastArrayLen
+// The two x axis are weightArrayLen and scoreArrayLen
+// const contrastArrayG = [200,110,100,90,80,70,60,55,50,45,40,35,30,25,20,15,12,11,7,0,];
+
+
+// Jan 27 2022
+const contrastArrayG = [200,120,105,100,95,90,85,80,75,70,65,60,55,50,45,40,35,30,25,20,15,10,0,];
+const contrastArrayLenG = contrastArrayG.length;
+
+const weightArray = [0,100,200,300,400,500,600,700,800,900];
+const weightArrayLen = weightArray.length;
+
+const scoreArray = [0,1,2,3,4,5];
+const scoreArrayLen = 6;
+
+
+
+
+ //////////////////////////////////////////////////////////////////////////
+/////  FONT TABLE DIALOGS  \//////////////////////////////////////////////
+
+
+const scoreColor = ['c00','b60','9a7900','08a','008d00','a0e'];
+
+const normalColspan = ''; // colspan="1"
+const simpleColspan = 'colspan="2"';
+const mobileColspan = 'colspan="2"';
+
+/*
+let mode = 'simple'; // 'normal' 'simple' 'mobile'
+let bodyText = document.getElementById('bodyText'); // only score 4 used
+let modeColspan = normalColspan;
+
+if (mode === 'simple') { bodyText.style = 'height: 120px; max-height: 120px;'; }
+
+
+const scoreTextArray = ['<span class="fs25">&#x1F6AB</span>',
+          'SCORE<br><span class="fs20 fw7">1</span>',
+          'SCORE<br><span class="fs20 fw7">2</span>',
+          'SCORE<br><span class="fs20 fw7">3</span>',
+          'SCORE<br><span class="fs14 fw5">4</span>',
+          '<span class="dib fs13 fw5" style="font-family: \'Barlow Condensed\';">PREFERRED<br>(5)</span>',
+          '<span class="">SCORE</span>',];
+
+const scoreTextArraySimple = ['<span class="fs35">&#x1F6AB</span>',
+              '<span class="fs35 fw6">1</span>',
+              '<span class="fs35 fw6">2</span>',
+              '<span class="fs35 fw6">3</span>',
+              '<span class="fs14 fw5">BODY<br>TEXT</span>',
+              '<span class="fs14 fw6">PREF</span>',
+              '<span class="fs12">LEVEL</span>',];
+
+const scoreTextArrayMobile = ['<span class="fs20">&#x1F6AB</span>',
+              '<span class="fs20 fw7">1</span>',
+              '<span class="fs20 fw7">2</span>',
+              '<span class="fs20 fw7">3</span>',
+              '<span class="fs20 fw7">BODY</span>',
+              '<span class="dib fs11 fw5" style="font-family: \'Barlow Condensed\';">PREF</span>',
+              '<span class="fs08 fw05">SCORE</span>',];
+    // deprecate
+
+const scoreTextProhibit = '<th><span class="fs20">&#x1F6AB</span></th>';
+
+const error9x1 = '<td colspan="9" class="underWeightAll" style="color: #a00; background-color: #fea; padding: 12px 48px; max-height: 125px; max-width:924px; width:924px; vertical-align: top;">';
+
+
+function ampSampTable9x5partA () { 
+    return  '<td colspan="9" rowspan="5" class="underWeightAll" style="color: var(--textColor, #123); background-color: var(--bgColor, #bad); padding: 12px; max-height: 388px; vertical-align: top;">';
+  }
+function ampSampTable9x5partAResearch () { 
+    return  '<td colspan="9" rowspan="5" class="underWeightAll researchCell" style="color: var(--textColor, #123); background-color: var(--bgColor, #123); padding: 12px; max-height: 388px; vertical-align: top;">';
+  }
+
+function ampSampTable9x5noSymbol () { 
+    return  '<span class="dib mt0 fs20 pr04 por pot04 lh05"> <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 120 120" width="100" height="100"><circle cx="60" cy="60" r="50" stroke=" var(--textColor, #123)" stroke-width="10" fill="none"/><line x1="28" y1="28" x2="92" y2="92" stroke=" var(--textColor, #123)" stroke-width="8"/></svg></span>';
+    }
+
+let ampSampTable9x5horsey = '<span class="dib fs20 pr02 por lh10" style="margin: -32px 24px 0 32px;  float: left;">♞<br>☻<br>⌚︎</span>';
+
+
+function ampSampTable9x5AmpSamp () { 
+    return  '<div id="ampSamp2" style="vertical-align: middle; font-size: 128px; color: var(--textColor, #123); border-color: var(--textColor, #123);">'
+    
+    + '<div class="montFont4 mb0" ><div class="dib por fs12 fw1" style="top:2px; left: -10px; font-family: Montserrat; letter-spacing:-0.16em;"><span class="fw9 ls02">I</span><span class="fw7 ls-04">I</span><span class="fw5 ls-07">I</span><span class="fw4 ls-09">II</span><span class="fw3 ls-11">III</span><span class="fw2 ls-14">IIII</span>IIIII</div>This is a NORMAL 12px Minimum Size TEXT EXAMPLE<div class="dib por fs12 fw1" style="top:2px; left: 12px; font-family: Montserrat; letter-spacing:-0.16em;">IIIII<span class="fw2 ls-14">IIII</span><span class="fw3 ls-11">III</span><span class="fw4 ls-07">II</span><span class="fw5 ls-03">I</span><span class="fw7 ls04">I</span><span class="fw9 ls05">I</span>&nbsp;</div></div>'
+
+    + '<div class="montFont2 mb10" ><div class="dib por fs12 fw1" style="top:2px; left: -10px; font-family: Montserrat; letter-spacing:-0.16em;"><span class="fw9 ls02">I</span><span class="fw7 ls-04">I</span><span class="fw5 ls-07">I</span><span class="fw4 ls-09">II</span><span class="fw3 ls-11">III</span><span class="fw2 ls-14">IIII</span>IIIII</div>This is a THIN TEXT EXAMPLE<div class="dib por fs12 fw1" style="top:2px; left: 12px; font-family: Montserrat; letter-spacing:-0.16em;">IIIII<span class="fw2 ls-14">IIII</span><span class="fw3 ls-11">III</span><span class="fw4 ls-07">II</span><span class="fw5 ls-03">I</span><span class="fw7 ls04">I</span><span class="fw9 ls05">I</span>&nbsp;</div></div>'
+
+    + '<div class="montFont2 m00" ><div class="dib por fs14 fw1 m0a" style="top:-8px; font-family: Montserrat,Jost; letter-spacing:-0.16em;">|||||<span class="fw2 ls-14">||||</span><span class="fw3 ls-11">|||</span><span class="fw4 ls-07">||</span><span class="fw5 ls-03">|</span><span class="fw7 ls04">|</span><span class="fw9 ls05">|</span>&nbsp;<span class="fw9 ls02">|</span><span class="fw7 ls-04">|</span><span class="fw5 ls-07">|</span><span class="fw4 ls-09">||</span><span class="fw3 ls-11">|||</span><span class="fw2 ls-14">||||</span>|||||</div></div>'   
+
+    + '<div class="dib por fs07 fw1" style="top: -20px; right: 12px; font-family: Montserrat; letter-spacing: -16px;">III<span class="fw2">II</span><span class="fw3 ls-14">I</span><span class="fw4 ls-10">I</span><span class="fw5 ls-04">I</span><span class="fw7 ls04">I</span><span class="fw9 ls00">I</span>&nbsp;</div>'
+
+    + '&amp; <div class="dib por fs07 fw1" style="top: -20px; left: -14px; font-family: Montserrat; letter-spacing: -16px;"><span class="fw9 ls03">I</span><span class="fw7 ls-05">I</span><span class="fw5 ls-10">I</span><span class="fw4 ls-14">I</span><span class="fw3 ls-16">I</span><span class="fw2">II</span>III</div>'
+    
+    + '<div class="helvetiFont mt12">• This is a Small Bold Text Example — 12px at 700 Weight. • </div>'
+    + '</div>';
+  }   
+    
+let ampSampTable9x5frownyClose = '<span class="dib mt0 fs25 pl04 por pot03 lh05">&#9785;</span></span></td>';
+
+
+let ampSampTable9x5floatRight = '<span class="dib fs20 pr02 por lh10" style="margin: -32px 0 0 24px; float: right;">✈<br>☎︎<br>☯︎︎︎</span>';
+
+let ampSampTable9x5Close = '</span></td>';
+
+
+let loConMessage2Low = '<span class="dib mt01 fs09 p01 cR pbgR br05">&nbsp; &#9785; &#x1F6AB; Contrast Too Low for All &#x1F6AB; &#9785; &nbsp; </span>';
+
+let loConMessage2LowSingle = ' class="por mnw100 mnh100 fs35 lh07 cR lbgO br12x" style="text-align:center;padding:0.5em 0;"> &#x1F6AB; </td>';
+
+let loConMessage2LowRow = '<span class="dib p02 cR pbgP br05" style="margin 0; padding:6px; ">&nbsp;&#9785; &#x1F6AB; <span class="dib por pob02 fs07 lh05">Contrast Too Low for This Score Level</span> &#x1F6AB; &#9785;&nbsp; </span>';
+
+let loConMessage2LowSimple = '<div class="dib por" style="margin 0; padding:0; position:relative; height: 120px; max-height: 120px;">'
+   + '<span class="dib m00 cR pbgP br05" style="margin 0; padding:8px;"> &#x1F6AB;'
+   + '<span class="dib m01 por fs08 lh11">Contrast<br>Too Low</span> &#x1F6AB;</span> '
+   + '<div class="dib por fs14 fw1 m00 lh06" style="margin:0; padding:4px; font-family: Montserrat,Barlow; letter-spacing:-0.16em;">&nbsp;&nbsp;&nbsp;&nbsp;'
+   + '|||||<span class="fw2 ls-14">||||</span><span class="fw3 ls-11">|||</span><span class="fw4 ls-07">||</span><span class="fw5 ls-03">|</span><span class="fw7 ls03">|</span><span class="fw9 ls03">|</span><span class="ampSampSmall">&amp; </span><span class="fw9 ls03">|</span><span class="fw7 ls-03">|</span><span class="fw5 ls-07">|</span><span class="fw4 ls-09">||</span><span class="fw3 ls-11">|||</span><span class="fw2 ls-14">||||</span>|||||'
+   + '</div></div>' ;
+
+let loConMessageBadColor = '<span class="dib mt01 fs09 p01 cR pbgO br05">&nbsp;&#9785; &#x1F6AB; Invalid Color Entry &#x1F6AB; &#9785; </span>';
+
+
+function loConWarning9x5 () { 
+    return  ampSampTable9x5partA() + loConMessage2Low + '<br>'
+             + ampSampTable9x5noSymbol()
+             + ampSampTable9x5AmpSamp()
+             + ampSampTable9x5frownyClose;
+  }
+
+function badColorWarning9x5 () { 
+    return  ampSampTable9x5partA() + loConMessageBadColor + '<br>'
+             + ampSampTable9x5noSymbol()
+             + ampSampTable9x5AmpSamp()
+             + ampSampTable9x5frownyClose;
+  }
+
+function researchModeAlert9x5 () { 
+    return  ampSampTable9x5partAResearch() + researchModeAlert + '<br>'
+             + ampSampTable9x5horsey
+             + ampSampTable9x5AmpSamp()
+             + ampSampTable9x5floatRight
+             + ampSampTable9x5Close;
+  }
+
+let loConWarningRow9x1 =
+    '<td colspan="9" class="underWeight" style="background-color: #a04;">'
+            + loConMessage2LowRow + '</td>';
+
+function loConWarningRow8x1 () {
+    return '<td colspan="8" class="fs22" style="color: #'
+            + globalTXTcolor + ';background-color: #' + globalBGcolor + ';">'
+            + loConMessage2LowSimple + '</td>';
+}
+
+function loConWarningRow9x1s () {
+    return '<td colspan="9" class="fs22" style="margin 0; padding: 12px 48px;  max-width:919.5px; width:919.5px; color: #'
+            + globalTXTcolor + ';background-color: #' + globalBGcolor + ';">'
+            + loConMessage2LowSimple + '</td>';
+}
+
+let loConWarningRow6x1 =
+            '<td colspan="6" class="underWeight" style="background-color: #a04;">'
+            + loConMessage2LowRow + '</td>';
+
+function hiConAlertRow (scoreLev, columns) {
+
+  let useAbove = (scoreLev == 4) ? 'Use the Preferred Level' :
+                                   'Use Score Level ' + (scoreLev + 1);
+  
+  return '<td colspan="'+columns+'" class="notApplicable NA'
+      + scoreLev + ' fs14 fw6">Above Minimums for Level '
+      + scoreLev + ', ' + useAbove + '</td>';
+  }
+
+
+//  */
+
+////////////////////////////////////////////////////////////////////////////
+///// G-Series Arrays from Spreadsheet of Lookup Tables \///////////////////
+////   Based on empirical data collected 2019-2022      \//////////////////
+///
+//  G G G G G G G  UPDATED JAN 27 2022
+//  (manual adjust for sc5)     
+//  SCORE LEVEL:    
+//  Master   1   2   3   4   5 (aka: preferred)
+//  NOTE: This precalc is set to "all the same"
+//        because the basic APCA tool only reports one level.
+
+
+const scoreLevelsPreCalcG = [
+   [200,120,120,120,120,120],
+    [120,120,120,120,120,120],
+    [105,105,105,105,105,105],
+    [100,100,100,100,100,100],
+    [95,95,95,95,95,95],
+    [90,90,90,90,90,90],
+    [85,85,85,85,85,85],
+    [80,80,80,80,80,80],
+    [75,75,75,75,75,75],
+    [70,70,70,70,70,70],
+    [65,65,65,65,65,65],
+    [60,60,60,60,60,60],
+    [55,55,55,55,55,55],
+    [50,50,50,50,50,50],
+    [45,45,45,45,45,45],
+    [40,40,40,40,40,40],
+    [35,35,35,35,35,35],
+    [30,30,30,30,30,30],
+    [25,25,25,25,25,25],
+    [20,20,20,20,20,20],
+    [15,15,15,15,16,15],
+    [10,10,10,10,11,14],
+    [0,1.0,1.0,1.0,1.0,1.0]
+    ];
+    
+    
+/*
+    // G G G G G UPDATED JAN 27 2022        
+    // INTERPOLATED         
+    // SCORE LEVEL      
+    //  M 1 2 3 4 5
+
+// */
+
+//  NOTE: This precalc is set to "all the same"
+//        because the basic APCA tool only reports one level.
+
+
+const scoreDeltaG = [
+    [200,1.0,1.0,1.0,1.0,1.0,],
+    [120,1.0,1.0,1.0,1.0,1.0,],
+    [105,1.0,1.0,1.0,1.0,1.0,],
+    [100,5,5,5,5,5,],
+    [95,5,5,5,5,5,],
+    [90,5,5,5,5,5,],
+    [85,5,5,5,5,5,],
+    [80,5,5,5,5,5,],
+    [75,5,5,5,5,5,],
+    [70,5,5,5,5,5,],
+    [65,5,5,5,5,5,],
+    [60,5,5,5,5,5,],
+    [55,5,5,5,5,5,],
+    [50,5,5,5,5,5,],
+    [45,5,5,5,5,5,],
+    [40,5,5,5,5,5,],
+    [35,5,5,5,5,5,],
+    [30,5,5,5,5,5,],
+    [25,5,5,5,5,5,],
+    [20,5,5,5,5,5,],
+    [15,5,5,5,5,5,],
+    [10,5,5,5,5,5,],
+    [0,1.0,1.0,1.0,1.0,1.0,]
+  ];
+  
+  
+  
+///// CONTRAST   FONT WEIGHT & SIZE ///////////////////////////////////
+
+// Font size interpolations. Here the chart was re-ordered to put
+// the main contrast levels each on one line, instead of font size per line.
+
+// G G G G G G  UPDATED JAN 31 2022                  
+// ADJUSTED FOR G Interpolation                 
+
+// 999 = prohibited   888 = ''   777 = nonTextOnly
+
+// FW 100 200 300 400 500 600 700 800 900
+
+
+/*
+
+// */
+
+
+// lutG14xLcValue = ['Lc',100,200,300,400,500,600,700,800,900],
+
+// 999: prohibited too low contrast
+// 888: replaced with 400s  Ok at previous minimum 
+// 777: NON TEXT at this minimum weight stroke
+// 5xx - minimum font at this weight for content, 5xx % 500 for font-size
+// 4xx - minimum font at this weight for any purpose], 4xx % 400 for font-size
+
+// MAIN FONT LOOKUP Jan 31 2022  Sorted by Lc Value
+
+const fontMatrixG = [  //  Jan 31 2022
+['Lc',100,200,300,400,500,600,700,800,900],
+[120,445,427,417,413.5,413.5,413.5,413.5,416,418],
+[105,445,427,417,413.5,413.5,413.5,413.5,416,418],
+[100,46.5,28,18,14,414,414,414,416,418],
+[95,48.5,29,20.5,14.5,14,414,414,416,418],
+[90,50,30,21,15,14.5,414,414,416,418],
+[85,53.5,32,22,16,15,14,414,416,418],
+[80,56.5,34,23,17,16,14.5,414,416,418],
+[75,60,36,24,18,17,15,14,416,418],
+[70,65,39,27.5,19.5,18,16,14.5,416,418],
+[65,71.5,43,30.5,21.5,19.5,17,15,416,418],
+[60,80,48,34,24,21,18,16,416,418],
+[55,86.5,52,37,26,22,19.5,17,16,418],
+[50,96.5,58,41,29,25,20,18,17,418],
+[45,120,72,51,36,28,24,20,18,418],
+[40,777,96,68,48,34,29,24,20,18],
+[35,777,120,93.5,66,46.5,40,33,26.5,20],
+[30,999,777,120,96,68,58,48,38.5,29],
+[25,999,777,777,120,102,87,72,57.5,43],
+[20,999,777,777,777,120,120,110,88,66],
+[15,999,999,777,777,777,777,120,120,120],
+[10,999,999,999,999,999,999,777,777,777],
+[0,999,999,999,999,999,999,999,999,999],
+];
+
+
+
+
+// G G G G G G UPDATED JAN 31 2022 
+// interpolation G  
+// FW 100 200 300 400 500 600 700 800 900
+  
+// lutG14xLcDelta = ['Lc∆',100,200,300,400,500,600,700,800,900],
+
+// MAIN FONT DELTA PRECALC Jan 31 2022 Sorted by Lc  rows higher  Jan 31 2022
+
+const fontDeltaG = [ // rows ABOVE Jan 31 2022
+['Lc∆h',100,200,300,400,500,600,700,800,900,],
+[120,0,0,0,0,0,0,0,0,0,],
+[105,0,0,0,0,0,0,0,0,0,],
+[100,1.5,1,1,0.5,0.5,0.5,0.5,0,0,],
+[95,2,1,2.5,0.5,0,0,0,0,0,],
+[90,1.5,1,0.5,0.5,0,0,0,0,0,],
+[85,3.5,2,1,1,0.5,0,0,0,0,],
+[80,3,2,1,1,1,0.5,0,0,0,],
+[75,3.5,2,1,1,1,0.5,0,0,0,],
+[70,5,3,3.5,1.5,1,1,0.5,0,0,],
+[65,6.5,4,3,2,1.5,1,0.5,0,0,],
+[60,8.5,5,3.5,2.5,1.5,1,1,0,0,],
+[55,6.5,4,3,2,1,1.5,1,0,0,],
+[50,10,6,4,3,3,0.5,1,1,0,],
+[45,23.5,14,10,7,3,4,2,1,0,],
+[40,0,24,17,12,6,5,4,2,0,],
+[35,0,24,25.5,18,12.5,11,9,6.5,2,],
+[30,0,0,26.5,30,21.5,18,15,12,9,],
+[25,0,0,0,24,34,29,24,19,14,],
+[20,0,0,0,0,18,33,38,30.5,23,],
+[15,0,0,0,0,0,0,10,32,54,],
+[10,0,0,0,0,0,0,0,0,0,],
+[0,0,0,0,0,0,0,0,0,0,],
+];
+
+
+
+
+/////  MINIMUMS ARRAYS  ///////////////////////////////////////////////////
+// Updated Apr 12 2022
+
+    // Minimum font size per score level and weight
+    // Weight S 1 2 3 4 5 6 7 8 9
+const fontMatrixGmin = [
+    ['sc0',32,16,12,10,9,8,8,10,12,],  // score: hard fail level
+    ['sc1',36,16,12,10,10,10,10,12,14,], // score 1
+    ['sc2',36,16,12,10,10,10,10,16,18,], // score 2
+    ['sc3',36,16,12,11,11,11,11,16,18,], // score 3
+    ['sc4',42,24,18,14,14,14,14,16,18,], // score 4
+    ['sc5',48,28,24,20,18,16,15,16,18,], // score 5
+  ];
+    // Minimum font size per use case and score level
+    // Score M 1 2 3 4 5
+const fontSizeGtype = [
+    ['maxBody',32,32,32,32,32,],    // MAX body text (not zoomed)
+    ['minBody',12,12,14,16,24,],    // Min body text 
+    ['maxContent',140,120,108,96,72,], // MAX content text
+    ['minContent',10,11,12,14,18,],   // Min content text
+    ['maxAny',144,120,120,108,96,],    // MAX anytext
+    ['minAny',8,10,11,12,14,],      // Min anytext (copyright etc)
+  ];
+  
+    // Contrast minimums per master level and score level
+    // score M 1 2 3 4 5
+const fontScoreGmin = [             // CONTRAST LEVELS
+    [90,115,99,94,90,85,],          // 0 MAX Large Headlines (> 48px & 500)
+    [75,68.4,71.8,73.4,74.8,90.0,], // 1 Min Cols of Body Text (manually set)
+    [60,47.4,52.8,56.4,59.8,75.0,], // 2 Min Content Text 
+    [45,33.4,34.8,37.4,44.8,55.0,], // 3 Min Large content text
+    [30,22.0,24.0,27.0,29.8,45.0,], // 4 Min Any text, large icons (manual)
+    [15,14.0,15.0,16.0,18.0,22.0,], // 5 Min for all (manually set)
+  ];
+
+const minScoreG = fontScoreGmin[5][1]; // Hard minimum contrast, all levels.
+const nonTextScoreG = fontScoreGmin[4][4];
+
+let scoreLevel = 0;
+
+let scoreIndex = 4; //[0,1,2,3,4,5]; // holds score position
+
+  // holds the calculated minimum font sizes per level
+let interpolatedFonts = [ 
+    [0,0,0,0,0,0,0,0,0,0,],
+    [1,0,0,0,0,0,0,0,0,0,],
+    [2,0,0,0,0,0,0,0,0,0,],
+    [3,0,0,0,0,0,0,0,0,0,],
+    [4,0,0,0,0,0,0,0,0,0,],
+    [5,0,0,0,0,0,0,0,0,0,],
+  ];
+  
+
+
+//// G series, LUT-X12.
+//// first column is font size in px
+
+let LUTx12 = [ ['fs-px',100,200,300,400,500,600,700,800,900],
+[10,'⊘','⊘','⊘','©§™','©§™','©§™','©§™','⊘','⊘'],
+[11,'⊘','⊘','⊘','©§™','©§™','©§™','©§™','⊘','⊘'],
+[12,'⊘','⊘','©§™','×90','×85','×80','×75','⊘','⊘'],
+[14,'⊘','⊘','©§™',90,85,80,75,'⊘','⊘'],
+[16,'⊘','©§™',95,80,75,70,65,'⊘','⊘'],
+[18,'⊘','©§™',90,75,70,65,60,'×60','⊘'],
+[21,'⊘',95,85,70,65,60,55,'×55','×55'],
+[24,'⊘',90,75,60,55,50,45,'×45','×45'],
+[28,'⊘',85,70,55,50,45,40,35,30],
+[34,95,80,65,50,45,40,35,30,30],
+[42,90,75,60,45,40,35,30,30,30],
+[72,75,60,45,40,35,30,30,30,30],
+[96,60,50,40,35,30,30,30,30,30], ];
+
+
+
+
+///////\                                                        ////////////////
+////////\                                                      /////////////////
+/////////\  END CONFORMANCE SCORING CONSTANTS AND ARRAYS END  //////////////////
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+
+
+
+
+////////////////////////////////////////////////////////////////////////////////
+/////////  DOM ACCESS VARIABLES  \//////////////////////////////////////////////
+////////                          \/////////////////////////////////////////////
+
+// Performance Improving Variables for DOM access //
+
+let inputBG = document.getElementById('inputBG'),
+    BGpicker = document.getElementById('BGpicker'),
+    BGpickerWrap = document.getElementById('BGpickerWrap'),
+    BGvalidText = document.getElementById('BGvalidText');
+
+let inputTXT = document.getElementById('inputTXT'),
+    TXTpicker = document.getElementById('TXTpicker'),
+    TXTpickerWrap = document.getElementById('TXTpickerWrap'),
+    TXTvalidText = document.getElementById('TXTvalidText');
+
+let tableSamples = document.getElementById('tableSamples');
+let ampSamp3 = document.getElementById('ampSamp3');
+
+let contrastResultTable = document.getElementById('contrastResultTable');
+let buttonSpecial = document.getElementById('buttonSpecial');
+
+/*
+let tableScoreDOMarray = [  document.getElementById('nonText'),
+                            document.getElementById('spotText'),
+                            document.getElementById('softText'),
+                            document.getElementById('fluentText'),
+                            document.getElementById('bodyText'),
+                            'null', ];
+
+let tsi = tableScoreDOMlen = tableScoreDOMarray.length;
+
+//  */
+
+let LsNormLabel = Math.round(normBG*100);
+let LsRevLabel = Math.round(revBG*100);
+
+
+////////////////////////////////////////////////////////////////////////////////
+/////////  PAGE LOAD UTILITIES   \//////////////////////////////////////////////
+////////                          \/////////////////////////////////////////////
+
+    // For old samples section
+function populateLabels() {   
+// deprecated
+}
+
+
+ 
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+/////////  TEST CONTRAST FUNCTION  \////////////////////////////////////////////
+////////                            \///////////////////////////////////////////
+///////                              \//////////////////////////////////////////
+
+
+function testContrast(midAdjust=false) {
+
+  let contrast = 0.0;
+  //let contrastString = '';
+
+  if (BG.ok && TXT.ok) {
+
+    // Get Contrast. It's kinda like "Get Shorty" but without Danny DiVito
+        
+    contrast = BPCAcontrast(TXT.LYP,BG.LYP);
+    //contrastString = APCAcontrast(BG,TXT,2);
+  
+    let absContrast = isNaN(contrast) ? 0 : Math.abs(parseFloat(contrast));
+    let contrastFixed = isNaN(contrast) ? contrast : contrast.toFixed(1);
+
+   //  contrastResultTable.innerHTML = "L<sup>c</sup>  " + contrastFixed;
+
+
+    let bridged = bridgeRatio(contrast,TXT.LYP,BG.LYP);
+    let workSans = "Barlow Condensed";
+    contrastResultTable.innerHTML = "L<sup>c</sup>  " + contrastFixed
+                      + "<hr style='margin: 6px auto; height:4px; border-color:#30a; border-width:0; border-radius: 2px; background-color:#30a'><div style='margin: -2px auto 0; padding:0; font-family: "+ workSans +", sans-serif; font-size: 0.85em; font-weight: 500;letter-spacing: 0;'>WCAG COMPATIBLE</div><span style='margin:0; padding:0; font-size: 1.35em; font-weight: 500;'>" + bridged ;
+
+
+    let rowString = '';
+    let currentLevel = 0;
+
+    let tempAlertColor = '#F00';
+
+    let modeScoreArrayLen = scoreArrayLen;
+    let modeWeightArrayLen = weightArrayLen;
+
+    globalBGcolor = BG.hex();
+    globalTXTcolor = TXT.hex();
+
+    // if (mode === 'simple') {researchMode = false;}
+
+    let sampleText = 'Fluent Text Sample';
+    let sampleBodyText = 
+     'The lazy grey dog slept in the <br>'
+    +'afternoon sun, but the frisky fox <br>'
+    +'frolicked freely in the field of <br>'
+    +'flowers without a care in the world. <br>'
+    +'The fox saw the slumbering dog and <br>'
+    +'tried to wake him, but the dog was<br>'
+    +'sound asleep, dreaming of chasing <br>'
+    +'birds through the lush green forest. <br>'
+    +'The fox wondered if the dog would <br>'
+    +'ever wake up so they could play, so...';
+    
+    let minimumText = 'MINIMUM';
+    
+    let fontLevel30 = 30, fontLevel46 = 46, fontLevel54 = 54, fontLevel96 = 96;
+
+
+
+/*  //  switch off results calcs
+
+    if (absContrast < minScoreG) {
+    
+    /////  FOR "ALL UNDER MINIMUM" MESSAGE  /////
+    
+          // alt for debug only
+          //if (absContrast < 120) { 
+    
+      if (mode === 'simple') {
+          tableScoreDOMarray[4].innerHTML =
+          '<th>'
+          + scoreTextArray[0] + '</th>'
+          + loConWarningRow9x1s();
+      } else if (mode === 'mobile') {
+          tableScoreDOMarray[4].innerHTML = '<th>'
+          + scoreTextArray[0] + '</th>'
+          + loConWarningRow6x1;
+      }
+
+    } else {  ///// Interpolate fonts and fill table  /////
+  
+      /////  Prep for interpolated fonts  /////
+
+      let si = 4;
+      let cl = 0;
+    
+      // this loop sets score index
+        for (; cl < contrastArrayLenG; ) {
+          if (absContrast > scoreLevelsPreCalcG[cl][si]) {
+            scoreIndex = cl;
+            break
+          } else {
+ // console.log('cl '+cl+'  si  ' + scoreIndex)
+            cl++;
+          }
+        }
+
+///////////////////////////////////////////////////////////////////////////
+/////////  Font and Score Interpolation  \////////////////////////////////
+////////                                  \//////////////////////////////
+
+      // Interpolation
+    let tempFont = 777;
+    let s = si; 
+    let w = 2;
+    let tempScoreAdj = 1.0;
+    let minFontTemp = 0.0;
+    let nonTextBorder = '';
+
+      // populate interpolatedFonts array with interpolated values
+
+      tempScoreAdj = (absContrast -
+                      scoreLevelsPreCalcG[scoreIndex][s]) /
+                      scoreDeltaG[scoreIndex][s];
+
+      for (; w < weightArrayLen; w++) {
+
+      tempFont = fontMatrixG[scoreIndex][w]; 
+
+        switch (tempFont) {
+          case 410:
+          case 411:
+          case 412:
+          case 413:
+          case 414:
+          case 415:
+          case 416:
+          case 418:
+          case 445:
+          case 427:
+          case 417:
+          case 413.5:
+          
+          case 777:
+          case 888:
+          case 999:
+          case 0:
+            
+            interpolatedFonts[s][w] = tempFont;
+            
+            break;
+
+
+          default:  // INTERPOLATION OF FONT SIZE
+                   // sets level for 0.5 size increments of smaller fonts
+                  // Note bitwise (n|0) instead of floor
+            (tempFont > 24) ?
+              interpolatedFonts[s][w] = 
+                  Math.round(tempFont -
+                  (fontDeltaG[scoreIndex][w] * //scoreIndex - 1 for correct ∆
+                  tempScoreAdj)) :
+              interpolatedFonts[s][w] = 
+                  tempFont -
+                  ((2.0 * fontDeltaG[scoreIndex][w] *
+                  tempScoreAdj) | 0) * 0.5; // (n|0) is bw floor
+        }
+      }
+
+
+////////\                         ///////////////////////////////////////////
+/////////\  End Interpolation   ////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////
+/////////  Populate Table and Samples   \/////////////////////////////////
+////////                                 \///////////////////////////////
+
+      s = 4;
+
+    if (mode === 'simple') {
+      w = 2;
+      modeWeightArrayLen = 8;
+      if (absContrast > 89.7) {
+        rowString = '<th style="background-color: #77ffee;" >BODY<br>TEXT<br>AAA</th>';
+      } else if (absContrast > 74.7) {
+        rowString = '<th style="background-color: #88ffcc;" >BODY<br>TEXT</th>';
+      } else if (absContrast > 59.7) {
+        rowString = '<th style="background-color: #bbffaa;" >FLUENT<br>TEXT</th>';
+      } else if (absContrast > 44.7) {
+        rowString = '<th style="background-color: #eeff44;" >LARGE<br>AND<br>"SOFT"<br>TEXT</th>';
+      } else if (absContrast > 29.7) {
+        rowString = '<th style="background-color: #ffcc66;" >SPOT<br>AND<br>NON<br>TEXT</th>';
+      } else if (absContrast > 14.7) {
+        rowString = '<th style="background-color: #ff8888;" >🚫<br>NON<br>TEXT<br>ONLY</th>';
+      } else {
+        rowString = '<th style="background-color: #aa0000;color:#fff;" >INVISIBLE</th>';
+      }
+
+      //rowString = '<th style="background-color: #99ffbb;" >' + scoreTextArraySimple[s] + '</th>';
+    } else if (mode === 'mobile') {
+      w = 2;
+      modeWeightArrayLen = 8;
+      rowString = '<th '+ normalColspan +' >' + scoreTextArray[s] + '</th>';
+    }
+
+
+
+
+    for (; w < modeWeightArrayLen; w++) {
+
+      tempFont = interpolatedFonts[s][w];
+
+      switch (tempFont) {
+
+          case 410:
+          case 411:
+          case 412:
+          case 413:
+          case 414:
+          case 415:
+          case 416:
+          case 418:
+          case 445:
+          case 427:
+          case 417:
+          case 413.5:
+               minFontTemp = tempFont % 400;
+// console.log(minFontTemp + '  x  ' + tempFont);
+
+         default:
+            tempFont = (tempFont <= fontMatrixGmin[s][w]) ?
+                        fontMatrixGmin[s][w] :
+                        tempFont;
+
+          if (mode === 'simple' && (w == 2 || w == 5 || w == 6)) {
+            modeColspan = normalColspan;
+            fontLevel96 = 96;  //82
+            fontLevel54 = 76;  //69
+            fontLevel46 = 58;  //30
+            fontLevel30 = 36;  //28
+            sampleText = 'SampleText';
+            minimumText = 'MIN';
+          } else if (mode === 'simple') { 
+            modeColspan = simpleColspan;
+            fontLevel96 = 120;
+            fontLevel54 = 99;
+            fontLevel46 = 74;
+            fontLevel30 = 40;
+            sampleText = 'Sample Text &amp; ATOMsizedgap';
+            minimumText = 'MINIMUM SIZE'; //'NO CONTENT TEXT<br> At This Size';
+          } else if (mode === 'mobile') { 
+            modeColspan = mobileColspan;
+          } else { modeColspan = normalColspan;
+          }
+
+    nonTextBorder = (contrast < 0) ? 'box-shadow: 0 0 3px 1px #123;' : '';
+
+
+    //  LowCon error
+      (tempFont > 800 ) ?
+            rowString += '<td '+ modeColspan + loConMessage2LowSingle :
+
+    // Non Text
+       ( (nonTextScoreG > absContrast || tempFont > 700) && (w == 2 || w == 5 || w == 6) ) ?
+          rowString += '<td style="font-size: 100px; font-weight: ' 
+            + weightArray[w] + '; font-family: K2D, Barlow, sans-serif; line-height: 1.0; color:'
+            + TXT.hexNoA() + '; background-color:' 
+            + BG.hexNoA() + '; padding: 0 0 24px 0;'
+            + '; border-width:'+ (w * 2) +'px; border-radius: 12px; border-color:'
+            + TXT.hexNoA() + '; text-align:center;' + nonTextBorder + '">N</td>' :
+
+    // Non Text
+        (nonTextScoreG > absContrast || tempFont > 700) ?
+          rowString += '<td '+ modeColspan +' style="font-size: 100px; font-stretch: ultra-expanded; font-weight: ' 
+            + weightArray[w] + '; font-family: K2D, Barlow, sans-serif; line-height: 1.0; color:'
+            + TXT.hexNoA() + '; background-color:' 
+            + BG.hexNoA() + '; padding: 0 0 24px 0;'
+            + '; border-width:'+ (w * 2) +'px; border-radius: 12px; border-color:'
+            + TXT.hexNoA() + '; text-align:center; ' + nonTextBorder + '">|N|</td>' :
+
+// MINIMUM 
+        (tempFont > 400 && w == 2) ?  
+          rowString += '<td '+ modeColspan +' style="font-size:' 
+            + minFontTemp  + 'px; font-weight:200; color:'
+            + TXT.hexNoA() + '; background-color:'
+            + BG.hexNoA() + ';line-height: 1.0;">' + minFontTemp
+            + 'px<br>' + minimumText +'</td>' :
+            
+        (tempFont > 400 ) ?  
+          rowString += '<td '+ modeColspan +' style="font-size:' 
+            + minFontTemp  + 'px; font-weight:' 
+            + weightArray[w] + '; color:'
+            + TXT.hexNoA() + '; background-color:'
+            + BG.hexNoA() + '; line-height:'
+            + (1.0 + w * 0.0456).toString()  + ';">' + minFontTemp
+            + 'px' + minimumText + '<br>'
+            + sampleBodyText +'</td>' :
+
+   // score colored inset
+        (tempFont > fontLevel96) ?
+          rowString += '<td '+ modeColspan + ' style="font-size:'
+            + tempFont + 'px; font-weight:'
+            + weightArray[w] + '; color:'
+            + TXT.hexNoA() + '; background-color:'
+            + BG.hexNoA() + '; line-height: 1.0;">&amp;'
+            + '<div style="position:absolute; bottom: 24px; border-radius: 0 4px 4px 6px; margin: -32px auto 0; padding:2px 6px 2px 12px; font-size: 16px; font-weight: 600; color:#'
+            + scoreColor[s] + '; background-color: #e6e2dd;">'
+            + tempFont + 'px</div></td>' :
+
+    // fs only when over 54
+        (tempFont > fontLevel54) ?  
+          rowString += '<td '+ modeColspan +' style="font-size:' 
+            + tempFont + 'px; font-weight:' 
+            + weightArray[w] + '; color:'
+            + TXT.hexNoA() + '; background-color:'
+            + BG.hexNoA() + ';line-height: 1.0;">' 
+            + tempFont + '</td>' :
+
+    // fspx only when over 46
+        (tempFont > fontLevel46) ?  
+          rowString += '<td '+ modeColspan +' style="font-size:' 
+            + tempFont + 'px; font-weight:' 
+            + weightArray[w] + '; color:'
+            + TXT.hexNoA() + '; background-color:'
+            + BG.hexNoA() + ';line-height: 1.0;">'
+            + tempFont + 'px</td>' :
+
+    // Sample Text when over 30
+        (tempFont > fontLevel30) ?
+          rowString += '<td '+ modeColspan +' style="font-size:' 
+            + tempFont + 'px; font-weight:' 
+            + weightArray[w] + '; color:'
+            + TXT.hexNoA() + '; background-color:'
+            + BG.hexNoA() + '; line-height: 1.0;">'
+            + tempFont + 'px<br>'+sampleText+'</td>' :
+                
+    // Sample Text Body Sample
+          rowString += '<td '+ modeColspan +' style="font-size:' 
+            + tempFont + 'px; font-weight:' 
+            + weightArray[w] + '; color:'
+            + TXT.hexNoA() + '; background-color:'
+            + BG.hexNoA() + '; line-height:' + (1.0 + w * 0.0456).toString() 
+            + ';">'
+            // + (2.2 - tempFont * 0.04) + ';">'
+            + tempFont + 'px<br>'+sampleBodyText+'</td>';
+      } // end switch
+    } // end column for
+    
+    tableScoreDOMarray[s].innerHTML = rowString;
+
+////////
+    } 
+  } else {   /// !(BG.ok && TXT.ok) ///
+
+    contrast = 0;
+    contrastResultTable.innerHTML = '<span class="cR">ERROR</span>';
+    //contrastResult.innerHTML = '<div class="fs06 cR">INVALID<br>COLOR</div>';
+    //contrastResult2.innerHTML = '<div class="fs06 cR">INVALID<br>COLOR</div>';
+
+    //tsi = tableScoreDOMlen - 1;
+    tableScoreDOMarray[4].innerHTML = scoreTextProhibit + error9x1 + "Color Entry Error";
+    //  tsi--;
+    //for (; tsi > 0; tsi--) {
+    //  tableScoreDOMarray[tsi].innerHTML = scoreTextProhibit;
+    //}
+
+//   */
+
+  }
+} // close testContrast()
+
+////////\                                    ///////////////////////////////////
+/////////\  END TEST CONTRAST FUNCTION END  ////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+
+
+
+</script>
+</body>
+</html>
