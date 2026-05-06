@@ -217,8 +217,8 @@ Additional documentation, including a plain language walkthrough, LaTeX math, an
 ````````
 
 ----- 
-### [LIVE VERSION](http://www.myndex.com/BPCA/)
-There's a working version with examples and reference material on [the BPCA site](http://www.myndex.com/BPCA/)
+### [LIVE VERSION](https://www.bridgepca.com)
+There's a working version with examples and reference material on [the BPCA site](https://www.bridgepca.com)
 
 [BPCAsite]: https://www.myndex.com/BPCA/
 

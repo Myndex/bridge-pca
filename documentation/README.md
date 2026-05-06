@@ -35,6 +35,6 @@ For instance, WCAG_2 SC 1.4.11 is not supported by any actual science, only some
 
 -----
 
-You can see the current working version of BridgePCA at https://www.myndex.com/BPCA/
+You can see the current working version of BridgePCA at https://www.bridgepca.com
 
 There is more about this project on our main site, https://www.myndex.com/WEB/Perception
