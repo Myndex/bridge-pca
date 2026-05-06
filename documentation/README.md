@@ -32,12 +32,15 @@ Nevertheless if you need a "standards compliant" method that also improves reada
 
 ## Why BridgePCA??
 
-BridgePCA was developed to address some aspersions from a small group of trolls who have been crowing that _"oh WCAG 2 is law tho."_ the truth is that it's not codified as an absolute law in most places, and even so, actual accessibility is what is legal. APCA and the [APCA Readability Criterion](https://readtech.org/ARC/) promotes _**actual**_ accessibility while WCAG_2 contrast does not.
+BridgePCA was developed to address some concerns raised by some regarding legal requirements. While actual accessibility is what is legal, WCAG 2 misses the mark as far as the contrast math is concerned. The algorithm for 1.4.3 and 1.4.11 grossly over rates contrast for dark colors, while underrating light color pairs. There is an unfortunate implication regarding mathematics more than accessibility.
 
-BridgePCA maintains backwards compatibility to the flawed WCAG_2 contrast but at the loss of some useful flexibility. It's a way to "force fit" WCAG_2 guidelines into something less harmful, but because WCAG_2 contrast ignores spatial characteristics such as line thickness as the primary driver of contrast, Bridge PCA is restricted from relaxing contrast on low-spatial frequency elements, which is specifically needed yet missing in WCAG 2.
+APCA and the [APCA Readability Criterion](https://readtech.org/ARC/) promotes _**actual**_ accessibility while WCAG_2 contrast does not. WCAG&nbsp;2 contrast's over rating of dark colors is an easy fix, and APCA directly exceeds WCAG&nbsp;2 both mathematically and in terms of actual accessibility. However the math of WCAG&nbsp;2 rejects color pairs involving white, even though they are far more readable than the same color paired with black that WCAG&nbsp;2 passes. APCA, being perceptually uniform, correctly passes the color that are better for CVD, and rejects the colors that are worse.
 
-For instance, WCAG_2 SC 1.4.11 is not supported by any actual science, only some self-referential cites that arguably have no place in a standards document. 1.4.11 makes some logical leaps and ignores the primary drivers of contrast perception. Moreover, WCAG_2 contrast _results_ can be grossly insufficient, or just barely enough, or much more than needed, all depending on context and use-cases — yet WCAG_2 contrast ignores context and use-cases.
+BridgePCA maintains backwards compatibility to the flawed WCAG&nbsp;2  contrast but at the loss of some useful flexibility. In other words, it rejects some useable colors all in the name of fitting within the awkward math profile of WCAG&nbsp;2 contrast. It's a way to "force fit" WCAG&nbsp;2  guidelines into something less harmful. But because WCAG_2 contrast ignores spatial characteristics (such as line thickness) as the primary driver of contrast, Bridge&nbsp;PCA is restricted from relaxing contrast on low-spatial frequency elements, which is also specifically needed, yet missing in WCAG&nbsp;2.
 
+For instance, WCAG&nbsp;2 SC 1.4.11 is not supported by any actual science, and makes some logical leaps, ignoring the primary drivers of contrast perception. Moreover, WCAG&nbsp;2 contrast _results_ can be grossly insufficient, or just barely enough, or much more than needed, all depending on context and use-cases — unfortunately WCAG&nbsp;2 contrast ignores context and use-cases.
+
+As such, while the APCA values (2021 with G4g4 constants) are visible, the "WCAG 2" equivalent values are usable as a drop in replacement. As colors get darker, you'll notice that the WCAG 2 values do not rise like the "official" algo, but remain in keeping with perceptual uniformity.
 
 -----
 

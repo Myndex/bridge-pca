@@ -35,11 +35,15 @@
 _NPM Install:_ ` npm i bridge-pca `
 
 ## Why BridgePCA??
-BridgePCA was developed to address some aspersions from a small group of trolls who have been crowing that _"oh WCAG&nbsp;2 is law tho."_ the truth is that WCAG&nbsp;2 is not codified as an absolute law in most places (check your region). The reality is actual accessibility is what is legal. APCA and the [APCA Readability Criterion](https://readtech.org/ARC/) promotes _**actual**_ accessibility while WCAG_2 contrast does not.
+BridgePCA was developed to address some concerns raised by some regarding legal requirements. While actual accessibility is what is legal, WCAG 2 misses the mark as far as the contrast math is concerned. The algorithm for 1.4.3 and 1.4.11 grossly over rates contrast for dark colors, while underrating light color pairs. There is an unfortunate implication regarding mathematics more than accessibility.
 
-BridgePCA maintains backwards compatibility to the flawed WCAG&nbsp;2  contrast but at the loss of some useful flexibility. It's a way to "force fit" WCAG&nbsp;2  guidelines into something less harmful. But because WCAG_2 contrast ignores spatial characteristics (such as line thickness) as the primary driver of contrast, Bridge PCA is restricted from relaxing contrast on low-spatial frequency elements, which is specifically needed yet missing in WCAG&nbsp;2.
+APCA and the [APCA Readability Criterion](https://readtech.org/ARC/) promotes _**actual**_ accessibility while WCAG_2 contrast does not. WCAG&nbsp;2 contrast's over rating of dark colors is an easy fix, and APCA directly exceeds WCAG&nbsp;2 both mathematically and in terms of actual accessibility. However the math of WCAG&nbsp;2 rejects color pairs involving white, even though they are far more readable than the same color paired with black that WCAG&nbsp;2 passes. APCA, being perceptually uniform, correctly passes the color that are better for CVD, and rejects the colors that are worse.
 
-For instance, WCAG&nbsp;2 SC 1.4.11 is not supported by any actual science, only some self-referential cites that arguably have no place in a standards document. 1.4.11 makes some logical leaps and ignores the primary drivers of contrast perception. Moreover, WCAG&nbsp;2 contrast _results_ can be grossly insufficient, or just barely enough, or much more than needed, all depending on context and use-cases — yetWCAG&nbsp;2  contrast ignores context and use-cases.
+BridgePCA maintains backwards compatibility to the flawed WCAG&nbsp;2  contrast but at the loss of some useful flexibility. In other words, it rejects some useable colors all in the name of fitting within the awkward math profile of WCAG&nbsp;2 contrast. It's a way to "force fit" WCAG&nbsp;2  guidelines into something less harmful. But because WCAG_2 contrast ignores spatial characteristics (such as line thickness) as the primary driver of contrast, Bridge&nbsp;PCA is restricted from relaxing contrast on low-spatial frequency elements, which is also specifically needed, yet missing in WCAG&nbsp;2.
+
+For instance, WCAG&nbsp;2 SC 1.4.11 is not supported by any actual science, and makes some logical leaps, ignoring the primary drivers of contrast perception. Moreover, WCAG&nbsp;2 contrast _results_ can be grossly insufficient, or just barely enough, or much more than needed, all depending on context and use-cases — unfortunately WCAG&nbsp;2 contrast ignores context and use-cases.
+
+As such, while the APCA values (2021 with G4g4 constants) are visible, the "WCAG 2" equivalent values are usable as a drop in replacement. As colors get darker, you'll notice that the WCAG 2 values do not rise like the "official" algo, but remain in keeping with perceptual uniformity.
 
 
 <img height='300' alt="Poster: a picture of crash test dummies crashing out of a car, and text that says don't be a dummy! Stop using low contrast text. At the bottom it says APCA the world is reading" src='https://user-images.githubusercontent.com/42009457/161151275-7c4feea7-888a-43f1-a9c0-7504afaac258.png'>  <img  height='300' alt='Smokey the bear saying  ONLY YOU CAN STOP LOW CONTRAST' src='https://user-images.githubusercontent.com/42009457/161151536-a0add333-161e-482d-a99a-d1d076c75daf.png'>   <img  height='300' alt='Uncle Sam saying I want you to use high contrast text' src='https://user-images.githubusercontent.com/42009457/161151222-74fb81af-f87b-4d7c-a41c-756e1ee3056f.png'> 
@@ -47,7 +51,7 @@ For instance, WCAG&nbsp;2 SC 1.4.11 is not supported by any actual science, only
 ### Bridge to the Advanced Perceptual Contrast Algorithm
 Current Version: **0.1.5 4g** (w3) (public beta)
 
-Bridge PCA is a contrast assessment method based on APCA & SAPC technology for predicting the perceived contrast between sRGB colors on a computer monitor. It has been developed as an assessment method to facilitate better readability while maintaining backwards compatibility with WCAG_2 contrast (1.4.3) accessibility standards relating to content for computer displays and mobile devices. The intention is to improve readability and understandability of content.
+Bridge PCA is a contrast assessment method based on APCA & SAPC technology for predicting the perceived contrast between sRGB colors on a computer monitor. It has been developed as an assessment method to facilitate better readability while maintaining backwards compatibility with WCAG_2 contrast (1.4.3 & 1.4.11) accessibility standards relating to content for computer displays and mobile devices. The intention is to improve readability and understandability of content.
 
 ### _WCAG\_2 Drop N Go_
 Current Version: 0.1.5 April 14, 2022
@@ -57,9 +61,11 @@ NEW: Improved WCAG 2 ratios.
 Bridge-PCS is a "drop n go" replacement for WCAG_2 math, and it's super easy to convert to WCAG_2 ratios. Like APCA, BridgePCA reports results as Lc (Lightness Contrast), and they align like this:
 
 Use the following conversions for AA and AAA:
-- **Lc 60 exceeds WCAG 3:1**
-- **Lc 75 exceeds WCAG 4.5:1**
-- **Lc 90 exceeds WCAG 7:1**
+- **Lc 60 always exceeds WCAG 3:1**
+- **Lc 75 always exceeds WCAG 4.5:1**
+- **Lc 90 always exceeds WCAG 7:1**
+
+As you can see clearly, there is no problem with backwards compatibility, but the reality is that these values can be too much contrast in a number of use cases. So it is just a matter of guidelines. The WCAG&nbsp;2 math does not allow for flexible guidelines—and that leaves us with a math discrepancy if we want to accommodate use cases and visual hierarchies. 
 
 **Large Font:** 24px (18pt) normal weight or 18.7px (14pt) bold, or larger.
 
@@ -117,15 +123,15 @@ In this chart, we see that WCAG&nbsp;2 contrast degrades losing readability as c
 
 Additional Notes
 -----
-Unlike the main APCA, BridgePCA is all about "emulating" WCAG&nbsp;2 contrast. So, BridgePCA is a like-for-like replacement of the quirky WCAG&nbsp;2 contrast math.
+Unlike the main APCA, BridgePCA is all about "emulating" WCAG&nbsp;2 contrast as a drop in replacement, fixing what can be fixed without incurring WCAG&nbsp;2's false rejections. Thus, BridgePCA is a like-for-like replacement of the quirky WCAG&nbsp;2 contrast math.
 
 Like APCA, BridgePCA reports results as Lc (Lightness Contrast). Conversion to WCAG&nbsp;2 ratios:
 
-- **Lc 60 exceeds WCAG 3:1**
-- **Lc 75 exceeds WCAG 4.5:1**
-- **Lc 90 exceeds WCAG 7:1**
+- **Lc 60 always exceeds WCAG 3:1**
+- **Lc 75 always exceeds WCAG 4.5:1**
+- **Lc 90 always exceeds WCAG 7:1**
 
-***DIFFERENCES:*** for best results, send the text color to the text input of the tool. Bridge PCA is "polarity sensitive," even though WCAG&nbsp;2 is not. For light text on a dark background, the result will have an R for "reverse" after the LC value. N means "normal".
+***DIFFERENCES:*** for best results, send the text color to the text input of the tool. Bridge PCA is "polarity sensitive," even though WCAG&nbsp;2 is not. For light text on a dark background, the Lc result will be negative screen.¹
 
 **No Free Lunch:** while BridgePCA corrects the many false passes and improves readability, the cost is that there is reduced design flexibility due to the fact that to maintain backwards compatibility, some contrasts are forced higher than they actually need be.
 
@@ -219,6 +225,9 @@ Additional documentation, including a plain language walkthrough, LaTeX math, an
     const loTrim = 0.0815;
     const trimThresh = 0.506;
 ````````
+
+Note:
+¹ Depending on the field, negative and positive contrast may have different meanings. In readability research, "screen contrast" is typically used, which means that negative is WoB, or White text on Black. In vision science studies, this same consition is more often called positive contrast. We are using negative screen contrast as the APCA guidelines are derived from modern readability research.
 
 ----- 
 ### [LIVE VERSION](https://www.bridgepca.com)
