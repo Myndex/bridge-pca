@@ -111,27 +111,31 @@ In addition, the following enhanced SCs can be added with Bridge-PCA to further 
 
 -----
 ### Comparison Chart
-In this chart, we see that WCAG_2 contrast degrades losing readability as color pairs get darker, while APCA technology maintains readability across the visual range.
+In this chart, we see that WCAG&nbsp;2 contrast degrades losing readability as color pairs get darker, while APCA technology maintains readability across the visual range.
 
 <img src="images/ColumnCompareAll400.png" width="820" alt="WCAG2 to APCA comparison table demonstrating the false passes of WCAG 2 contrast">
 
 Additional Notes
 -----
-Unlike the main APCA, BridgePCA is all about "emulating" WCAG_2 contrast. So, BridgePCA is a like-for-like replacement of the quirky WCAG_2 contrast math.
+Unlike the main APCA, BridgePCA is all about "emulating" WCAG&nbsp;2 contrast. So, BridgePCA is a like-for-like replacement of the quirky WCAG&nbsp;2 contrast math.
 
-Like APCA, BridgePCA reports results as Lc (Lightness Contrast). Conversion to WCAG_2 ratios:
+Like APCA, BridgePCA reports results as Lc (Lightness Contrast). Conversion to WCAG&nbsp;2 ratios:
 
 - **Lc 60 exceeds WCAG 3:1**
 - **Lc 75 exceeds WCAG 4.5:1**
 - **Lc 90 exceeds WCAG 7:1**
 
-***DIFFERENCES:*** for best results, send the text color to the text input of the tool. Bridge PCA is "polarity sensitive," even though WCAG_2 is not. For light text on a dark background, the result will have an R for "reverse" after the LC value. N means "normal".
+***DIFFERENCES:*** for best results, send the text color to the text input of the tool. Bridge PCA is "polarity sensitive," even though WCAG&nbsp;2 is not. For light text on a dark background, the result will have an R for "reverse" after the LC value. N means "normal".
 
 **No Free Lunch:** while BridgePCA corrects the many false passes and improves readability, the cost is that there is reduced design flexibility due to the fact that to maintain backwards compatibility, some contrasts are forced higher than they actually need be.
 
-BridgePCA has some minor internal adjustments to align with some of the more incorrect aspects of WCAG_2 contrast math. In order to be backwards compatible, BridgePCA will not forgive the false-fails of WCAG_2, but BridgePCA **will** correct the many false passes which vastly improves readability.
+One of the areas that the WCAG 2 contrast is wrong, relates to users with CVD (color vision deficiency sometimes referred to as colorblind). WCAG&nbsp;2 excludes many colors like reds and oranges against white which are good for CVD especially protanopia, while paradoxically passing those same colors against black, which is substantially worse for CVD.
 
-But if you need a standards compliant method that also improves readability this is it. If on the other hand you do not need to abide by the letter of any particular standard, you may want to consider the more flexible full APCA solution.
+The <a href="https://apcacontrast.com">full APCA</a> correctly rejects the color combinations that are detrimental to CVD, and passes the colors that are better for CVD—the only area where APCA passes colors that WCAG 2 rejects, are the very color pairs that are better for CVD.
+
+BridgePCA has some minor internal adjustments to align with some of these more incorrect aspects of WCAG&nbsp;2 contrast math, namely the lighter colored pairs. In order to be backwards compatible, BridgePCA will not forgive the false-fails of WCAG&nbsp;2, but BridgePCA **will** correct the many false passes which vastly improves readability.
+
+Nevertheless if you need a "standards compliant" method that also improves readability this is it. If on the other hand you do not need to abide by the letter of any particular standard, you may want to consider the more flexible full APCA solution.
 
 -----
 ## Developer QuickStart
@@ -220,7 +224,7 @@ Additional documentation, including a plain language walkthrough, LaTeX math, an
 ### [LIVE VERSION](https://www.bridgepca.com)
 There's a working version with examples and reference material on [the BPCA site](https://www.bridgepca.com)
 
-[BPCAsite]: https://www.myndex.com/BPCA/
+[BPCAsite]: https://www.bridgepca.com
 
 [![](https://raw.githubusercontent.com/Myndex/SAPC-APCA/master/images/Myndex_eye_cielabWide.png)](https://github.com/Myndex)
 
