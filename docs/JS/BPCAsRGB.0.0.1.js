@@ -1875,4 +1875,3 @@ function CIE2sRGBstring( spaces = 0b0000, LstarY, caux, hbvy, outputType = 'arra
 
 //  The movie's over, go home...
 
-}
